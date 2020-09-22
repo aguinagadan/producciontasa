@@ -466,7 +466,7 @@ class course_renderer extends \core_course_renderer {
 		$boxColor = "blue";
 
 		$content .= '<div class="moved-background"></div>';
-		$content .= '<div class="cc-main-table-container pr-0 pl-0 w-100"><div style="width: 65%;margin: 0 auto;">';
+		$content .= '<div class="cc-main-table-container pr-0 pl-0 w-100"><div style="width: 85%;margin: 0 auto;">';
 		$coursesDivs = '';
 
 		foreach ($subcategories as $key=>$subcategory) {
