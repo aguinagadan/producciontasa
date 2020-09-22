@@ -65,6 +65,7 @@ $courserenderer = $PAGE->get_renderer('core', 'course');
 $PAGE->set_heading($heading);
 $content = $courserenderer->course_category($categoryid);
 
+$PAGE->set_pagelayout('frontpage');
 echo $OUTPUT->header();
 echo $OUTPUT->skip_link_target();
 echo $content;
