@@ -91,7 +91,7 @@ class sitehomehandler {
      * @return array of sliding data
      */
     public static function get_slider_data() {
-        global $PAGE, $OUTPUT;
+        global $PAGE, $OUTPUT, $CFG;
 
         $sliderdata = array();
         $sliderdata['isslider'] = false;
@@ -136,6 +136,7 @@ class sitehomehandler {
         } else if (!$frontpagecontenttype) { // Static data.
             // Get the static front page settings.
             $sliderdata['addtxt'] = format_text(toolbox::get_setting('addtext'));
+						$sliderdata['searchURL'] = $CFG->wwwroot . '/course/search.php';
 
             $contenttype = toolbox::get_setting('contenttype');
             if (!$contenttype) {
@@ -155,7 +156,7 @@ class sitehomehandler {
         }
         return $sliderdata;
     }
-    
+
     /**
      * Return the recent blog.
      *
