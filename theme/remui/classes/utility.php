@@ -606,6 +606,35 @@ class utility {
         return $footer;
     }
 
+	/*
+	 * Get course image.
+	 */
+		public static function get_course_image($corecourselistelement, $islist = false) {
+			global $CFG, $OUTPUT;
+			if (!$islist) {
+				$corecourselistelement = new core_course_list_element($corecourselistelement);
+			}
+
+			// Course image.
+			foreach ($corecourselistelement->get_course_overviewfiles() as $file) {
+				$isimage = $file->is_valid_image();
+				$courseimage = file_encode_url(
+					"$CFG->wwwroot/pluginfile.php",
+					'/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
+					$file->get_filearea(). $file->get_filepath(). $file->get_filename(),
+					!$isimage
+				);
+				if ($isimage) {
+					break;
+				}
+			}
+			if (!empty($courseimage)) {
+				return $courseimage;
+			} else {
+				return $OUTPUT->get_generated_image_for_id($corecourselistelement->id);
+			}
+		}
+
     /**
      * Function to get the remote data from url
      *
