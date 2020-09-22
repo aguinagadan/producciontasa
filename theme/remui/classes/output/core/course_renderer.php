@@ -199,7 +199,7 @@ class course_renderer extends \core_course_renderer {
 
 				case FRONTPAGECATEGORYNAMES:
 					$output .= $this->frontpage_part('skipcategories', 'frontpage-category-names',
-						'Buscar cursos por ' . strtolower(get_string('categories')), $this->frontpage_categories_list(), 'cc-category-header pr-0 pl-0 pb-0');
+						'Buscar cursos por categorías', $this->frontpage_categories_list(), 'cc-category-header pr-0 pl-0 pb-0');
 					break;
 
 				case FRONTPAGECATEGORYCOMBO:
