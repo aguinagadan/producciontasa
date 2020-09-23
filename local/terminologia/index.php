@@ -15,9 +15,10 @@ try {
 		$isManager = 0;
 	}
 
-	$title = 'Terminologia';
+	$title = 'Aula virtual - Terminología';
 	// Set up the page.
 	$url = new moodle_url("/local/terminologia/index.php", array('component' => $component, 'search' => $search));
+	$PAGE->set_title($title);
 	$PAGE->set_url($url);
 
 	$PAGE->requires->css(new moodle_url('css/terminologia.css'));
