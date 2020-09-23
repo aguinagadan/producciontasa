@@ -2,6 +2,16 @@ body {
     font-family: 'Catamaran', sans-serif !important;
 }
 
+#region-main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.card {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .terminologia-max-width-100 {
     max-width: 100%;
 }
