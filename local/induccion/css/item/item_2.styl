@@ -1,0 +1,100 @@
+.boya
+    margin-top -80px;
+    margin-left -60px
+    &:nth-child(1)
+        left 23.3%
+        top 87%
+        &.active ~ .boatch
+            top 78%
+            left 26%
+        .point
+            &::before                        
+                right -18px
+    &:nth-child(2)
+        left 76.7%
+        top 50.8%
+        &.active ~ .boatch
+            top 60%
+            left 74%
+        .point
+            &::before                        
+                right -10px
+                bottom -15px
+    @media(max-width:1024px){
+        &:nth-child(1){
+            left: calc(41% - 20px);
+            top 86%
+            &.active ~ .boatch{
+                top 75%
+                left 45%
+                height 130px;
+            }
+        }
+        &:nth-child(2){
+            left: calc(78% - 20px);
+            top 52%
+            &.active ~ .boatch{
+                top 40%
+                left 20%
+                height 130px;
+            }
+        }
+        @media(max-height: 768px){
+            &:nth-child(1){
+                left: calc(47.5% - 80px);
+                top 85%
+                &.active ~ .boatch{
+                    top 75%
+                    left 45%
+                }
+            }
+            &:nth-child(2){
+                left: calc(83% - 80px);
+                top 46%
+                &.active ~ .boatch{
+                    top 36%
+                    left 30%
+                }
+            }
+        }
+        @media(max-height: 480px){
+            &:nth-child(1){
+                left: 20%;
+                top 93%
+                &.active ~ .boatch{
+                    top 7%
+                    left 10%
+                    height 80px
+                    width: 110px
+                }
+            }
+            &:nth-child(2){
+                left: 72%;
+                top 58%
+                &.active ~ .boatch{
+                    top 10%
+                    left 62%
+                    height 80px
+                    width: 110px
+                }
+            }
+        }
+    }
+    @media(max-width:480px){
+        &:nth-child(1){
+            left: calc(50% - 20px);
+            top 87%
+            &.active ~ .boatch{
+                top 75%
+                left 45%
+            }
+        }
+        &:nth-child(2){
+            left: calc(50% - 20px);
+            top 52%
+            &.active ~ .boatch{
+                top 40%
+                left 55%
+            }
+        }
+    }

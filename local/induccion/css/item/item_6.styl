@@ -1,0 +1,274 @@
+.boya
+    margin-top -80px;
+    margin-left -60px
+    &:nth-child(1)
+        left 23.3%
+        top 87%
+        &.active ~ .boatch
+            top 78%
+            left 26%
+        .point
+            &::before                        
+                right -18px
+    &:nth-child(2)
+        left 20.2%
+        top 58%
+        &.active ~ .boatch
+            top 48%
+            left 22%
+        .point
+            &::before                        
+                right -15px
+                top 50px
+    &:nth-child(3)
+        left 37.2%
+        top 31%
+        &.active ~ .boatch
+            top 39%
+            left 30%
+        .point
+            &::before                        
+                right 20px
+                bottom -15px
+    &:nth-child(4)
+        left 52.5%
+        top 52.5%
+        &.active ~ .boatch
+            top 54%
+            left 36%
+        .point
+            &::before                        
+                left 0px
+                bottom: -10px 
+    &:nth-child(5)
+        left 63.5%
+        top 68%
+        &.active ~ .boatch
+            top 76%
+            left 56%
+        .point
+            &::before                        
+                right 30%
+                bottom -15px
+    &:nth-child(6)
+        left 76.7%
+        top 50.8%
+        &.active ~ .boatch
+            top 60%
+            left 74%
+        .point
+            &::before                        
+                right -10px
+                bottom -15px
+    @media(max-width:1024px){
+        &:nth-child(1){
+            left: calc(50% - 80px);
+            top 94%
+            &.active ~ .boatch{
+                top 89%
+                left 45%
+            }
+        }
+        &:nth-child(2){
+            left: calc(90% - 80px);
+            top 79.5%
+            &.active ~ .boatch{
+                top 74.5%
+                left 37%
+            }
+        }
+        &:nth-child(3){
+            left: calc(50% - 80px);
+            top 64.5%
+            &.active ~ .boatch{
+                top 59.5%
+                left 45%
+            }
+        }
+        &:nth-child(4){
+            left: calc(90% - 80px);
+            top 49%
+            &.active ~ .boatch{
+                top 44%
+                left 37%
+            }
+        }
+        &:nth-child(5){
+            left: calc(50% - 80px);
+            top 34%
+            &.active ~ .boatch{
+                top 29%
+                left 45%
+            }
+        }              
+        &:nth-child(6){
+            left: calc(90% - 80px);
+            top 18%
+            &.active ~ .boatch{
+                top 13%
+                left 37%
+            }
+        }
+        @media(max-height: 768px){
+            &:nth-child(1){
+                left: calc(47.5% - 80px);
+                top 94%
+                &.active ~ .boatch{
+                    top 89%
+                    left 45%
+                }
+            }
+            &:nth-child(2){
+                left: calc(83% - 80px);
+                top 79.5%
+                &.active ~ .boatch{
+                    top 74.5%
+                    left 37%
+                }
+            }
+            &:nth-child(3){
+                left: calc(47.5% - 80px);
+                top 64.5%
+                &.active ~ .boatch{
+                    top 59.5%
+                    left 45%
+                }
+            }
+            &:nth-child(4){
+                left: calc(83% - 80px);
+                top 49%
+                &.active ~ .boatch{
+                    top 44%
+                    left 37%
+                }
+            }
+            &:nth-child(5){
+                left: calc(47.5% - 80px);
+                top 34%
+                &.active ~ .boatch{
+                    top 29%
+                    left 45%
+                }
+            }              
+            &:nth-child(6){
+                left: calc(83% - 80px);
+                top 18%
+                &.active ~ .boatch{
+                    top 13%
+                    left 37%
+                }
+            }
+        }
+        @media(max-height:480px){
+            &:nth-child(1){
+                left: 14%;
+                top 93%
+                &.active ~ .boatch{
+                    top 10%
+                    left 9%
+                    height 80px
+                    width: 110px
+                }
+            }
+            &:nth-child(2){
+                left: 28.8%;
+                top 76%
+                &.active ~ .boatch{
+                    top 10%
+                    left 23.2%
+                    height 80px
+                    width: 110px
+                }
+            }
+            &:nth-child(3){
+                left: 43.6%;
+                top 58%
+                &.active ~ .boatch{
+                    top 10%
+                    left 38%
+                    height 80px
+                    width: 110px
+                }
+            }
+            &:nth-child(4){
+                left: 58.4%;
+                top 40%
+                &.active ~ .boatch{
+                    top 10%
+                    left 52.8%
+                    height 80px
+                    width: 110px
+                }
+            }
+            &:nth-child(5){
+                left: 73.2%;
+                top 21%
+                &.active ~ .boatch{
+                    top 10%
+                    left 66.7%
+                    height 80px
+                    width: 110px
+                }
+            }              
+            &:nth-child(6){
+                left: 88%;
+                top 21%
+                &.active ~ .boatch{
+                    top 10%
+                    left 82.4%
+                    height 80px
+                    width: 110px
+                }
+            }  
+        }
+    }
+    @media(max-width:480px){
+        &:nth-child(1){
+            left: calc(50% - 20px);
+            top 94%
+            &.active ~ .boatch{
+                top 89%
+                left 45%
+            }
+        }
+        &:nth-child(2){
+            left: calc(50% - 20px);
+            top 79.5%
+            &.active ~ .boatch{
+                top 74.5%
+                left 37%
+            }
+        }
+        &:nth-child(3){
+            left: calc(50% - 20px);
+            top 64.5%
+            &.active ~ .boatch{
+                top 59.5%
+                left 45%
+            }
+        }
+        &:nth-child(4){
+            left: calc(50% - 20px);
+            top 49%
+            &.active ~ .boatch{
+                top 44%
+                left 37%
+            }
+        }
+        &:nth-child(5){
+            left: calc(50% - 20px);
+            top 34%
+            &.active ~ .boatch{
+                top 29%
+                left 45%
+            }
+        }              
+        &:nth-child(6){
+            left: calc(50% - 20px);
+            top 18%
+            &.active ~ .boatch{
+                top 13%
+                left 37%
+            }
+        }
+    }

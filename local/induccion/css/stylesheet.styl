@@ -1,0 +1,610 @@
+@import url('../font/stylesheet.css')
+$min-width = 100%
+$min-heigth = 100vh
+$width-mapa = 65vw
+$cofre = 250px
+*
+    margin 0
+    padding 0
+    box-sizing border-box
+.game-tasa
+    position relative
+    height: 100vh;
+    overflow hidden
+.contanier-game-load
+    background url('../img/pantalla-inicial.png')
+    background-size 100% 100%
+    background-repeat no-repeat
+    min-width $min-width
+    height 100%
+    display flex
+    video
+        border-radius 20px
+        box-shadow 0 0 0 10px white
+        margin auto
+        height $min-heigth * .70
+        width auto
+    @media (max-width: 1024px)
+        @media(max-height: 768px)
+            video
+                height auto
+                width 90%
+                box-shadow 0 0 0 8px white
+        @media(max-height: 1366px)
+            video
+                height auto
+                width 90%
+                box-shadow 0 0 0 8px white
+    @media (max-width: 768px)
+        background-size auto 100%
+        @media (max-height: 1024px)
+            video
+                height auto
+                width 90%
+                box-shadow 0 0 0 5px white
+        @media (max-height: 480px)
+            background-size 100%
+            video
+                height auto
+                width 70%
+                box-shadow 0 0 0 5px white
+    @media (max-width: 480px)
+        background-size auto 100%
+        @media (max-height: 812px)
+            video
+                height auto
+                width 90%
+                box-shadow 0 0 0 5px white
+    
+    *:focus
+        outline -webkit-focus-ring-color auto 0
+.container-game
+    background url('../img/mar.png')
+    min-width $min-width
+    height 100%
+    display none
+    .header
+        display flex
+        padding-top 30px
+        padding-left 5%
+        align-items center
+        .millas
+            background #F9B233
+            color white
+            padding 7px 20px
+            // font-family sans-serif
+            font-size 26px
+            border-radius 30px
+            font-family 'antonregular'
+        .right
+            color #184A7D
+            margin-left 20px
+            @media(max-width: 768px){
+                display none
+            }
+            .title
+                font-family 'verdana'
+                margin-bottom 5px
+                font-weight bold
+            .subtitle
+                font-family 'verdana'
+        @media(max-height: 480px){
+            padding: 5px 0 0 5%;
+            .millas{
+                padding 0px 20px
+            }
+            .right{
+                color #184A7D
+                margin-left 20px
+            }
+            .title{
+                font-size: 14px;
+            }
+            .subtitle{
+                font-size: 12px;
+            }
+        }
+    .pergamino
+        height 75%
+        width 75%
+        margin 25px auto 0 auto
+        position relative
+        animation show-mapa 2s linear
+        .mapa
+            background url('../img/mapa.png') no-repeat
+            background-size 75vw 100%
+            background-position center
+            width 100%
+            height 100%
+            &.v-m
+                display: none;
+            
+        &::after, &::before
+            content ""
+            background url('../img/rollo.png') no-repeat
+            background-size 100% 100%
+            height 100%
+            width 100px
+            position absolute
+            top 0
+        &::after
+            left -70px
+            transform rotateZ(180deg)
+        &::before
+            right -70px
+        @media (max-width: 1024px){
+            margin 90px auto 0 auto
+            height 60%
+            animation show-mapa-md 2s linear
+            
+            &::after,&::before{
+                background url('../img/md/rollo-horizontal.png') no-repeat
+                background-size 100% 100%
+                height 100px
+                width 104%
+            }
+            &::after{
+                // transform rotateZ(90deg)
+                left -2%
+                top -70px
+            }
+            &::before{
+                right -2%
+                top auto
+                bottom -70px
+                z-index 1
+            }
+            .mapa{
+                background none
+                width 100%
+                height 100%
+                overflow-y auto
+                position relative
+                .paper{
+                    background: url('../img/md/ruta.png');
+                    background-size: 100% auto;
+                    background-repeat: no-repeat;
+                    background-position: center bottom;
+                    min-height: 100%;
+                    // height: 800px;
+                    position: relative;
+                    &::before,&::after{
+                        content ''
+                        position absolute
+                    }
+                    &::after{
+                        background url('../img/md/playa-bottom.png') no-repeat
+                        background-size: 100% auto;
+                        bottom 0
+                        left -5px
+                        width 40%
+                        height 200px
+                        background-position: left bottom;
+                    }
+                    &::before{
+                        background url('../img/md/playa-top.png') no-repeat
+                        background-size 100% auto
+                        top 0
+                        right -3px
+                        width 100%
+                        height: calc(75vw * 0.38);
+                    }
+                    .boya{
+                        transform: scale(1.3);
+                        .point{
+                            &::before{
+                                left auto                     
+                                right -10px
+                                bottom auto
+                                top 40px
+                            }
+                        }
+                        &:nth-child(2n){
+                            .point{
+                                &::before{
+                                    left -10px                     
+                                    right auto
+                                }
+                            }
+                        }
+                    }
+                }
+                &.v-m{
+                    display: block;
+                    .paper{
+                        &::after{
+                            display: none;
+                        }        
+                    }  
+                }
+                &.v-pc{
+                    display: none;
+                }
+            }
+            @media(max-height: 480px){
+                animation show-mapa 2s linear
+                height 70%
+                margin 30px auto 0 auto;
+                
+                &::after,&::before{
+                    background url('../img/rollo.png') no-repeat
+                    background-size 100% 100%
+                    height 108%
+                    width 60px
+                }
+                &::after{
+                    // transform rotateZ(90deg)
+                    left -20px
+                    top -5%
+                }
+                &::before{
+                    right -20px
+                    top auto
+                    bottom -3%
+                    z-index 1
+                }
+                .mapa{
+                    overflow-y: hidden;
+                    overflow-x: auto;
+                    min-width: 100%;
+                    .paper{
+                        background: url('../img/movil/ruta-h.png')!important;
+                        background-size: auto 100% !important;
+                        &::after{
+                            display: none;
+                        }
+                        &::before{
+                            height: 100%;
+                            background url('../img/movil/playa-right.png') no-repeat !important
+                            background-size auto 100% !important
+                            top 0
+                            left auto
+                            right 0
+                            width: calc(75vh * .45);
+                        }
+                        .boya{
+                            transform: scale(1) !important;
+                            // bottom: 5%;
+                            top: calc(45% + 108px);
+                            .point{
+                                &::before{
+                                    top: -30px;
+                                    bottom: auto;
+                                    left: 60%;
+                                    right: auto;
+                                }
+                            }
+                            &:nth-child(2n){
+                                .point{
+                                    &::before{
+                                        top: -30px;
+                                        bottom: auto;
+                                        left: 60%;
+                                        right: auto;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media (max-width: 480px){
+            &::after,&::before{
+                height 60px
+            }
+            &::after{
+                // transform rotateZ(90deg)
+                left -2%
+                top -50px
+            }
+            &::before{
+                right -2%
+                top auto
+                bottom -50px
+                z-index 1
+            }
+            .mapa{
+                .paper{
+                    background: url('../img/movil/ruta.png');
+                    background-size: 100% auto;
+                    background-repeat: no-repeat;
+                    background-position: center bottom;
+                    &::after{
+                        height 60px
+                    }
+                }
+                .boya{
+                    transform: scale(1) !important;
+                    &::before{
+                        left auto !important                     
+                        right -10px!important
+                        bottom auto !important
+                        top 40px!important
+                    }
+                    &:nth-child(2n){
+                        .point{
+                            &::before{
+                                left auto !important                     
+                                right -10px!important
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .boya
+            cursor pointer
+            position absolute
+            // box-shadow 0 0 1px 1px red
+            opacity .2
+            height 108px
+            width 80px
+            text-align center
+            transition all .3s linear
+            text-decoration none
+            display block
+            .actual
+                top -30px
+                left -50px
+                position absolute
+                background url('../img/active.png') no-repeat
+                background-size 100%
+                width 100px
+                height 30px
+                animation actual infinite 1.5s linear
+            &.active
+                opacity 1
+            .img
+                background url('../img/boya.png') no-repeat
+                background-size auto 60px
+                background-position center center
+                height 60px
+                padding-top 60px
+                width 100%
+                animation boya 2s infinite linear
+            // &.actual
+            //     .img
+                    
+            .point
+                color #685B59
+                font-family 'antonregular'
+                line-height 16px
+                &::before
+                    content ""
+                    height 20px
+                    width 20px
+                    background #685B59
+                    border-radius 50%
+                    position absolute
+        .boatch
+            background url('../img/barco.png') no-repeat
+            background-size 100% auto
+            position absolute
+            width 10%
+            height 12%
+            animation barco 2s infinite linear
+            @media(max-width:1024px){
+                width 22%
+                height 15%
+            }
+            @media(max-width:768px){
+                width 35%
+                height 15%
+            }
+.back-game
+    background rgba(#184A7D, .35)
+    position absolute
+    min-width $min-width
+    min-height 100%
+    top 0
+    left 0
+    display none
+    z-index 5
+    .person-tasa
+        background url('../img/personaje.png') no-repeat
+        background-size auto 110%
+        background-position-x -1407px
+        height 650px
+        margin-top $min-heigth * .2
+        width 351px
+        bottom 0
+        left $min-width * .05
+        position absolute
+        animation person 2s steps(5)
+        @media (max-width: 1024px){
+            @media (max-height: 1366px){
+                min-height $min-heigth * .5
+            }
+            @media (max-height: 480px){
+                transform-origin: bottom left;
+                transform: scale(.5);
+            }
+        }
+        @media (max-width: 768px){
+            min-height $min-heigth * .5
+            @media (max-height: 480px){
+                min-height $min-heigth * .8
+            }
+        }
+        @media (max-width: 480px){
+            min-height $min-heigth * .4!important
+            transform-origin: bottom left;
+            transform: scale(.6);
+        }
+        .head,.body,.arm
+            position absolute
+    .content
+        position absolute
+        top calc(50vh - 50px)
+        width 100%
+        text-align center
+        @media (max-width: 768px)
+            top calc(50vh - 100px)
+        @media (max-width: 480px)
+            top calc(50vh - 100px)
+        &.add
+            .title
+                
+                opacity 0
+            .btn
+                opacity 0
+            animation add-millas 1s linear infinite
+        .title
+            text-align center
+            font-family 'josefin_sansthin'
+            font-weight bolder
+            color white
+            font-size 20px
+            margin-bottom 10px
+        .millas
+            background #F9B233
+            color white
+            padding 7px 20px
+            font-family sans-serif
+            font-size 32px
+            border-radius 30px
+            font-family 'antonregular'
+            display inline-block
+            animation millas 1.5s linear infinite
+        .btn
+            margin-top 10px
+            button
+                background none
+                border none
+                color purple
+                cursor pointer
+                font-family 'verdana'
+                font-size 18px
+                padding 5px
+.final
+    background url('../img/fondo.png')
+    background-size 100% 100%
+    background-repeat no-repeat
+    min-width $min-width
+    height 100%
+    position relative
+    display flex
+    align-items center
+    justify-content center
+    overflow hidden
+    .luz
+        opacity .35
+        position absolute
+        height 200vw
+        width: 200vw
+        background url('../img/shine.png')
+        background-size auto auto
+        background-position center center
+        animation rotate-360 infinite 12s linear
+    .cofre
+        // display flex
+        $mid-cofre = $cofre / 2
+        position relative
+        padding-top $mid-cofre
+        height $cofre
+        width $cofre
+        .tapa
+            background url('../img/cofre-tapa.png')
+            background-size 500% 100%
+            background-repeat no-repeat
+            background-position-x -1000px
+            height $cofre - 10px
+            width 100%
+            top 0
+            left 0
+            position absolute
+            animation cofre 1s steps(5)
+        .caja
+            background url('../img/cofre-base.png')
+            background-size 100% 100%
+            background-repeat no-repeat
+            height 100%
+    .text
+        position absolute
+        color purple
+        $extend = 5px
+        text-shadow 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white,0 0 $extend white, 0 0 $extend white, 0 0 $extend white, 0 0 $extend white
+        font-size 24px
+        animation show-final .5s linear
+        font-family 'modakregular'
+        transform scale(2)
+        span
+            display block
+            text-align center
+@keyframes boya
+    0%
+        transform scale(1)
+    50%
+        transform scale(1.1)
+    100%
+        transform scale(1)
+@keyframes barco
+    0%
+        transform translateX(0px)
+    50%
+        transform translateX(10px)
+    100%
+        transform translateX(0px)
+@keyframes show-mapa
+    0%
+        width 5%
+        // background-size auto 100%
+    100%
+        width $width-mapa
+        // background-size auto 100%
+@keyframes show-mapa-md
+    0%
+        margin-top 50%
+        height  5%
+        // background-size auto 100%
+    100%
+        margin-top 90px
+        height 60%
+        // background-size auto 100%
+@keyframes millas
+    0%
+        transform scale(1)
+    50%
+        transform scale(1.1)
+    100%
+        transform: scale(1)
+@keyframes person 
+    from
+        background-position-x 0
+    to
+        background-position-x -1759px
+@keyframes actual
+    0%
+        transform scale(1)
+    50%
+        transform scale(.9)
+    100%
+        transform scale(1)
+@keyframes cofre
+    from
+        background-position-x: 0px
+    to
+        background-position-x: -1250px
+@keyframes show-final
+    0%
+        transform scale(.1)
+        opacity 1
+    100%
+        transform scale(2)
+        opacity 1
+@keyframes rotate-360
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(350deg)
+@keyframes add-millas
+    from
+        opacity 1
+        transform scale(1)
+        width 100%
+    to
+        opacity 0
+        transform scale(.5)
+        width 60%
+        top 0
