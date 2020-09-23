@@ -7,9 +7,8 @@ body {
     padding-right: 0 !important;
 }
 
-.card {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+.card, .card-body {
+    padding: 0 !important;
 }
 
 .terminologia-max-width-100 {

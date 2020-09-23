@@ -28,6 +28,8 @@ try {
 	$PAGE->requires->js(new moodle_url('js/terminologia_admin.js'));
 	$PAGE->requires->js(new moodle_url('js/terminologia_guest.js'));
 
+	echo $OUTPUT->header();
+
 	include('term_base.php');
 
 	if ($isManager) {
