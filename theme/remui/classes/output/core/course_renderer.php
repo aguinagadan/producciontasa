@@ -124,30 +124,29 @@ class course_renderer extends \core_course_renderer {
 		$courses = $coursecat->get_courses();
 		$html = '';
 
-		if (!empty($courses)) {
-			$current = 0;
-			$rowCount = 0;
-			$countForColor = 0;
+		$current = 0;
+		$rowCount = 0;
+		$countForColor = 0;
 
-			foreach($courses as $c) {
-				$countForColor++;
+		foreach($courses as $c) {
+			$countForColor++;
 
-				$html .= '<div class="cc-course-container-min">
-													<div class="cc-course-div-box-dinamic" data-categoryid="1" data-depth="1" data-showcourses="5" data-type="0">
-															<div class="cc-courses-image-container" style="background: url('. \theme_remui\utility::get_course_image($c, 1) .'); background-size: cover;"></div>
-															'. $this->progressBarHTML($c) .' 
-															<div class="cc-courses-detail-container cc-height-200" style="background-color: white;">
-																<div class="cc-courses-cat-name">'. 'Lanzamiento: ' . $this->convertDateToSpanish($c->startdate) .'</div>
-																<div class="cc-courses-course-name">'. $c->fullname .'</div>
-																<a class="cc-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $c->id)). '">Acceder al curso</a>
-															</div>
-													</div>
-												</div>';
-				$rowCount++;
-				$current++;
-			}
-			$html .= $this->getChildCoursesHTML($coursecat->get_children());
+			$html .= '<div class="cc-course-container-min">
+												<div class="cc-course-div-box-dinamic" data-categoryid="1" data-depth="1" data-showcourses="5" data-type="0">
+														<div class="cc-courses-image-container" style="background: url('. \theme_remui\utility::get_course_image($c, 1) .'); background-size: cover;"></div>
+														'. $this->progressBarHTML($c) .' 
+														<div class="cc-courses-detail-container cc-height-200" style="background-color: white;">
+															<div class="cc-courses-cat-name">'. 'Lanzamiento: ' . $this->convertDateToSpanish($c->startdate) .'</div>
+															<div class="cc-courses-course-name">'. $c->fullname .'</div>
+															<a class="cc-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $c->id)). '">Acceder al curso</a>
+														</div>
+												</div>
+											</div>';
+			$rowCount++;
+			$current++;
 		}
+		$html .= $this->getChildCoursesHTML($coursecat->get_children());
+
 		return $html;
 	}
 
@@ -491,9 +490,7 @@ class course_renderer extends \core_course_renderer {
 		}
 
 		foreach ($subcategories as $key=>$subcategory) {
-			if(count($subcategory->get_courses()) > 0) {
 				$coursesDivs .= '<div class="cc-courses-div-detail row" category-id="'.$key.'">'.$this->getCoursesHTML($subcategory).'</div>';
-			}
 		}
 
 		$content .= '</div>';
