@@ -89,7 +89,7 @@ class course_renderer extends \core_course_renderer {
 							</div>';
 
 			if(empty($courses)) {
-				$html .= '<div><div style="text-align: center; font-size: large" class="cc-category-container">Aún no existen cursos para esta categoría</div></div>';
+				$html .= '<div><div style="margin-top: 3%; text-align: center; font-size: large" class="cc-category-container">Aún no existen cursos para esta categoría</div></div>';
 			} elseif (!empty($courses)) {
 				$html .= '<div><div class="row ml-0">';
 
