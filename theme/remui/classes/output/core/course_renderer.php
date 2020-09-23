@@ -473,6 +473,11 @@ class course_renderer extends \core_course_renderer {
 		$coursesDivs = '';
 
 		foreach ($subcategories as $key=>$subcategory) {
+
+			if(!$subcategory->visible) {
+				continue;
+			}
+
 			$countForColor++;
 
 			if($countForColor === 1) {
