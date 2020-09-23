@@ -147,6 +147,10 @@ class course_renderer extends \core_course_renderer {
 		}
 		$html .= $this->getChildCoursesHTML($coursecat->get_children());
 
+		if($html == '') {
+			$html .= '<div style="margin: auto;"> Aún no existen cursos para esta categoría </div>';
+		}
+
 		return $html;
 	}
 
