@@ -1,0 +1,23 @@
+.boya
+    margin-top -80px;
+    margin-left -60px
+    &:nth-child(1)
+        left 23.3%
+        top 87%
+        &.active ~ .boatch
+            top 78%
+            left 26%
+        .point
+            &::before                        
+                right -18px
+    @media(max-width:1024px){
+        &:nth-child(1){
+            left: calc(48% - 80px);
+            top 77%
+            &.active ~ .boatch{
+                top 55%
+                left 52%
+                height 25%
+            }
+        }
+    }
