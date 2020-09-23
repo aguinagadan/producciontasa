@@ -608,6 +608,11 @@ class course_renderer extends \core_course_renderer {
 
 		if ($chelper->get_show_courses() == self::COURSECAT_SHOW_COURSES_COUNT) {
 			$coursescount = $coursecat->get_courses_count();
+
+			foreach($coursecat->get_children() as $subcatChild) {
+				$coursescount += $subcatChild->get_courses_count();
+			}
+
 			$coursesLabel = ' CURSOS';
 			if($coursescount == 1) {
 				$coursesLabel = ' CURSO';
