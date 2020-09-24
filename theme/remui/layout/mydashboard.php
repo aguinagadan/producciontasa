@@ -1168,20 +1168,6 @@ border-radius: 4px;">
 	return $seguimientoHtml;
 }
 
-$templatecontextDashboard = [
-	'URL' => $CFG->wwwroot . '',
-	'username' => $USER->firstname . ' ' . $USER->lastname,
-	'levelname' => $levelName,
-	'points' => $xp,
-	'levelbadge' => $levelBadge,
-	'progressbar' => $progressBar,
-	'totalcourses' => $totalCourses,
-	'completedcourses' => $completedCourses,
-	'pendingcourses' => $pendingCourses,
-	'courseshtml' => $coursesHtml,
-	'pendingCoursesHtml' => $pendingCoursesHtml,
-	'seguimientoHtml' => getSeguimientoHtml()
-];
 
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
 
