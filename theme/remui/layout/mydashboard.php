@@ -186,6 +186,93 @@ function getPendingCoursesHtml($courses) {
 	return $coursesHtml;
 }
 
+function getProgressBarDetail($value) {
+	$progressHTML = '
+			<div class="d-progress d-total" data-value='.$value.'>
+				<span class="d-progress-left">
+					<span class="d-progress-bar border-primary-green"></span>
+				</span>
+				<span class="d-progress-right">
+					<span class="d-progress-bar border-primary-green"></span>
+				</span>
+				<div class="w-100 h-100 rounded-circle d-flex align-items-center justify-content-center"></div>
+			</div>';
+
+	return $progressHTML;
+}
+
+function getDaysLeftPercentage($startDate, $endDate) {
+	$totalDays = intval(floor(($endDate-$startDate)/86400));
+	$passedDays = intval(floor((strtotime(date('c')) - $startDate)/86400));
+	return ($passedDays/$totalDays) * 100;
+}
+
+function getDaysLeft($startDate, $endDate) {
+	$totalDays = intval(floor(($endDate-$startDate)/86400));
+	$passedDays = intval(floor((strtotime(date('c')) - $startDate)/86400));
+	return $totalDays - $passedDays;
+}
+
+function getCoursesHtml($courses) {
+	$html = '';
+
+	if(!empty($courses)) {
+		foreach($courses as $course) {
+			$categoryId = $course->category;
+			$coursePercentage = !empty($course->progress) ? $course->progress : 0;
+			$daysLeft = getDaysLeft($course->startdate, $course->enddate);
+			$daysLeftPercentage = getDaysLeftPercentage($course->startdate, $course->enddate);
+
+			$html.= '<div class="column d-course-row" style="height: 149px; width: 610px; background-color: white; box-shadow: 2px 2px 4px #00000029; border-radius: 4px; margin: 0 0 1% 1%; padding: 1%;">
+							<div class="row" style="position: relative; height: 100%;">
+								<div class="col-sm" style="position: relative; max-width: 40% !important; text-align: left; height: 100%;">
+									<img class="dd-image-card" src="'. getCourseImageById($course->id) .'">
+								</div>
+								<div class="col-sm pl-0 pr-0" style="width: 50%;left: 1%;position: relative;text-align: left;">
+									<div class="text-left" style="font-size: 12px; color: #A3AFB7">'. getCategoryById($categoryId)->name .'</div>
+									<div class="text-left dd-line-height-name" style="font-size: 22px; font-weight: 525; color: #526069; overflow: hidden; height: 40px;"><a style="text-decoration: none !important; color: #526069 !important;" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">'. $course->fullname .'</a></div>
+									<div class="row dd-rounded-progress-box" style="width: 100%; height: auto; padding-top: 6%;">
+										<div class="col-sm" style="width: 50%; height: 100%;">
+											<div class="row">
+												 <div class="col-sm" style="max-width: 30% !important;">';
+			$html.= getProgressBarDetail($coursePercentage);
+			$html.= '</div>
+													<div class="col-sm dd-line-height" style="font-size: 13px; color: #A3AFB7">
+														Progreso: '. round($coursePercentage) .' %';
+			$html.= '</div>
+											</div>
+										</div>';
+
+			if(isset($course->enddate) && !empty($course->enddate)) {
+				$html.= '<div class="col-sm" style="width: 50%; height: 100%;">
+											<div class="row">
+												 <div class="col-sm" style="max-width: 30% !important;">';
+				$html.= getProgressBarDetail($daysLeftPercentage);
+				$html.= '</div>
+													<div class="col-sm dd-line-height pr-0" style="font-size: 13px; color: #A3AFB7">
+														Cierra en '. $daysLeft .' días';
+				$html.= '</div>
+											</div>
+										</div>';
+			} else {
+				$html.= '<div class="col-sm" style="width: 50%">
+											<div class="row">
+												 <div class="col-sm" style="width: 50%">
+											-
+											</div>';
+			}
+			$html.= '</div>
+								</div>
+							</div>
+						</div>';
+		}
+	} else {
+		$html = '<div>No existen cursos</div>';
+	}
+
+	return $html;
+}
+
 $templatecontextDashboard = [
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
@@ -195,7 +282,7 @@ $templatecontextDashboard = [
 	'progressbar' => getLevelInformation()['progressBar'],
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
-	'courseshtml' => '',
+	'courseshtml' => getCoursesHtml($userCourses),
 	'seguimientoHtml' => ''
 ];
 
