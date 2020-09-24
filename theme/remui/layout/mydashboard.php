@@ -133,6 +133,242 @@ function getCategoryById($catId) {
 	return $DB->get_record('course_categories',array('id'=>$catId));
 }
 
+function getProgressBarDetailSeguimientoHtml($value, $courseId=null) {
+	$returnHTML = '<div course-id="'. $courseId .'" class="element-progress-bar col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';
+	$returnHTML .= '<div course-id="'. $courseId .'" class="element-progress-bar col-sm-7">'. getProgressBarDetailSeguimiento($value) .'</div>';
+
+	return $returnHTML;
+}
+
+function getProgressBarDetailSeguimiento($value) {
+	return '<div class="block_xp-level-progress progress-non-zero d-progress-bar-level-course" style="width: 95%;">
+<div class="xp-bar-wrapper d-progress-bar-level-course" role="progressbar" aria-valuenow="'. $value .'" aria-valuemin="0" aria-valuemax="100" style="width: ' . $value .'%; margin: 0 !important;">
+<div class="xp-bar d-xp-bar-course"></div>
+</div>
+</div>';
+}
+
+function getProgressBarDetail($value) {
+	$progressHTML = '
+			<div class="d-progress d-total" data-value='.$value.'>
+				<span class="d-progress-left">
+					<span class="d-progress-bar border-primary-green"></span>
+				</span>
+				<span class="d-progress-right">
+					<span class="d-progress-bar border-primary-green"></span>
+				</span>
+				<div class="w-100 h-100 rounded-circle d-flex align-items-center justify-content-center"></div>
+			</div>';
+
+	return $progressHTML;
+}
+
+function getDaysLeftPercentage($startDate, $endDate) {
+	$totalDays = intval(floor(($endDate-$startDate)/86400));
+	$passedDays = intval(floor((strtotime(date('c')) - $startDate)/86400));
+	return ($passedDays/$totalDays) * 100;
+}
+
+function getDaysLeft($startDate, $endDate) {
+	$totalDays = intval(floor(($endDate-$startDate)/86400));
+	$passedDays = intval(floor((strtotime(date('c')) - $startDate)/86400));
+	return $totalDays - $passedDays;
+}
+
+function progressBarHTML($course) {
+	global $USER;
+	$div = '<div style="height: 15px; background-color: white;"></div>';
+
+	$percentage = progress::get_course_progress_percentage($course, $USER->id);
+
+	if($percentage === 0) {
+		$div = '<div class="progress progress-square mb-0">
+									<div class="progress-bar bg-red-600-cc" style="height: 100%; width: 100%; background-color: #FF644C !important;" role="progressbar">
+											<span>' . $percentage . '%' . '</span>
+									</div>
+							</div>';
+	} elseif($percentage > 0) {
+		$percentage = round($percentage);
+		$div = '<div class="progress progress-square mb-0">
+									<div class="progress-bar bg-green-600-cc" style="width: ' . $percentage . '%; height: 100%;" role="progressbar">
+											<span>' . $percentage . '%' . '</span>
+									</div>
+							</div>';
+	}
+	return $div;
+}
+
+function getPendingCoursesHtml($courses) {
+	global $USER;
+	$coursesHtml = '';
+	$totalPending = 0;
+
+	foreach($courses as $key=>$c) {
+		$course = get_course($c->id);
+
+		$percentage = progress::get_course_progress_percentage($course, $USER->id);
+		if($percentage == 100) {
+			continue;
+		}
+
+		$content = '<div class="cc-courses-info">
+										<div class="dd-category-box-secundary">
+										<div class="dd-h3-courses-info" style="background: url('. \theme_remui\utility::get_course_image($c) .');"></div>
+										<div class="cc-courses-detail-container dd-ultimos-desc"> '. progressBarHTML($c) .'
+											<div class="text-left" style="font-size: 12px; color: #A3AFB7; padding: 2% 4% 0 7%; height: 35px;">'. getCategoryById($c->id)->name .'</div>
+											<div class="dd-courses-course-name">'. $c->fullname .'</div>
+											<a class="dd-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $c->id)). '">Acceder al curso</a>
+				</div>
+				</div>
+			</div>';
+
+		$totalPending++;
+		$coursesHtml.= '<div class="slide">'. $content .'</div>';
+	}
+	$coursesHtml.= '<input id="totalPending" type="hidden" value="'.$totalPending.'">';
+	return $coursesHtml;
+}
+
+function getCoursesHtml($course) {
+	$html = '';
+
+	if(!empty($course)) {
+		$categoryId = $course->category;
+		$courseObj = get_course($course->id);
+		$coursePercentage = !empty($course->percentage) ? $course->percentage : 0;
+		$daysLeft = getDaysLeft($course->startdate, $course->enddate);
+		$daysLeftPercentage = getDaysLeftPercentage($course->startdate, $course->enddate);
+
+		$html.= '<div class="column d-course-row" style="height: 149px; width: 610px; background-color: white; box-shadow: 2px 2px 4px #00000029; border-radius: 4px; margin: 0 0 1% 1%; padding: 1%;">
+							<div class="row" style="position: relative; height: 100%;">
+								<div class="col-sm" style="position: relative; max-width: 40% !important; text-align: left; height: 100%;">
+									<img class="dd-image-card" src="'. \theme_remui\utility::get_course_image($courseObj) .'">
+								</div>
+								<div class="col-sm pl-0 pr-0" style="width: 50%;left: 1%;position: relative;text-align: left;">
+									<div class="text-left" style="font-size: 12px; color: #A3AFB7">'. getCategoryById($categoryId)->name .'</div>
+									<div class="text-left dd-line-height-name" style="font-size: 22px; font-weight: 525; color: #526069; overflow: hidden; height: 40px;"><a style="text-decoration: none !important; color: #526069 !important;" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">'. $course->fullname .'</a></div>
+									<div class="row dd-rounded-progress-box" style="width: 100%; height: auto; padding-top: 6%;">
+										<div class="col-sm" style="width: 50%; height: 100%;">
+											<div class="row">
+												 <div class="col-sm" style="max-width: 30% !important;">';
+		$html.= getProgressBarDetail($coursePercentage);
+		$html.= '</div>
+													<div class="col-sm dd-line-height" style="font-size: 13px; color: #A3AFB7">
+														Progreso: '. round($coursePercentage) .' %';
+		$html.= '</div>
+											</div>
+										</div>';
+
+		if(isset($course->enddate) && !empty($course->enddate)) {
+			$html.= '<div class="col-sm" style="width: 50%; height: 100%;">
+											<div class="row">
+												 <div class="col-sm" style="max-width: 30% !important;">';
+			$html.= getProgressBarDetail($daysLeftPercentage);
+			$html.= '</div>
+													<div class="col-sm dd-line-height pr-0" style="font-size: 13px; color: #A3AFB7">
+														Cierra en '. $daysLeft .' días';
+			$html.= '</div>
+											</div>
+										</div>';
+		} else {
+			$html.= '<div class="col-sm" style="width: 50%">
+											<div class="row">
+												 <div class="col-sm" style="width: 50%">
+											-
+											</div>';
+		}
+		$html.= '</div>
+								</div>
+							</div>
+						</div>';
+	} else {
+		$html = '<div>No existen cursos</div>';
+	}
+
+	return $html;
+}
+
+function getEnrolledUsersDetail($courseId) {
+	global $DB;
+	$stats = array();
+	$enrolledusers = $DB->get_records_sql(
+		"SELECT u.*
+               FROM {course} c
+               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
+               JOIN {enrol} e ON c.id = e.courseid
+               JOIN {user_enrolments} ue ON e.id = ue.enrolid
+               JOIN {user} u ON ue.userid = u.id
+               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
+              WHERE c.id = ?",
+		array(CONTEXT_COURSE, 5, $courseId)
+	);
+	return $enrolledusers;
+}
+
+
+function getEnrolledUsers($course) {
+	global $DB;
+	$stats = array();
+	$enrolledusers = $DB->get_records_sql(
+		"SELECT u.*
+               FROM {course} c
+               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
+               JOIN {enrol} e ON c.id = e.courseid
+               JOIN {user_enrolments} ue ON e.id = ue.enrolid
+               JOIN {user} u ON ue.userid = u.id
+               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
+              WHERE c.id = ?",
+		array(CONTEXT_COURSE, 5, $course->id)
+	);
+	return count($enrolledusers);
+}
+
+function getCourseStats($course) {
+	global $DB;
+	$stats = array();
+	$enrolledusers = $DB->get_records_sql(
+		"SELECT u.*
+               FROM {course} c
+               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
+               JOIN {enrol} e ON c.id = e.courseid
+               JOIN {user_enrolments} ue ON e.id = ue.enrolid
+               JOIN {user} u ON ue.userid = u.id
+               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
+              WHERE c.id = ?",
+		array(CONTEXT_COURSE, 5, $course->id)
+	);
+	$stats['enrolledusers'] = count($enrolledusers);
+
+	$completion = new \completion_info($course);
+	if ($completion->is_enabled()) {
+		$inprogress = 0;
+		$studentcompleted = 0;
+		$yettostart = 0;
+		$modules = $completion->get_activities();
+		foreach ($enrolledusers as $user) {
+			$activitiesprogress = 0;
+			foreach ($modules as $module) {
+				$moduledata = $completion->get_data($module, false, $user->id);
+				$activitiesprogress += $moduledata->completionstate == COMPLETION_INCOMPLETE ? 0 : 1;
+			}
+			if ($activitiesprogress == 0) {
+				$yettostart++;
+			} else if ($activitiesprogress == count($modules)) {
+				$studentcompleted++;
+			} else {
+				$inprogress++;
+			}
+		}
+		$stats['nocompletion'] = false;
+		$stats['studentcompleted'] = $studentcompleted;
+		$stats['inprogress'] = $inprogress;
+		$stats['yettostart'] = $yettostart;
+	} else {
+		$stats['nocompletion'] = true;
+	}
+	return $studentcompleted;
+}
+
 
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
 
