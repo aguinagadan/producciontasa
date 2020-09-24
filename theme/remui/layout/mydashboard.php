@@ -214,10 +214,11 @@ function getDaysLeft($startDate, $endDate) {
 }
 
 function getCoursesHtml($courses) {
-	$html = '';
+	$coursesHtml = '';
 
 	if(!empty($courses)) {
 		foreach($courses as $course) {
+			$html = '';
 			$categoryId = $course->category;
 			$coursePercentage = !empty($course->progress) ? $course->progress : 0;
 			$daysLeft = getDaysLeft($course->startdate, $course->enddate);
@@ -265,12 +266,13 @@ function getCoursesHtml($courses) {
 								</div>
 							</div>
 						</div>';
+			$coursesHtml.= $html;
 		}
 	} else {
-		$html = '<div>No existen cursos</div>';
+		$coursesHtml = '<div>No existen cursos</div>';
 	}
 
-	return $html;
+	return $coursesHtml;
 }
 
 $templatecontextDashboard = [
