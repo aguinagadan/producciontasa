@@ -33,8 +33,11 @@ use block_xp\local\xp\level_with_badge;
 use core_completion\progress;
 use core_course_renderer;
 use coursecat_helper;
+use theme_remui\usercontroller as usercontroller;
 
 global $USER, $CFG;
+
+$userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
 
 function obtenerCursosRaw() {
 	return get_courses();
@@ -120,6 +123,69 @@ function getLevelInformation() {
 	return $levelInfo;
 }
 
+function convertDateToSpanish($timestamp) {
+	setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
+	return strftime("%d de %B de %Y", $timestamp);
+}
+
+function getCategoryById($catId) {
+	global $DB;
+	return $DB->get_record('course_categories',array('id'=>$catId));
+}
+
+function progressBarHTML($percentage) {
+	$div = '<div style="height: 15px; background-color: white;"></div>';
+
+	if($percentage === 0) {
+		$div = '<div class="progress progress-square mb-0">
+									<div class="progress-bar bg-red-600-cc" style="height: 100%; width: 100%; background-color: #FF644C !important;" role="progressbar">
+											<span>' . $percentage . '%' . '</span>
+									</div>
+							</div>';
+	} elseif($percentage > 0) {
+		$percentage = round($percentage);
+		$div = '<div class="progress progress-square mb-0">
+									<div class="progress-bar bg-green-600-cc" style="width: ' . $percentage . '%; height: 100%;" role="progressbar">
+											<span>' . $percentage . '%' . '</span>
+									</div>
+							</div>';
+	}
+	return $div;
+}
+
+function getCourseImageById($courseId) {
+	$course = get_course($courseId);
+	return \theme_remui\utility::get_course_image($course);
+}
+
+function getPendingCoursesHtml($courses) {
+	$coursesHtml = '';
+	$totalPending = 0;
+
+	foreach($courses as $key=>$course) {
+
+		if($course->progress == 100) {
+			continue;
+		}
+
+		$content = '<div class="cc-courses-info">
+										<div class="dd-category-box-secundary">
+									<div class="dd-h3-courses-info" style="background: url('. getCourseImageById($course->id) .');"></div>
+										<div class="cc-courses-detail-container dd-ultimos-desc"> '. progressBarHTML($course->progress) .'
+											<div class="text-left" style="font-size: 12px; color: #A3AFB7; padding: 2% 4% 0 7%; height: 35px;">'. getCategoryById($course->id)->name .'</div>
+											<div class="dd-courses-course-name">'. $course->fullname .'</div>
+											<a class="dd-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">Acceder al curso</a>
+				</div>
+				</div>
+			</div>';
+
+		$totalPending++;
+		$coursesHtml.= '<div class="slide">'. $content .'</div>';
+	}
+	$coursesHtml.= '<input id="totalPending" type="hidden" value="'.$totalPending.'">';
+	return $coursesHtml;
+}
+
 $templatecontextDashboard = [
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
@@ -128,10 +194,8 @@ $templatecontextDashboard = [
 	'levelbadge' => getLevelInformation()['levelBadge'],
 	'progressbar' => getLevelInformation()['progressBar'],
 	'totalcourses' => count(enrol_get_my_courses()),
-	'completedcourses' => '',
-	'pendingcourses' => '',
+	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => '',
-	'pendingCoursesHtml' => '',
 	'seguimientoHtml' => ''
 ];
 
