@@ -36,47 +36,41 @@ use coursecat_helper;
 
 global $USER;
 
-$courses = enrol_get_all_users_courses($USER->id, true);
+function getLevelPropertyValue($level, $property) {
+	$returnedValue = '';
 
-require_once("{$CFG->libdir}/completionlib.php");
-$course = new stdClass();
-$completedCourses = 0;
-$coursesHtml = '';
-
-foreach($courses as $key=>$c) {
-	$iscomplete = 0;
-	$course = get_course($c->id);
-	$cinfo = new completion_info($course);
-	$percentage = progress::get_course_progress_percentage($course, $USER->id);
-	//$studentsCompleted = getCourseStats($c);
-
-	if($percentage == 100) {
-		$completedCourses++;
-		$iscomplete = 1;
+	switch($property) {
+		case 'name':
+			$name = $level instanceof level_with_name ? $level->get_name() : null;
+			if (empty($name)) {
+				$name = get_string('levelx', 'block_xp', $level->get_level());
+			}
+			$returnedValue = $name;
+			break;
 	}
-
-	$course->percentage = $percentage;
-	$course->iscomplete = $iscomplete;
-	//$course->studentscompleted = $studentsCompleted;
-
-	$courses[$key]->percentage = $percentage;
-	$courses[$key]->iscomplete = $iscomplete;
-	//$courses[$key]->studentscompleted = $studentsCompleted;
-
-	//$coursesHtml .= getCoursesHtml($course);
+	return $returnedValue;
 }
 
-$totalCourses = count($courses);
+function getLevelName() {
+	global $USER;
+
+	$world = \block_xp\di::get('course_world_factory')->get_world($this->page->course->id);
+	$state = $world->get_store()->get_state($USER->id);
+	$widget = new \block_xp\output\xp_widget($state, [], null, []);
+	$level = $widget->state->get_level();
+
+	return getLevelPropertyValue($level, 'name');
+}
 
 $templatecontextDashboard = [
 	//samuel - pendiente al cambiar a produccion
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
-	'levelname' => '',
+	'levelname' => getLevelName(),
 	'points' => '',
 	'levelbadge' => '',
 	'progressbar' => '',
-	'totalcourses' => $totalCourses,
+	'totalcourses' => '',
 	'completedcourses' => '',
 	'pendingcourses' => '',
 	'courseshtml' => '',
