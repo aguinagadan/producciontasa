@@ -36,6 +36,38 @@ use coursecat_helper;
 
 global $USER;
 
+$courses = enrol_get_all_users_courses($USER->id, true);
+
+require_once("{$CFG->libdir}/completionlib.php");
+$course = new stdClass();
+$completedCourses = 0;
+$coursesHtml = '';
+
+foreach($courses as $key=>$c) {
+	$iscomplete = 0;
+	$course = get_course($c->id);
+	$cinfo = new completion_info($course);
+	$percentage = progress::get_course_progress_percentage($course, $USER->id);
+	//$studentsCompleted = getCourseStats($c);
+
+	if($percentage == 100) {
+		$completedCourses++;
+		$iscomplete = 1;
+	}
+
+	$course->percentage = $percentage;
+	$course->iscomplete = $iscomplete;
+	//$course->studentscompleted = $studentsCompleted;
+
+	$courses[$key]->percentage = $percentage;
+	$courses[$key]->iscomplete = $iscomplete;
+	//$courses[$key]->studentscompleted = $studentsCompleted;
+
+	//$coursesHtml .= getCoursesHtml($course);
+}
+
+$totalCourses = count($courses);
+
 $templatecontextDashboard = [
 	//samuel - pendiente al cambiar a produccion
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
