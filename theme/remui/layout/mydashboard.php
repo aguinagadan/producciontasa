@@ -34,7 +34,11 @@ use core_completion\progress;
 use core_course_renderer;
 use coursecat_helper;
 
-global $USER;
+global $USER, $CFG;
+
+function obtenerCursosRaw() {
+	return get_courses();
+}
 
 function getLevelPropertyValue($level, $property) {
 	$returnedValue = '';
@@ -54,7 +58,9 @@ function getLevelPropertyValue($level, $property) {
 function getLevelName() {
 	global $USER;
 
-	$world = \block_xp\di::get('course_world_factory')->get_world($this->page->course->id);
+	$courses = obtenerCursosRaw();
+	$courseId = array_shift($courses)->id;
+	$world = \block_xp\di::get('course_world_factory')->get_world($courseId);
 	$state = $world->get_store()->get_state($USER->id);
 	$widget = new \block_xp\output\xp_widget($state, [], null, []);
 	$level = $widget->state->get_level();
