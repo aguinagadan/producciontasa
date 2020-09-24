@@ -249,18 +249,16 @@ function getCoursesHtml($courses) {
 											<div class="row">
 												 <div class="col-sm" style="max-width: 30% !important;">';
 				$html.= getProgressBarDetail($daysLeftPercentage);
-				$html.= '</div>
+			$html.= '					 </div>
 													<div class="col-sm dd-line-height pr-0" style="font-size: 13px; color: #A3AFB7">
-														Cierra en '. $daysLeft .' días';
-				$html.= '</div>
+															Cierra en '. $daysLeft .' días';
+						$html.= '			</div>
 											</div>
-										</div>';
+									</div>';
 			} else {
 				$html.= '<div class="col-sm" style="width: 50%">
 											<div class="row">
-												 <div class="col-sm" style="width: 50%">
-											-
-											</div>';
+												 <div class="col-sm" style="width: 50%">-</div></div></div>';
 			}
 			$html.= '</div>
 								</div>
