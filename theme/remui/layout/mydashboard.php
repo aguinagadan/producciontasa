@@ -38,7 +38,7 @@ global $USER;
 
 $templatecontextDashboard = [
 	//samuel - pendiente al cambiar a produccion
-	'URL' => '',
+	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
 	'levelname' => '',
 	'points' => '',
