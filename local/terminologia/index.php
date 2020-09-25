@@ -9,7 +9,6 @@ $title = 'Aula virtual - Terminología';
 $url = new moodle_url("/local/terminologia/index.php", array('component' => $component, 'search' => $search));
 $PAGE->set_title($title);
 $PAGE->set_url($url);
-echo $OUTPUT->header();
 
 error_reporting(E_ALL);
 
@@ -28,6 +27,7 @@ $PAGE->requires->js(new moodle_url('js/terminologia_base.js'));
 $PAGE->requires->js(new moodle_url('js/terminologia_admin.js'));
 $PAGE->requires->js(new moodle_url('js/terminologia_guest.js'));
 
+echo $OUTPUT->header();
 include('term_base.php');
 
 if ($isManager) {
