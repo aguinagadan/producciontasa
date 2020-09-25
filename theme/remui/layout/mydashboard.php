@@ -1076,7 +1076,7 @@ $templatecontextDashboard = [
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => getCoursesHtml($userCourses),
-	'seguimientoHtml' => getSeguimientoHtml()
+	'seguimientoHtml' => ''
 ];
 
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
