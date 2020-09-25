@@ -11,32 +11,29 @@ $PAGE->set_title($title);
 $PAGE->set_url($url);
 echo $OUTPUT->header();
 
-try {
-	error_reporting(E_ALL);
+error_reporting(E_ALL);
 
-	$terminoController = new TerminoController();
+$terminoController = new TerminoController();
 
-	$isManager = 1;
-	$personalcontext = context_user::instance($USER->id);
-	if (!has_capability('tool/policy:managedocs', $personalcontext)) {
-		$isManager = 0;
-	}
-
-	$PAGE->requires->css(new moodle_url('css/terminologia.css'));
-
-	$PAGE->requires->jquery();
-	$PAGE->requires->js(new moodle_url('js/terminologia_base.js'));
-	$PAGE->requires->js(new moodle_url('js/terminologia_admin.js'));
-	$PAGE->requires->js(new moodle_url('js/terminologia_guest.js'));
-
-	include('term_base.php');
-
-	if ($isManager) {
-		include('term_admin.php');
-	} else {
-		include('term_guest.php');
-	}
-} catch (Exception $exception) {
-	echo 'El usuario debe estar autenticado para ver este módulo';
+$isManager = 1;
+$personalcontext = context_user::instance($USER->id);
+if (!has_capability('tool/policy:managedocs', $personalcontext)) {
+	$isManager = 0;
 }
+
+$PAGE->requires->css(new moodle_url('css/terminologia.css'));
+
+$PAGE->requires->jquery();
+$PAGE->requires->js(new moodle_url('js/terminologia_base.js'));
+$PAGE->requires->js(new moodle_url('js/terminologia_admin.js'));
+$PAGE->requires->js(new moodle_url('js/terminologia_guest.js'));
+
+include('term_base.php');
+
+if ($isManager) {
+	include('term_admin.php');
+} else {
+	include('term_guest.php');
+}
+
 echo $OUTPUT->footer();
