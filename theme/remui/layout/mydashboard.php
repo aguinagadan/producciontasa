@@ -35,7 +35,7 @@ use core_course_renderer;
 use coursecat_helper;
 use theme_remui\usercontroller as usercontroller;
 
-global $USER, $CFG, $USER, $OUTPUT;
+global $USER, $CFG, $USER;
 
 $userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
 
@@ -391,4 +391,6 @@ $templatecontextDashboard = [
 	'seguimientoHtml' => getSeguimientoHtml()
 ];
 
-echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontextDashboard);
+$templatecontext = array_merge($templatecontext, $templatecontextDashboard);
+
+echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
