@@ -2,11 +2,10 @@
 global $terminoController;
 
 $alphabetArr = range('A', 'Z');
-$mostSearchedArr = $terminoController->GetMasBuscados();
-
-$nuevosTerminos = $terminoController->GetNuevosTerminos();
-$palabrasBuscadas = $terminoController->GetPalabrasBuscadas();
-$usuariosActivos = $terminoController->GetUsuariosActivos();
+$mostSearchedArr = !empty($terminoController->GetMasBuscados()) ? $terminoController->GetMasBuscados() : array();
+$nuevosTerminos = !empty($terminoController->GetNuevosTerminos()) ? $terminoController->GetNuevosTerminos() : array();
+$palabrasBuscadas = !empty($terminoController->GetPalabrasBuscadas()) ? $terminoController->GetPalabrasBuscadas() : array();
+$usuariosActivos = !empty($terminoController->GetUsuariosActivos()) ? $terminoController->GetUsuariosActivos() : array();
 
 $count = 1;
 ?>
@@ -41,7 +40,7 @@ $count = 1;
             <table class="buscados-table">
                 <?php foreach (range(1,3) as $r) { $count=1; ?>
               <tr>
-                <?php foreach ($mostSearchedArr as $key=>$item) {?>
+                <?php if(!empty($mostSearchedArr)) { foreach ($mostSearchedArr as $key=>$item) {?>
                     <td>
                         <?php
                         if($count == 1) {
@@ -64,7 +63,7 @@ $count = 1;
                         ?>
                     </div>
                         </td>
-                    <?php } ?>
+                    <?php } }?>
                   </tr>
                 <?php } ?>
             </table>
