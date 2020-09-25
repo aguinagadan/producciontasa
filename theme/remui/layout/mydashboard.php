@@ -314,47 +314,47 @@ function getCoursesHtml($courses) {
 
 
 
-//function getEnrolledUsersDetail($courseId) {
-//	global $DB;
-//	$enrolledusers = $DB->get_records_sql(
-//		"SELECT u.*
-//               FROM {course} c
-//               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
-//               JOIN {enrol} e ON c.id = e.courseid
-//               JOIN {user_enrolments} ue ON e.id = ue.enrolid
-//               JOIN {user} u ON ue.userid = u.id
-//               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
-//              WHERE c.id = ?",
-//		array(CONTEXT_COURSE, 5, $courseId)
-//	);
-//	return $enrolledusers;
-//}
-//
-//function getEnrolledUsers($course) {
-//	global $DB;
-//	$enrolledusers = $DB->get_records_sql(
-//		"SELECT u.*
-//               FROM {course} c
-//               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
-//               JOIN {enrol} e ON c.id = e.courseid
-//               JOIN {user_enrolments} ue ON e.id = ue.enrolid
-//               JOIN {user} u ON ue.userid = u.id
-//               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
-//              WHERE c.id = ?",
-//		array(CONTEXT_COURSE, 5, $course->id)
-//	);
-//	return count($enrolledusers);
-//}
-//
-//function getUserAllDataByCourseId($courseId) {
-//	$users = getEnrolledUsersDetail($courseId);
-//
-//	foreach($users as $key=>$user) {
-//		profile_load_data($user);
-//	}
-//
-//	return $users;
-//}
+function getEnrolledUsersDetail($courseId) {
+	global $DB;
+	$enrolledusers = $DB->get_records_sql(
+		"SELECT u.*
+               FROM {course} c
+               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
+               JOIN {enrol} e ON c.id = e.courseid
+               JOIN {user_enrolments} ue ON e.id = ue.enrolid
+               JOIN {user} u ON ue.userid = u.id
+               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
+              WHERE c.id = ?",
+		array(CONTEXT_COURSE, 5, $courseId)
+	);
+	return $enrolledusers;
+}
+
+function getEnrolledUsers($course) {
+	global $DB;
+	$enrolledusers = $DB->get_records_sql(
+		"SELECT u.*
+               FROM {course} c
+               JOIN {context} ctx ON c.id = ctx.instanceid AND ctx.contextlevel = ?
+               JOIN {enrol} e ON c.id = e.courseid
+               JOIN {user_enrolments} ue ON e.id = ue.enrolid
+               JOIN {user} u ON ue.userid = u.id
+               JOIN {role_assignments} ra ON ctx.id = ra.contextid AND u.id = ra.userid AND ra.roleid = ?
+              WHERE c.id = ?",
+		array(CONTEXT_COURSE, 5, $course->id)
+	);
+	return count($enrolledusers);
+}
+
+function getUserAllDataByCourseId($courseId) {
+	$users = getEnrolledUsersDetail($courseId);
+
+	foreach($users as $key=>$user) {
+		profile_load_data($user);
+	}
+
+	return $users;
+}
 //
 //function getPersonalPorArea($course, $tipoPersonal, $area, $enrolledUsersArray) {
 //	$returnHTML = '';
@@ -957,19 +957,19 @@ function getCoursesHtml($courses) {
 //	return $returnArr;
 //}
 //
-//function getCategoryProgressById($courses) {
-//	$progress = 0;
-//
-//	foreach($courses as $key=>$course) {
-//		$enrolledUsersArray = getUserAllDataByCourseId($course->id);
-//		$progress += getCursosProgress($course, $enrolledUsersArray)['progress'];
-//	}
-//
-//	$progress = $progress/count($courses);
-//
-//	return $progress;
-//}
-//
+function getCategoryProgressById($courses) {
+	$progress = 0;
+
+	foreach($courses as $key=>$course) {
+		$enrolledUsersArray = getUserAllDataByCourseId($course->id);
+		//$progress += getCursosProgress($course, $enrolledUsersArray)['progress'];
+	}
+
+	$progress = $progress/count($courses);
+
+	return $progress;
+}
+
 function getSSCategories() {
 	global $DB;
 	$returnHTML = '';
@@ -981,7 +981,7 @@ function getSSCategories() {
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
 			$extraClass = 'cat-clickable';
-			//$value = getCategoryProgressById($children_courses);
+			$value = getCategoryProgressById($children_courses);
 			$value = 50;
 		} else {
 			$extraStyle = '';
