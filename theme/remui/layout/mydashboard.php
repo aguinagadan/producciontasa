@@ -273,6 +273,38 @@ function getCoursesHtml($courses) {
 	return $coursesHtml;
 }
 
+function getSeguimientoHtml() {
+	$seguimientoHtml = '';
+	$seguimientoHtml .= '
+<div style="background-color: white; width: 90%; margin-left: 5%; padding: 1% 1% 1% 2% !important; box-shadow: 2px 2px 4px #00000029;
+border-radius: 4px;">
+			<div class="row">
+				<div class="col-sm" style="text-align: left; font-weight: bold; color: #154A7D; font-size: 24px;">Seguimiento de finalización de cursos</div>
+				<div class="col-sm-1 pl-0">
+					<div class="row">
+						<div class="col-sm carta-general" data-toggle="modal">
+						</div> 
+						<div id="modalXLS" class="col-sm" style="cursor: pointer;">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col" style="text-align: left; color: #154A7D; font-size: 15px;">Puedes dar clic en cualquier item para desplegar detalles</div>
+			</div>
+			<div class="row">
+				<div class="ss-breadcrumb col-sm row" style="text-align: left; margin: 2% 0 1% 0; color: #154A7D; font-size: 18px;">
+					<div class="main-clickable" style="cursor: pointer;">CATEGORÍAS</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="seguimiento-content" class="col" style="text-align: left; color: #526069;"></div>
+			</div>
+</div>';
+
+	return $seguimientoHtml;
+}
+
 $templatecontextDashboard = [
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
@@ -283,7 +315,7 @@ $templatecontextDashboard = [
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => getCoursesHtml($userCourses),
-	'seguimientoHtml' => ''
+	'seguimientoHtml' => getSeguimientoHtml()
 ];
 
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
