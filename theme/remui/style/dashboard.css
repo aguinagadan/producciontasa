@@ -41,8 +41,8 @@
     width: 100%;
 }
 div.slide{
-    width: 17vw;
-    min-width: 17vw;
+    width: 17.3vw;
+    min-width: 17.3vw;
     height: 100%;
     -webkit-transform: translateX(0px);
     -moz-transform: translateX(0px);
