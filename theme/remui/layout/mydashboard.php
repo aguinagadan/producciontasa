@@ -41,6 +41,14 @@ use theme_remui\usercontroller as usercontroller;
 
 $userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
 
+$isManager = 1;
+$personalcontext = context_user::instance($USER->id);
+if (!has_capability('tool/policy:managedocs', $personalcontext)) {
+	$isManager = 0;
+}
+
+$seguimientoHtml = '';
+
 function categoryHasCourses($catId) {
 	$courses = core_course_category::get($catId)->get_courses();
 	if(count($courses) > 0) {
@@ -1075,12 +1083,9 @@ border-radius: 4px;">
 	return $seguimientoHtml;
 }
 
-
-
-
-
-
-
+if($isManager) {
+	$seguimientoHtml = getSeguimientoHtml();
+}
 
 $templatecontextDashboard = [
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
@@ -1092,7 +1097,7 @@ $templatecontextDashboard = [
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => getCoursesHtml($userCourses),
-	'seguimientoHtml' => getSeguimientoHtml()
+	'seguimientoHtml' => $seguimientoHtml
 ];
 
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
