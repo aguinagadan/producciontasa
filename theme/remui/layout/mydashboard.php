@@ -273,6 +273,82 @@ function getCoursesHtml($courses) {
 	return $coursesHtml;
 }
 
+function getSSCategories() {
+	global $DB;
+	$returnHTML = '';
+	$categories = $DB->get_records('course_categories');
+
+//	foreach($categories as $cat) {
+//		if(categoryHasCourses($cat->id)) {
+//			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
+//			$extraClass = 'cat-clickable';
+//			$value = getCategoryProgressById($cat->id);
+//		} else {
+//			$extraStyle = '';
+//			$extraClass = '';
+//			$value = 0;
+//		}
+//
+//		$returnHTML .= '<div class="ss-container ss-main-container row ss-m-b-05">';
+//		$returnHTML .= '<div data-id="'. $cat->id .'" class="col-sm '. $extraClass .'"'.$extraStyle.' style="font-size: 18px;">'.$cat->name.'</div>';
+//		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';
+//		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($value) .'</div>';
+//		$returnHTML .= '</div>';
+//	}
+
+//	foreach($categories as $cat) {
+//		$returnHTML .= getSSCoursesById($cat->id);
+//	}
+
+	$returnHTML.= '<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal mensaje personal -->
+			<div class="modal-content">
+				<div class="modal-header" style="padding: 2% 3% 0 3%; border-bottom: 0;">
+					<h4 class="ss-message-title-1 modal-title"></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-header" style="padding: 0 0 0 3%; border-bottom: 0;">
+					<h5 class="modal-title">Llegará a su correo electrónico</h5>
+				</div>
+				<div class="modal-body">
+					<textarea id="message-text" class="form-control" style="height: 140px;"></textarea>
+				</div>
+				<div class="modal-footer" style="padding: 0 3% 3% 0; border-top: 0;">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button id="myModalBtn" type="button" class="btn btn-info" data-dismiss="modal" style="color: white;">Enviar</button>
+				</div>
+			</div>
+		</div>
+	</div>';
+
+	$returnHTML.= '<div class="modal fade" id="myModalGeneral" role="dialog">
+		<div class="modal-dialog">
+		
+			<!-- Modal mensaje general -->
+			<div class="modal-content">
+				<div class="modal-header" style="padding: 2% 3% 0 3%; border-bottom: 0;">
+					<h4 class="ss-message-title-1 modal-title">MENSAJE PARA EMPLEADOS</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-header" style="padding: 0 0 0 3%; border-bottom: 0;">
+					<h5 class="modal-title">Llegará al correo de los usuarios que aún no terminan el curso.</h5>
+				</div>
+				<div class="modal-body">
+					<textarea id="message-text-all" class="form-control" style="height: 140px;"></textarea>
+				</div>
+				<div class="modal-footer" style="padding: 0 3% 3% 0; border-top: 0;">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button id="myModalGeneralBtn" type="button" class="btn btn-info" data-dismiss="modal" style="color: white;">Enviar</button>
+				</div>
+			</div>
+		</div>
+	</div>';
+
+	return $returnHTML;
+}
+
 function getSeguimientoHtml() {
 	$seguimientoHtml = '';
 	$seguimientoHtml .= '
@@ -298,7 +374,7 @@ border-radius: 4px;">
 				</div>
 			</div>
 			<div class="row">
-				<div id="seguimiento-content" class="col" style="text-align: left; color: #526069;"></div>
+				<div id="seguimiento-content" class="col" style="text-align: left; color: #526069;">'. getSSCategories().'</div>
 			</div>
 </div>';
 
