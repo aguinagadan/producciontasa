@@ -7,7 +7,12 @@ use stdClass;
 require(__DIR__ . '/../../../../config.php');
 
 class Termino {
+
 	public function __construct() {
+	}
+
+	private function getOneWeekAgo() {
+		return strtotime('-1 week');
 	}
 
 	/**
@@ -223,13 +228,65 @@ class Termino {
 		return null;
 	}
 
+	private function getPalabrasCount($queryArr) {
+		$data3 = array();
+		$currentTerminoID = array();
+
+		foreach($queryArr as $key=>$d2) {
+			if(in_array($d2->id_termino, $currentTerminoID)) {
+				continue;
+			}
+			$currentTerminoID[] = $d2->id_termino;
+			if($d2->creado < $this->getOneWeekAgo()) {
+				continue;
+			} else {
+				$data3[$key] = $d2;
+			}
+		}
+
+		return count($data3);
+	}
+
+	private function getUsuariosActivosCount($queryArr) {
+		$data3 = array();
+		$currentUsuarioID = array();
+
+		foreach($queryArr as $key=>$d2) {
+			if(in_array($d2->id_usuario, $currentUsuarioID)) {
+				continue;
+			}
+			$currentUsuarioID[] = $d2->id_usuario;
+			if($d2->creado < $this->getOneWeekAgo()) {
+				continue;
+			} else {
+				$data3[$key] = $d2;
+			}
+		}
+
+		return count($data3);
+	}
+
+	private function getNuevosTerminosCount($queryArr) {
+		$data3 = array();
+
+		foreach($queryArr as $key=>$d2) {
+			if($d2->creado < $this->getOneWeekAgo()) {
+				continue;
+			} else {
+				$data3[$key] = $d2;
+			}
+		}
+
+		return count($data3);
+	}
+
 	/**
 	 * @return integer
 	 */
 	public function GetNuevosTerminos() {
 		global $DB;
-		$data = $DB->get_records_sql("SELECT * FROM {termino} WHERE from_unixtime(creado) between date_sub(now(),INTERVAL 1 WEEK) and now()");
-		return count($data);
+		$data = $DB->get_records_sql("SELECT * FROM {termino}");
+		return $this->getNuevosTerminosCount($data);
 	}
 
 	/**
@@ -237,8 +294,8 @@ class Termino {
 	 */
 	public function GetPalabrasBuscadas() {
 		global $DB;
-		$data = $DB->get_records_sql("SELECT * FROM {termino_buscado} WHERE from_unixtime(creado) between date_sub(now(),INTERVAL 1 WEEK) and now() GROUP BY id_termino");
-		return count($data);
+		$data = $DB->get_records_sql("SELECT * FROM {termino_buscado}");
+		return $this->getPalabrasCount($data);
 	}
 
 	/**
@@ -259,8 +316,9 @@ class Termino {
 	 */
 	public function GetUsuariosActivos() {
 		global $DB;
-		$data = $DB->get_records_sql("SELECT * FROM {termino_usuario_log} WHERE from_unixtime(creado) between date_sub(now(),INTERVAL 1 WEEK) and now() GROUP BY id_usuario");
-		return count($data);
+		$data = $DB->get_records_sql("SELECT * FROM {termino_usuario_log}");
+		return $this->getUsuariosActivosCount($data);
 	}
+
 
 }
