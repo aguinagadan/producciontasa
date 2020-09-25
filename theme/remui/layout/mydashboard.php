@@ -349,9 +349,9 @@ function getEnrolledUsers($course) {
 function getUserAllDataByCourseId($courseId) {
 	$users = getEnrolledUsersDetail($courseId);
 
-	foreach($users as $key=>$user) {
-		profile_load_data($user);
-	}
+//	foreach($users as $key=>$user) {
+//		profile_load_data($user);
+//	}
 
 	return $users;
 }
