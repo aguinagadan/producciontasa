@@ -388,7 +388,7 @@ $templatecontextDashboard = [
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => getCoursesHtml($userCourses),
-	'seguimientoHtml' => ''
+	'seguimientoHtml' => getSeguimientoHtml()
 ];
 
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontextDashboard);
