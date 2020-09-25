@@ -181,8 +181,8 @@ class Termino {
 	 */
 	public function GetMasBuscados() {
 		global $DB;
-		$data = $DB->get_records_sql("SELECT id,nombre,origen FROM {termino} ORDER BY visitas DESC LIMIT 0,9");
-		$data = !empty($data) ? $data : array();
+		$data = $DB->get_records_sql("SELECT id,nombre,origen FROM {termino} ORDER BY visitas DESC");
+		$data = !empty($data) ? array_slice($data,0,10) : array();
 		return $data;
 	}
 
