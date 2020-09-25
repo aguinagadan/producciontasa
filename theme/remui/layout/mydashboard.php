@@ -35,7 +35,7 @@ use core_course_renderer;
 use coursecat_helper;
 use theme_remui\usercontroller as usercontroller;
 
-global $USER, $CFG, $USER;
+global $USER, $CFG;
 
 $userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
 
@@ -273,111 +273,6 @@ function getCoursesHtml($courses) {
 	return $coursesHtml;
 }
 
-function getSSCategories() {
-	global $DB;
-	$returnHTML = '';
-	$categories = $DB->get_records('course_categories');
-
-//	foreach($categories as $cat) {
-//		if(categoryHasCourses($cat->id)) {
-//			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
-//			$extraClass = 'cat-clickable';
-//			$value = getCategoryProgressById($cat->id);
-//		} else {
-//			$extraStyle = '';
-//			$extraClass = '';
-//			$value = 0;
-//		}
-//
-//		$returnHTML .= '<div class="ss-container ss-main-container row ss-m-b-05">';
-//		$returnHTML .= '<div data-id="'. $cat->id .'" class="col-sm '. $extraClass .'"'.$extraStyle.' style="font-size: 18px;">'.$cat->name.'</div>';
-//		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';
-//		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($value) .'</div>';
-//		$returnHTML .= '</div>';
-//}
-//
-//	foreach($categories as $cat) {
-//		$returnHTML .= getSSCoursesById($cat->id);
-//	}
-
-	$returnHTML.= '<div class="modal fade" id="myModal" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" style="padding: 2% 3% 0 3%; border-bottom: 0;">
-					<h4 class="ss-message-title-1 modal-title"></h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-header" style="padding: 0 0 0 3%; border-bottom: 0;">
-					<h5 class="modal-title">Llegará a su correo electrónico</h5>
-				</div>
-				<div class="modal-body">
-					<textarea id="message-text" class="form-control" style="height: 140px;"></textarea>
-				</div>
-				<div class="modal-footer" style="padding: 0 3% 3% 0; border-top: 0;">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<button id="myModalBtn" type="button" class="btn btn-info" data-dismiss="modal" style="color: white;">Enviar</button>
-				</div>
-			</div>
-		</div>
-	</div>';
-
-	$returnHTML.= '<div class="modal fade" id="myModalGeneral" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" style="padding: 2% 3% 0 3%; border-bottom: 0;">
-					<h4 class="ss-message-title-1 modal-title">MENSAJE PARA EMPLEADOS</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-header" style="padding: 0 0 0 3%; border-bottom: 0;">
-					<h5 class="modal-title">Llegará al correo de los usuarios que aún no terminan el curso.</h5>
-				</div>
-				<div class="modal-body">
-					<textarea id="message-text-all" class="form-control" style="height: 140px;"></textarea>
-				</div>
-				<div class="modal-footer" style="padding: 0 3% 3% 0; border-top: 0;">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<button id="myModalGeneralBtn" type="button" class="btn btn-info" data-dismiss="modal" style="color: white;">Enviar</button>
-				</div>
-			</div>
-		</div>
-	</div>';
-
-	return $returnHTML;
-}
-
-function getSeguimientoHtml() {
-	$seguimientoHtml = '
-<div style="background-color: white; width: 90%; margin-left: 5%; padding: 1% 1% 1% 2% !important; box-shadow: 2px 2px 4px #00000029; border-radius: 4px;">
-		<div class="row">
-			<div class="col-sm" style="text-align: left; font-weight: bold; color: #154A7D; font-size: 24px;">Seguimiento de finalización de cursos</div>
-			<div class="col-sm-1 pl-0">
-				<div class="row">
-					<div class="col-sm carta-general" data-toggle="modal">
-						<img style="opacity: 0.5; cursor: auto;" src="../theme/remui/pix/ic_email_24px.png">
-					</div> 
-					<div id="modalXLS" class="col-sm" style="cursor: pointer;">
-						<img src="../theme/remui/pix/ic_get_app_24px.png">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col" style="text-align: left; color: #154A7D; font-size: 15px;">Puedes dar clic en cualquier item para desplegar detalles</div>
-		</div>
-		<div class="row">
-			<div class="ss-breadcrumb col-sm row" style="text-align: left; margin: 2% 0 1% 0; color: #154A7D; font-size: 18px;">
-				<div class="main-clickable" style="cursor: pointer;">CATEGORÍAS</div>
-			</div>
-			<div class="row">
-				<div id="seguimiento-content" class="col" style="text-align: left; color: #526069;">'. getSSCategories().'</div>
-			</div>
-		</div>
-</div>';
-
-	return $seguimientoHtml;
-}
-
-
 $templatecontextDashboard = [
 	'URL' => $CFG->wwwroot . '/pluginfile.php/1/theme_remui/staticimage/1600901593/catalogo-cursos.titulo.png',
 	'username' => $USER->firstname . ' ' . $USER->lastname,
@@ -388,7 +283,7 @@ $templatecontextDashboard = [
 	'totalcourses' => count(enrol_get_my_courses()),
 	'pendingCoursesHtml' => getPendingCoursesHtml($userCourses),
 	'courseshtml' => getCoursesHtml($userCourses),
-	'seguimientoHtml' => getSeguimientoHtml()
+	'seguimientoHtml' => ''
 ];
 
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
