@@ -14,7 +14,15 @@
     display: none;
 }
 
-body {
+body #page-site-index{
+    margin-left: 0 !important;
+}
+
+body #page-local-terminologia-index{
+    margin-left: 0 !important;
+}
+
+body #page-local-induccion-index{
     margin-left: 0 !important;
 }
 
