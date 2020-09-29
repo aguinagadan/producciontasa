@@ -2,15 +2,23 @@
     display: none;
 }
 
-/*#page-my-index #nav-drawer {*/
-/*    display: none;*/
-/*}*/
+#page-my-index #nav-drawer {
+    display: none;
+}
 
 #page-local-terminologia-index #nav-drawer {
     display: none;
 }
 
 #page-local-induccion-index #nav-drawer {
+    display: none;
+}
+
+#page-user-profile #nav-drawer {
+    display: none;
+}
+
+#page-course-search #nav-drawer {
     display: none;
 }
 
