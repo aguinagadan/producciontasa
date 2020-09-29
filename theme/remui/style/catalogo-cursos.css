@@ -22,15 +22,23 @@
     display: none;
 }
 
-body#page-site-index{
+body#page-site-index {
     margin-left: 0 !important;
 }
 
-body#page-local-terminologia-index{
+body#page-local-terminologia-index {
     margin-left: 0 !important;
 }
 
-body#page-local-induccion-index{
+body#page-local-induccion-index {
+    margin-left: 0 !important;
+}
+
+body#page-course-search {
+    margin-left: 0 !important;
+}
+
+body#page-user-profile {
     margin-left: 0 !important;
 }
 
