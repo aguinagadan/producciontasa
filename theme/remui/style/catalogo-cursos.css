@@ -1,5 +1,17 @@
-#nav-drawer {
-    display: none !important;
+#page-site-index #nav-drawer {
+    display: none;
+}
+
+#page-my-index #nav-drawer {
+    display: none;
+}
+
+#page-local-terminologia-index #nav-drawer {
+    display: none;
+}
+
+#page-local-induccion-index #nav-drawer {
+    display: none;
 }
 
 body {
