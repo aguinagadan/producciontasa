@@ -310,6 +310,7 @@ function getUserAllDataByCourseId($courseId) {
 
 	foreach($users as $key=>$user) {
 		//$users[$key] = get_complete_user_data('id', $user->id);
+		$progress += round(progress::get_course_progress_percentage($context, $user['id']));
 		$users[$key] = $user;
 	}
 
