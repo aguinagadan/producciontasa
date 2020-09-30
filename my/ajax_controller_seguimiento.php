@@ -105,7 +105,7 @@ function get_zonas_areas_detail() {
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="'. $dataOpen .'"  class="col-sm element-clickable" style="cursor: pointer;">'. $seguimientoDetail .'</div>';
 
-		//$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
+		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML.= '-';
 		$returnHTML.= '</div>';
 	}
@@ -125,12 +125,14 @@ function get_zonas_detail() {
 
 	$users = core_enrol_external::get_enrolled_users($courseId);
 
-	foreach($users as $user) {
-		//3: zonas
-		if(!empty($user['customfields'][3]['value'])) {
-			$zonas[] = $user['customfields'][3]['value'];
-		}
-	}
+//	foreach($users as $user) {
+//		//3: zonas
+//		if(!empty($user['customfields'][3]['value'])) {
+//			$zonas[] = $user['customfields'][3]['value'];
+//		}
+//	}
+//
+	$zonas = ['1','2'];
 
 	$zonas = array_unique($zonas);
 
