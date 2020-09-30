@@ -93,13 +93,11 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			//$progress = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['progress'];
-			$progress = get_zonas_1_percentage($courseId);
+			$progress = 50;
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			//$progress = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['progress'];
 			$progress = 50;
 		}
 
@@ -144,14 +142,15 @@ function get_zonas_detail() {
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-division" class="col-sm element-clickable" style="cursor: pointer;">' . $zona . '</div>';
 
-		foreach($users as $user) {
-			if($user['customfields'][3]['value'] == $zona) {
-				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-				$contUsers++;
-			}
-		}
+//		foreach($users as $user) {
+//			if($user['customfields'][3]['value'] == $zona) {
+//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
+//				$contUsers++;
+//			}
+//		}
 
-		$progress = round($progress/$contUsers);
+//		$progress = round($progress/$contUsers);
+		$progress = 50;
 
 		$returnHTML .= getProgressBarDetailSeguimientoHtml($progress);
 
@@ -192,16 +191,17 @@ function get_divisiones_detail() {
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal" class="ss-container ss-main-container-division row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div division-name="'. $division . '" zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $division .'</div>';
+//
+//		foreach($users as $user) {
+//			if(
+//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division) {
+//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
+//				$contUsers++;
+//			}
+//		}
 
-		foreach($users as $user) {
-			if(
-				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division) {
-				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-				$contUsers++;
-			}
-		}
-
-		$progress = round($progress/$contUsers);
+		//$progress = round($progress/$contUsers);
+		$progress = 50;
 
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML .= '</div>';
@@ -243,16 +243,17 @@ function get_tipo_personal_by_division_detail() {
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div tipo-personal-name="' . $tipoPersonal . '" division-name="' . $division . '" zona-name="' . $zona . '" course-id="'. $courseId .'" data-open="ss-main-container-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $tipoPersonal .'</div>';
 
-		foreach($users as $user) {
-			if(
-				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division  && $user['customfields'][6]['value'] == $tipoPersonal
-			) {
-				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-				$contUsers++;
-			}
-		}
+//		foreach($users as $user) {
+//			if(
+//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division  && $user['customfields'][6]['value'] == $tipoPersonal
+//			) {
+//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
+//				$contUsers++;
+//			}
+//		}
 
-		$progress = round($progress/$contUsers);
+//		$progress = round($progress/$contUsers);
+		$progress = 50;
 
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML .= '</div>';
