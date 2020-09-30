@@ -112,7 +112,7 @@ function updateUser($user, $userAD) {
 
 	$posicion      = !empty($userAD['jobTitle']) ? $userAD['jobTitle'] : '';
 
-	$user->profile_field_DNI = $dni;
+	$user->profile_field_dni = $dni;
 	$user->profile_field_codigo = $nroTrabajador;
 	$user->profile_field_gerencia = $gerencia;
 	$user->profile_field_zona = $zona;
