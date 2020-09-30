@@ -64,25 +64,10 @@ function get_courses_by_category($catId) {
 	$coursesArr = $segModel->GetCoursesByCategory($catId);
 	$returnHTML = '';
 	$progress = 0;
-	$contUsers = 0;
-	$totalPercentage = 0;
-	$totalPercentageCount = 0;
 
 	foreach($coursesArr as $course) {
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
 		$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
-
-		$course = get_course($course->id);
-		$users = core_enrol_external::get_enrolled_users($course->id);
-
-		foreach($users as $user) {
-			$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-			$contUsers++;
-		}
-		$progress = round($progress/$contUsers);
-		$totalPercentage += $progress;
-		$totalPercentageCount++;
-
 		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progress,0) .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progress) .'</div>';
 		$returnHTML .= '</div>';
@@ -92,7 +77,6 @@ function get_courses_by_category($catId) {
 	$response['status'] = true;
 	$response['data'] = $coursesArr;
 	$response['data']['html'] = $returnHTML;
-	$response['data']['categoryPercentage'] = round($totalPercentage/$totalPercentageCount);
 
 	return $response;
 }
