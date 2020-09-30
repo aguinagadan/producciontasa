@@ -120,7 +120,6 @@ function get_zonas_areas_detail() {
 function get_zonas_detail() {
 	global $details;
 	$courseId = $details['courseId'];
-	$course = get_course($courseId);
 	$returnHTML = '';
 	$zonas = array();
 
@@ -130,7 +129,6 @@ function get_zonas_detail() {
 
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
-		//3: zonas
 		if(!empty($user->profile['zona'])) {
 			$zonas[] = $user->profile['zona'];
 		}
@@ -170,18 +168,18 @@ function get_zonas_detail() {
 function get_divisiones_detail() {
 	global $details;
 	$courseId = $details['courseId'];
-	$course = get_course($courseId);
 	$zona = $details['zona'];
 	$returnHTML = '';
 	$divisiones = array();
 
-	$users = core_enrol_external::get_enrolled_users($courseId);
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
 
-	foreach($users as $user) {
-		//4: divisiones
-		if(!empty($user['customfields'][4]['value'])) {
-			if($user['customfields'][3]['value'] == $zona) {
-				$divisiones[] = $user['customfields'][4]['value'];
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		if(!empty($user->profile['division'])) {
+			if($user->profile['zona'] == $zona) {
+				$divisiones[] = $user->profile['division'];
 			}
 		}
 	}
@@ -220,19 +218,19 @@ function get_divisiones_detail() {
 function get_tipo_personal_by_division_detail() {
 	global $details;
 	$courseId = $details['courseId'];
-	$course = get_course($courseId);
 	$zona = $details['zona'];
 	$division = $details['division'];
 	$returnHTML = '';
 	$tipoPersonalArr = array();
 
-	$users = core_enrol_external::get_enrolled_users($courseId);
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
 
-	foreach($users as $user) {
-		//6: tipo personal
-		if(!empty($user['customfields'][6]['value'])) {
-			if($user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division) {
-				$tipoPersonalArr[] = $user['customfields'][6]['value'];
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		if(!empty($user->profile['tipo_personal'])) {
+			if($user->profile['zona'] == $zona && $user->profile['division'] == $division) {
+				$tipoPersonalArr[] = $user->profile['tipo_personal'];
 			}
 		}
 	}
@@ -280,19 +278,20 @@ function get_personal_detail() {
 	$returnHTML = '';
 	$personalArr = array();
 
-	$users = core_enrol_external::get_enrolled_users($courseId);
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
 
 	foreach($users as $key=>$user) {
-		//6: tipo personal
-		if(!empty($user['fullname'])) {
+		profile_load_custom_fields($user);
+		if(!empty($user->profile['division'])) {
 			if(
-				$user['customfields'][3]['value'] == $zona &&
-				$user['customfields'][4]['value'] == $division &&
-				$user['customfields'][6]['value'] == $tipoPersonal
+				$user->profile['zona'] == $zona &&
+				$user->profile['division'] == $division &&
+				$user->profile['tipo_personal'] == $tipoPersonal
 			) {
-				$personalArr[$key]['id'] = $user['id'];
-				$personalArr[$key]['firstname'] = $user['firstname'];
-				$personalArr[$key]['fullname'] = $user['fullname'];
+				$personalArr[$key]['id'] = $user->id;
+				$personalArr[$key]['firstname'] = $user->firstname;
+				$personalArr[$key]['fullname'] = $user->fullname;
 			}
 		}
 	}
