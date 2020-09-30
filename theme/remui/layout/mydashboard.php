@@ -305,19 +305,19 @@ function getCoursesHtml($courses) {
 
 
 
-function getUserAllDataByCourseId($courseId) {
-	$course = get_course($courseId);
-	$users = core_enrol_external::get_enrolled_users($courseId);
-	$progress = 0;
-
-	foreach($users as $key=>$user) {
-		//$users[$key] = get_complete_user_data('id', $user->id);
-		$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-		$users[$key] = $user;
-	}
-
-	return $users;
-}
+//function getUserAllDataByCourseId($courseId) {
+//	$course = get_course($courseId);
+//	$users = core_enrol_external::get_enrolled_users($courseId);
+//	$progress = 0;
+//
+//	foreach($users as $key=>$user) {
+//		//$users[$key] = get_complete_user_data('id', $user->id);
+//		$progress += round(progress::get_course_progress_percentage($course, $user['id']));
+//		//$users[$key] = $user;
+//	}
+//
+//	return array();
+//}
 //
 //function getPersonalPorArea($course, $tipoPersonal, $area, $enrolledUsersArray) {
 //	$returnHTML = '';
@@ -920,17 +920,31 @@ function getUserAllDataByCourseId($courseId) {
 //	return $returnArr;
 //}
 //
-function getCategoryProgressById($courses) {
-	$progress = 0;
 
-	foreach($courses as $key=>$course) {
-		$enrolledUsersArray = getUserAllDataByCourseId($course->id);
-		//$progress += getCursosProgress($course, $enrolledUsersArray)['progress'];
+function getCoursesByCategoryProgress($cat) {
+	$coursesArr = $cat->get_courses();
+
+	$progress = 0;
+	$contUsers = 0;
+	$totalPercentage = 0;
+	$totalPercentageCount = 0;
+
+	foreach($coursesArr as $course) {
+		$course = get_course($course->id);
+
+		$context = CONTEXT_COURSE::instance($course->id);
+		$users = get_enrolled_users($context);
+
+		foreach($users as $user) {
+			$progress += round(progress::get_course_progress_percentage($course, $user->id));
+			$contUsers++;
+		}
+		$progress = round($progress/$contUsers);
+		$totalPercentage += $progress;
+		$totalPercentageCount++;
 	}
 
-	$progress = $progress/count($courses);
-
-	return $progress;
+	return round($totalPercentage/$totalPercentageCount);
 }
 
 function getSSCategories() {
@@ -944,8 +958,7 @@ function getSSCategories() {
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
 			$extraClass = 'cat-clickable';
-			$value = getCategoryProgressById($children_courses);
-			$value = 50;
+			$value = getCoursesByCategoryProgress($cat);
 		} else {
 			$extraStyle = '';
 			$extraClass = '';
