@@ -30,7 +30,7 @@ global $USER, $CFG;
 require_once('common.php');
 require_once($CFG->dirroot. '/course/lib.php');
 require_once($CFG->libdir. '/coursecatlib.php');
-require_once($CFG->dirroot . '/user/externallib.php');
+require_once($CFG->dirroot . '/enrol/externallib.php');
 
 use moodle_url;
 use block_xp\local\xp\level_with_name;
