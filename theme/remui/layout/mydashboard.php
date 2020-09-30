@@ -308,9 +308,9 @@ function getUserAllDataByCourseId($courseId) {
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
-	foreach($users as $key=>$user) {
-		$users[$key] = get_complete_user_data('id', $user->id);
-	}
+//	foreach($users as $key=>$user) {
+//		$users[$key] = get_complete_user_data('id', $user->id);
+//	}
 
 	return $users;
 }
