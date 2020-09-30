@@ -127,13 +127,14 @@ function get_zonas_detail() {
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
-//	foreach($users as $user) {
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($users[$key]);
 //		//3: zonas
 //		if(!empty($user['customfields'][3]['value'])) {
 //			$zonas[] = $user['customfields'][3]['value'];
 //		}
-//	}
-//
+	}
+
 	echo '<pre>';
 	var_dump($users);
 	exit;
