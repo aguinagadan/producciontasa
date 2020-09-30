@@ -290,64 +290,98 @@ require(['theme_remui/loader'], function () {
         }
 
         $(document).on('click', '.main-clickable', function() {
-        $('.ss-container').hide();
-        $('.ss-main-container').show();
-        $(this).nextAll('div').remove();
-        $(this).css('opacity','1');
-        $('.carta-general').find('img').css('opacity', 0.5);
-        $('.carta-general').find('img').css('cursor', 'auto');
-        $('.carta-general').attr('data-target', '');
+            $('.ss-container').hide();
+            $('.ss-main-container').show();
+            $(this).nextAll('div').remove();
+            $(this).css('opacity','1');
+            $('.carta-general').find('img').css('opacity', 0.5);
+            $('.carta-general').find('img').css('cursor', 'auto');
+            $('.carta-general').attr('data-target', '');
         });
 
         $(document).on('click', '.cat-clickable', function() {
-        var catId = $(this).attr('data-id');
-        var elementToShow = $('.ss-main-container-course[data-id='+catId+']');
+            var currentElement = $(this);
+            var catId = $(this).attr('data-id');
 
-        $('.carta-general').find('img').css('opacity', 0.5);
-        $('.carta-general').find('img').css('cursor', 'auto');
-        $('.carta-general').attr('data-target', '');
+            var data = {
+                catId: catId,
+                request_type: 'get_courses_by_category'
+            };
 
-        $('.ss-container').hide();
-        elementToShow.show();
-        elementToShow.css('display','flex');
-        elementToShow.removeClass('hidden');
+            $.ajax({
+                type: "POST",
+                url: "ajax_controller_seguimiento.php",
+                data: data,
+                success: function(res) {
+                    var elementToShow = $.parseHTML(res.data.html);
+                    $('.carta-general').find('img').css('opacity', 0.5);
+                    $('.carta-general').find('img').css('cursor', 'auto');
+                    $('.carta-general').attr('data-target', '');
 
-        addBreadcrumb($(this));
+                    $('.ss-container').hide();
+                    $('#seguimiento-content').append(elementToShow);
+                    addBreadcrumb(currentElement);
+                }
+            });
         });
 
         function openDataSS(dataOpen, $this) {
-        var elementToShow = $('.' + dataOpen + '[course-id='+ $this.attr("course-id") +']' + '[zona-name="'+ $this.attr("zona-name") +'"]');
+            var zona, division, tipoPersonal = '';
+            if($this.attr('zona-name')) {
+                zona = $this.attr('zona-name');
+            }
+            if($this.attr('division-name')) {
+                division = $this.attr('division-name');
+            }
 
-        $('.carta-general').find('img').css('opacity', 0.5);
-        $('.carta-general').find('img').css('cursor', 'auto');
-        $('.carta-general').attr('data-target', '');
+            if($this.attr('tipo-personal-name')) {
+                tipoPersonal = $this.attr('tipo-personal-name');
+            }
 
-        if(dataOpen == 'ss-main-container-seguimiento-detail') {
-        $('.carta-general').find('img').css('opacity', 1);
-        $('.carta-general').find('img').css('cursor', 'pointer');
-        $('.carta-general').attr('data-target', '#myModalGeneral');
-        }
+            var data = {
+                courseId: $this.attr('course-id'),
+                zona: zona,
+                division: division,
+                tipoPersonal: tipoPersonal,
+                request_type: dataOpen
+            };
 
-        $('.ss-container').hide();
-        elementToShow.show();
-        elementToShow.css('display','flex');
-        elementToShow.removeClass('hidden');
-        addBreadcrumb($this);
-        addIds();
+            $.ajax({
+                type: "POST",
+                url: "ajax_controller_seguimiento.php",
+                data: data,
+                success: function(res) {
+                    var elementToShow = $.parseHTML(res.data.html);
+                    $('.carta-general').find('img').css('opacity', 0.5);
+                    $('.carta-general').find('img').css('cursor', 'auto');
+                    $('.carta-general').attr('data-target', '');
+
+                    if(dataOpen == 'ss-main-container-seguimiento-detail') {
+                        $('.carta-general').find('img').css('opacity', 1);
+                        $('.carta-general').find('img').css('cursor', 'pointer');
+                        $('.carta-general').attr('data-target', '#myModalGeneral');
+                    }
+
+                    $('.ss-container').hide();
+                    $('#seguimiento-content').append(elementToShow);
+                    addBreadcrumb($this);
+                    //addIds();
+                }
+            });
         }
 
         $(document).on('click', '.element-clickable', function() {
-        openDataSS($(this).attr('data-open'), $(this));
+            openDataSS($(this).attr('data-open'), $(this));
         });
 
         $(document).on("click", '.personal-clickable, .logo-mail-clickable', function () {
-        var id = $(this).data('id');
-        $("#myModalBtn").attr('id-user', id);
+            var id = $(this).data('id');
+            $("#myModalBtn").attr('id-user', id);
         });
 
         $(document).on("click", '.carta-general', function () {
-        var ids = $(this).attr('user-ids');
-        $("#myModalGeneralBtn").attr('id-users-all', ids);
+            var ids = $(this).attr('user-ids');
+            $("#myModalGeneralBtn").attr('id-users-all', ids);
         });
 
         $(document).on('click', '#myModalGeneralBtn', function() {
