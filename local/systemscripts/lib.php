@@ -5,7 +5,7 @@ require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
 
 function getZonaPorDivision($division) {
-	$returnValue = '';
+	$returnValue = 'No especificado';
 
 	$divisionNorte = ['Chimbote', 'Malabrigo', 'Zananco', 'Astillero'];
 	$divisionNorte = array_map('strtolower', $divisionNorte);
@@ -66,13 +66,8 @@ function migrate_tasa_users_task() {
 
 		//consultar: filtrando si tiene datos extra (?)
 		if(
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_department']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ||
-			isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'])
+			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) &&
+			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'])
 		) {
 			updateUser($user, $userAD);
 		}
@@ -144,18 +139,18 @@ function updateUser($user, $userAD) {
 	$nroTrabajador = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ?
 		$userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'] : '';
 
-	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription'] : '';
+	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription'] : 'No especificado';
 
-	$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : '';
+	$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : 'No especificado';
 
 	$zona          = getZonaPorDivision($division);
 
 	$areaFuncional = !empty($userAD['department']) ?
-		$userAD['department'] : '';
+		$userAD['department'] : 'No especificado';
 
-	$tipoEmpleado  = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType'] : '';
+	$tipoEmpleado  = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType'] : 'No especificado';
 
-	$posicion      = !empty($userAD['jobTitle']) ? $userAD['jobTitle'] : '';
+	$posicion      = !empty($userAD['jobTitle']) ? $userAD['jobTitle'] : 'No especificado';
 
 	$user->profile_field_dni = $dni;
 	$user->profile_field_codigo = $nroTrabajador;
