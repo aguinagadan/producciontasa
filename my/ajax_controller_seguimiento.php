@@ -123,7 +123,9 @@ function get_zonas_detail() {
 	$returnHTML = '';
 	$zonas = array();
 
-	$users = core_enrol_external::get_enrolled_users($courseId);
+	//$users = core_enrol_external::get_enrolled_users($courseId);
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
 
 //	foreach($users as $user) {
 //		//3: zonas
@@ -132,7 +134,9 @@ function get_zonas_detail() {
 //		}
 //	}
 //
-	$zonas = ['1','2'];
+	echo '<pre>';
+	var_dump($users);
+	exit;
 
 	$zonas = array_unique($zonas);
 
