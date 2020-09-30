@@ -49,14 +49,6 @@ if (!has_capability('tool/policy:managedocs', $personalcontext)) {
 
 $seguimientoHtml = '';
 
-function categoryHasCourses($catId) {
-	$courses = core_course_category::get($catId)->get_courses();
-	if(count($courses) > 0) {
-		return true;
-	}
-	return false;
-}
-
 function obtenerCursosRaw() {
 	return get_courses();
 }
@@ -316,9 +308,9 @@ function getUserAllDataByCourseId($courseId) {
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
-//	foreach($users as $key=>$user) {
-//		profile_load_data($user);
-//	}
+	foreach($users as $key=>$user) {
+		$users[$key] = get_complete_user_data('id', $user->id);
+	}
 
 	return $users;
 }
