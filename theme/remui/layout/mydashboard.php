@@ -958,7 +958,8 @@ function getSSCategories() {
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
 			$extraClass = 'cat-clickable';
-			$value = getCoursesByCategoryProgress($cat);
+//		$value = getCoursesByCategoryProgress($cat);
+			$value = 50;
 		} else {
 			$extraStyle = '';
 			$extraClass = '';
