@@ -307,10 +307,11 @@ function getCoursesHtml($courses) {
 function getUserAllDataByCourseId($courseId) {
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
+	$progress = 0;
 
 	foreach($users as $key=>$user) {
 		//$users[$key] = get_complete_user_data('id', $user->id);
-		$progress += round(progress::get_course_progress_percentage($context, $user['id']));
+		$progress += round(progress::get_course_progress_percentage($context, $user->id));
 		$users[$key] = $user;
 	}
 
