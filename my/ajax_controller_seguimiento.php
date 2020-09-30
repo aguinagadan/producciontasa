@@ -7,6 +7,7 @@ global $CFG;
 require_once '../my/classes/model/Seguimiento.php';
 require_once($CFG->dirroot . '/enrol/externallib.php');
 require_once($CFG->dirroot. '/course/lib.php');
+require_once($CFG->dirroot . '/user/profile/lib.php');
 
 use core_completion\progress;
 use Seguimiento\Model\Seguimiento as SeguimientoModel;
