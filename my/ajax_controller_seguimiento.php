@@ -105,7 +105,7 @@ function get_zonas_areas_detail() {
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="'. $dataOpen .'"  class="col-sm element-clickable" style="cursor: pointer;">'. $seguimientoDetail .'</div>';
 
-		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
+		//$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML.= '-';
 		$returnHTML.= '</div>';
 	}
