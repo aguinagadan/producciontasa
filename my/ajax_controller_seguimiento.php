@@ -229,9 +229,9 @@ function get_tipo_personal_by_division_detail() {
 
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
-		if(!empty($user->profile['tipo_personal'])) {
+		if(!empty($user->profile['personal'])) {
 			if($user->profile['zona'] == $zona && $user->profile['division'] == $division) {
-				$tipoPersonalArr[] = $user->profile['tipo_personal'];
+				$tipoPersonalArr[] = $user->profile['personal'];
 			}
 		}
 	}
