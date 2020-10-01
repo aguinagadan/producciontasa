@@ -128,10 +128,11 @@ function get_zonas_detail() {
 	$users = get_enrolled_users($context);
 
 	foreach($users as $key=>$user) {
-		profile_load_custom_fields($user);
-		if(!empty($user->profile['zona'])) {
-			$zonas[] = $user->profile['zona'];
-		}
+		//profile_load_custom_fields($user);
+		//if(!empty($user->profile['zona'])) {
+		//	$zonas[] = $user->profile['zona'];
+		//}
+		$zonas[] = $key;
 	}
 
 	$zonas = array_unique($zonas);
