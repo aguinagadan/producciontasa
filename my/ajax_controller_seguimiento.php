@@ -288,7 +288,7 @@ function get_personal_detail() {
 			if(
 				$user->profile['zona'] == $zona &&
 				$user->profile['division'] == $division &&
-				$user->profile['tipo_personal'] == $tipoPersonal
+				$user->profile['personal'] == $tipoPersonal
 			) {
 				$personalArr[$key]['id'] = $user->id;
 				$personalArr[$key]['firstname'] = $user->firstname;
