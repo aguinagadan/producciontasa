@@ -64,7 +64,7 @@ function get_courses_by_category($catId) {
 	$segModel = new SeguimientoModel();
 	$coursesArr = $segModel->GetCoursesByCategory($catId);
 	$returnHTML = '';
-	$progress = 0;
+	$progress = 50;
 
 	foreach($coursesArr as $course) {
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
@@ -315,6 +315,12 @@ function get_personal_detail() {
 
 	return $response;
 }
+
+function get_areas_funcionales_detail() {}
+
+function get_tipo_personal_by_area_funcional_detail() {}
+
+function get_personal_by_area_detail() {}
 
 function get_zonas_1_percentage($courseId) {
 	$course = get_course($courseId);

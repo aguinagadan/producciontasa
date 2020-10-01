@@ -958,12 +958,11 @@ function getSSCategories() {
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
 			$extraClass = 'cat-clickable';
-//		$value = getCoursesByCategoryProgress($cat);
 			$value = 50;
 		} else {
 			$extraStyle = '';
 			$extraClass = '';
-			$value = 0;
+			$value = 50;
 		}
 
 		$returnHTML .= '<div class="ss-container ss-main-container row ss-m-b-05">';
@@ -971,12 +970,6 @@ function getSSCategories() {
 		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($value) .'</div>';
 		$returnHTML .= '</div>';
-	}
-
-	foreach($categories as $category) {
-		$cat = \coursecat::get($category->id);
-		$children_courses = $cat->get_courses();
-		//$returnHTML .= getSSCoursesById($children_courses);
 	}
 
 	$returnHTML.= '<div class="modal fade" id="myModal" role="dialog">
