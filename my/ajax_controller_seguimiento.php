@@ -128,8 +128,9 @@ function get_zonas_detail() {
 	$users = get_enrolled_users($context);
 
 	foreach($users as $key=>$user) {
-		$categories = profile_get_user_fields_with_data_by_category($user->id);
-		$zona = $categories[2][3]->data;
+		//$categories = profile_get_user_fields_with_data_by_category($user->id);
+		profile_load_custom_fields($user);
+		//$zona = $categories[2][3]->data;
 		if(!empty($zona)) {
 			$zonas[] = $zona;
 		}
