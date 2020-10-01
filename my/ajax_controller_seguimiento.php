@@ -129,17 +129,13 @@ function get_zonas_detail() {
 
 	foreach($users as $key=>$user) {
 		$categories = profile_get_user_fields_with_data_by_category($user->id);
-		$zona = $categories[1][3]->data;
+		$zona = $categories[2][3]->data;
 		if(!empty($zona)) {
 			$zonas[] = $zona;
 		}
 	}
 
 	$zonas = array_unique($zonas);
-
-	echo '<pre>';
-	var_dump($zonas);
-	exit;
 
 	foreach($zonas as $zona) {
 		$progress = 0;
