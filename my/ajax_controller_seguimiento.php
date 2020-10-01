@@ -123,23 +123,17 @@ function get_zonas_detail() {
 	$returnHTML = '';
 	$zonas = array();
 
-	//$users = core_enrol_external::get_enrolled_users($courseId);
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
 	foreach($users as $key=>$user) {
 		//$categories = profile_get_user_fields_with_data_by_category($user->id);
 		profile_load_custom_fields($user);
-		//$zona = $categories[2][3]->data;
+		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			$zonas[] = $user->profile['zona'];
+			$zonas[] = $zona;
 		}
 	}
-
-	$zonas = array_unique($zonas);
-	echo '<pre>';
-	var_dump($zonas);
-	exit;
 
 	foreach($zonas as $zona) {
 		$progress = 0;
