@@ -132,11 +132,14 @@ function get_zonas_detail() {
 		profile_load_custom_fields($user);
 		//$zona = $categories[2][3]->data;
 		if(!empty($zona)) {
-			$zonas[] = $zona;
+			$zonas[] = $user->profile['zona'];
 		}
 	}
 
 	$zonas = array_unique($zonas);
+	echo '<pre>';
+	var_dump($zonas);
+	exit;
 
 	foreach($zonas as $zona) {
 		$progress = 0;
