@@ -255,7 +255,7 @@ function get_tipo_personal_by_division_detail() {
 //			}
 //		}
 
-//		$progress = round($progress/$contUsers);
+//	$progress = round($progress/$contUsers);
 		$progress = 50;
 
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
@@ -284,18 +284,20 @@ function get_personal_detail() {
 
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
-		if(!empty($user->profile['division'])) {
-			if(
-				$user->profile['zona'] == $zona &&
-				$user->profile['division'] == $division &&
-				$user->profile['personal'] == $tipoPersonal
-			) {
-				$personalArr[$key]['id'] = $user->id;
-				$personalArr[$key]['firstname'] = $user->firstname;
-				$personalArr[$key]['fullname'] = $user->fullname;
-			}
+		if(
+			$user->profile['zona'] == $zona &&
+			$user->profile['division'] == $division &&
+			$user->profile['personal'] == $tipoPersonal
+		) {
+			$personalArr[$key]['id'] = $user->id;
+			$personalArr[$key]['firstname'] = $user->firstname;
+			$personalArr[$key]['fullname'] = $user->fullname;
 		}
 	}
+
+	echo '<pre>';
+	var_dump($personalArr);
+	exit;
 
 	$personalArr = array_unique($personalArr);
 
