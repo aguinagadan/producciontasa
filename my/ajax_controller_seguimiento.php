@@ -135,6 +135,8 @@ function get_zonas_detail() {
 		}
 	}
 
+	$zonas = array_unique($zonas);
+
 	foreach($zonas as $zona) {
 		$progress = 0;
 		$contUsers = 0;
