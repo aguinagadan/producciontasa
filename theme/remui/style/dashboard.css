@@ -432,3 +432,6 @@ div.slide{
 .cc-adjust-margin {
     margin-left: 6.5%;
 }
+#loadingDiv img {
+    width: 100%;
+}

@@ -1040,6 +1040,7 @@ border-radius: 4px;">
 			<div class="row">
 				<div class="col" style="text-align: left; color: #154A7D; font-size: 15px;">Puedes dar clic en cualquier item para desplegar detalles</div>
 			</div>
+			<div id="loadingDiv" style="width: 83px;height: 29px;" class="col-sm-1 hidden"><img src="../theme/remui/pix/spinner.gif"></div>
 			<div class="row">
 				<div class="ss-breadcrumb col-sm row" style="text-align: left; margin: 2% 0 1% 0; color: #154A7D; font-size: 18px;">
 					<div class="main-clickable" style="cursor: pointer;">CATEGORÍAS</div>
