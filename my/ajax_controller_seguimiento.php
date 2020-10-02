@@ -94,7 +94,24 @@ function get_courses_by_category($catId) {
 function get_zonas_areas_detail() {
 	global $details;
 	$courseId = $details['courseId'];
+	$course = get_course($courseId);
 	$returnHTML = '';
+	$totalProgress = 0;
+	$totalZonas = 0;
+	$progress = 0;
+
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
+
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		$zona = $user->profile['zona'];
+		if(!empty($zona)) {
+			$progress = round(progress::get_course_progress_percentage($course, $user->id));
+			$totalProgress += $progress;
+			$totalZonas++;
+		}
+	}
 
 	$seguimientoDetails = array('Seguimiento por zonas', 'Seguimiento por área funcional');
 
@@ -103,7 +120,7 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = 50;
+			$progress = round($totalProgress/$totalZonas);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
