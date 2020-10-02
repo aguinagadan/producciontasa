@@ -26,14 +26,23 @@ try {
 		case 'ss-main-container-zonas-detail':
 			$returnArr = get_zonas_detail();
 			break;
+		case 'ss-main-container-areas-detail':
+			$returnArr = get_areas_funcionales_detail();
+			break;
 		case 'ss-main-container-division':
 			$returnArr = get_divisiones_detail();
 			break;
 		case 'ss-main-container-tipo-personal':
 			$returnArr = get_tipo_personal_by_division_detail();
 			break;
+		case 'ss-main-container-tipo-personal-area':
+			$returnArr = get_tipo_personal_by_area_funcional_detail();
+			break;
 		case 'ss-main-container-personal':
 			$returnArr = get_personal_detail();
+			break;
+		case 'ss-main-container-personal-area':
+			$returnArr = get_personal_by_area_detail();
 			break;
 	}
 } catch (Exception $e) {
@@ -316,11 +325,140 @@ function get_personal_detail() {
 	return $response;
 }
 
-function get_areas_funcionales_detail() {}
+function get_areas_funcionales_detail() {
+	global $details;
+	$courseId = $details['courseId'];
+	$returnHTML = '';
+	$areas = array();
 
-function get_tipo_personal_by_area_funcional_detail() {}
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
 
-function get_personal_by_area_detail() {}
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		$area = $user->profile['area_funcional'];
+		if(!empty($area)) {
+			$areas[] = $area;
+		}
+	}
+
+	$areas = array_unique($areas);
+
+	foreach($areas as $area) {
+		$progress = 0;
+		$contUsers = 0;
+		//$personaIds = getAreaProgress($course, $area, $enrolledUsersArray)['ids'];
+		$returnHTML.= '<div zona-name="zona-default-areas" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal-area" class="ss-container ss-main-container-areas-detail row ss-m-b-05">';
+		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
+		$returnHTML .= '<div area-name="'. $area .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal-area" class="col-sm element-clickable" style="cursor: pointer;">'. $area .'</div>';
+		//$progress = getAreaProgress($course, $area, $enrolledUsersArray)['progress'];
+		$progress = 50;
+		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
+		$returnHTML.= '</div>';
+	}
+
+	$response['status'] = true;
+	$response['data']['html'] = $returnHTML;
+
+	return $response;
+}
+
+function get_tipo_personal_by_area_funcional_detail() {
+	global $details;
+	$courseId = $details['courseId'];
+	$area = $details['area'];
+	$returnHTML = '';
+	$tipoPersonalArr = array();
+
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
+
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		if(!empty($user->profile['personal'])) {
+			if($user->profile['area_funcional'] == $area) {
+				$tipoPersonalArr[] = $user->profile['personal'];
+			}
+		}
+	}
+
+	$tipoPersonalArr = array_unique($tipoPersonalArr);
+
+	foreach($tipoPersonalArr as $tipoPersonal) {
+		$progress = 0;
+		$contUsers = 0;
+		//$personaIds = getTipoPersonalPorDivisionProgress($course, $division, $zona, $enrolledUsersArray)['ids'];
+		$returnHTML .= '<div area-name="' . $area . '" course-id="'. $courseId .'" data-open="ss-main-container-personal-area" class="ss-container ss-main-container-tipo-personal row ss-m-b-05">';
+		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
+		$returnHTML .= '<div tipo-personal-name="' . $tipoPersonal . '" area-name="' . $area . '" course-id="'. $courseId .'" data-open="ss-main-container-personal-area" class="col-sm element-clickable" style="cursor: pointer;">'. $tipoPersonal .'</div>';
+
+//		foreach($users as $user) {
+//			if(
+//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division  && $user['customfields'][6]['value'] == $tipoPersonal
+//			) {
+//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
+//				$contUsers++;
+//			}
+//		}
+
+//	$progress = round($progress/$contUsers);
+		$progress = 50;
+
+		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
+		$returnHTML .= '</div>';
+	}
+
+	$response['status'] = true;
+	$response['data']['html'] = $returnHTML;
+
+	return $response;
+}
+
+function get_personal_by_area_detail() {
+	global $details;
+
+	$courseId = $details['courseId'];
+	$course = get_course($courseId);
+	$area = $details['area'];
+	$tipoPersonal = $details['tipoPersonal'];
+	$returnHTML = '';
+	$personalArr = array();
+
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
+
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		if(
+			$user->profile['area_funcional'] == $area &&
+			$user->profile['personal'] == $tipoPersonal
+		) {
+			$personalArr[$key]['id'] = $user->id;
+			$personalArr[$key]['firstname'] = $user->firstname;
+			$personalArr[$key]['lastname'] = $user->lastname;
+			$personalArr[$key]['fullname'] = $user->fullname;
+		}
+	}
+
+	$personalArr = array_unique($personalArr);
+
+	foreach($personalArr as $personal) {
+		$returnHTML.= '<div zona-name="'. $tipoPersonal . $area .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">
+											<input class="personaIds" type="hidden" value="'.$personal['id'].'">
+											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-sm personal-clickable" style="cursor: pointer; font-size: 18px;" data-toggle="modal" data-target="#myModal">'. $personal['firstname'] . ' ' . $personal['lastname'] . '</div>
+											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-xs logo-mail-clickable" data-toggle="modal" data-target="#myModal" style="cursor: pointer;">
+													<img src="../theme/remui/pix/ic_email_24px.png">
+											</div>';
+		$progress = round(progress::get_course_progress_percentage($course, $personal['id']));
+		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
+		$returnHTML.= '</div>';
+	}
+
+	$response['status'] = true;
+	$response['data']['html'] = $returnHTML;
+
+	return $response;
+}
 
 function get_zonas_1_percentage($courseId) {
 	$course = get_course($courseId);

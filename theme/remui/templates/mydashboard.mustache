@@ -326,14 +326,16 @@ require(['theme_remui/loader'], function () {
         });
 
         function openDataSS(dataOpen, $this) {
-            var zona, division, tipoPersonal = '';
+            var zona, area, division, tipoPersonal = '';
             if($this.attr('zona-name')) {
                 zona = $this.attr('zona-name');
+            }
+            if($this.attr('area-name')) {
+                area = $this.attr('area-name');
             }
             if($this.attr('division-name')) {
                 division = $this.attr('division-name');
             }
-
             if($this.attr('tipo-personal-name')) {
                 tipoPersonal = $this.attr('tipo-personal-name');
             }
@@ -341,6 +343,7 @@ require(['theme_remui/loader'], function () {
             var data = {
                 courseId: $this.attr('course-id'),
                 zona: zona,
+                area: area,
                 division: division,
                 tipoPersonal: tipoPersonal,
                 request_type: dataOpen
