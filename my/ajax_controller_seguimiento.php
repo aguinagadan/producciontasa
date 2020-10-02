@@ -129,6 +129,7 @@ function get_zonas_areas_detail() {
 function get_zonas_detail() {
 	global $details;
 	$courseId = $details['courseId'];
+	$course = get_course($courseId);
 	$returnHTML = '';
 	$zonas = array();
 
