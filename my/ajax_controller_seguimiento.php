@@ -73,16 +73,21 @@ function get_courses_by_category($catId) {
 	$segModel = new SeguimientoModel();
 	$coursesArr = $segModel->GetCoursesByCategory($catId);
 	$returnHTML = '';
-	$progress = 50;
 
 	foreach($coursesArr as $course) {
+		$progress = 0;
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
 		$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
-		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progress,0) .'%</div>';
-		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progress) .'</div>';
+		$courseStats = \block_remuiblck\coursehandler::get_course_stats($course);
+
+		foreach($courseStats['enrolleduserstotal'] as $enrolledUser) {
+			$progress += round(progress::get_course_progress_percentage($course, $enrolledUser->id));
+		}
+		$progressAverage = $progress/count($courseStats['enrolleduserstotal']);
+		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progressAverage,0) .'%</div>';
+		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progressAverage) .'</div>';
 		$returnHTML .= '</div>';
 	}
-
 
 	$response['status'] = true;
 	$response['data'] = $coursesArr;
@@ -94,11 +99,12 @@ function get_courses_by_category($catId) {
 function get_zonas_areas_detail() {
 	global $details;
 	$courseId = $details['courseId'];
-	$course = get_course($courseId);
+	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$totalProgress = 0;
+	$totalProgressZonas = 0;
 	$totalZonas = 0;
-	$progress = 0;
+	$totalProgressAreas = 0;
+	$totalAreas = 0;
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -107,9 +113,15 @@ function get_zonas_areas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			$progress = round(progress::get_course_progress_percentage($course, $user->id));
-			$totalProgress += $progress;
+			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
+			$totalProgressZonas += $progressZonas;
 			$totalZonas++;
+		}
+		$area = $user->profile['area_funcional'];
+		if(!empty($area)) {
+			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
+			$totalProgressAreas += $progressAreas;
+			$totalAreas++;
 		}
 	}
 
@@ -120,12 +132,12 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round($totalProgress/$totalZonas);
+			$progress = round($totalProgressZonas/$totalZonas);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = 50;
+			$progress = round($totalProgressAreas/$totalAreas);
 		}
 
 		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
@@ -146,7 +158,7 @@ function get_zonas_areas_detail() {
 function get_zonas_detail() {
 	global $details;
 	$courseId = $details['courseId'];
-	$course = get_course($courseId);
+	$course = getCourseById($courseId);
 	$returnHTML = '';
 	$zonas = array();
 
@@ -183,6 +195,7 @@ function get_zonas_detail() {
 function get_divisiones_detail() {
 	global $details;
 	$courseId = $details['courseId'];
+	$course = getCourseById($courseId);
 	$zona = $details['zona'];
 	$returnHTML = '';
 	$divisiones = array();
@@ -194,32 +207,21 @@ function get_divisiones_detail() {
 		profile_load_custom_fields($user);
 		if(!empty($user->profile['division'])) {
 			if($user->profile['zona'] == $zona) {
-				$divisiones[] = $user->profile['division'];
+				$division = $user->profile['division'];
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$divisiones[$division]['nombre'] = $division;
+				$divisiones[$division]['progreso'][] = $progress;
 			}
 		}
 	}
 
-	$divisiones = array_unique($divisiones);
-
 	foreach($divisiones as $division) {
-		$progress = 0;
-		$contUsers = 0;
 		//$personaIds = getDivisionesPorZonaProgress($course, $zona, $enrolledUsersArray)['ids'];
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal" class="ss-container ss-main-container-division row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
-		$returnHTML .= '<div division-name="'. $division . '" zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $division .'</div>';
-//
-//		foreach($users as $user) {
-//			if(
-//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division) {
-//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-//				$contUsers++;
-//			}
-//		}
+		$returnHTML .= '<div division-name="'. $division['nombre'] . '" zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $division['nombre'] .'</div>';
 
-		//$progress = round($progress/$contUsers);
-		$progress = 50;
-
+		$progress = round(array_sum($division['progreso'])/count($division['progreso']));
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML .= '</div>';
 	}
@@ -232,11 +234,12 @@ function get_divisiones_detail() {
 
 function get_tipo_personal_by_division_detail() {
 	global $details;
-	$courseId = $details['courseId'];
-	$zona = $details['zona'];
-	$division = $details['division'];
 	$returnHTML = '';
 	$tipoPersonalArr = array();
+	$courseId = $details['courseId'];
+	$course = getCourseById($courseId);
+	$zona = $details['zona'];
+	$division = $details['division'];
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -245,33 +248,21 @@ function get_tipo_personal_by_division_detail() {
 		profile_load_custom_fields($user);
 		if(!empty($user->profile['personal'])) {
 			if($user->profile['zona'] == $zona && $user->profile['division'] == $division) {
-				$tipoPersonalArr[] = $user->profile['personal'];
+				$tipoPersonal = $user->profile['personal'];
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$tipoPersonalArr[$tipoPersonal]['nombre'] = $tipoPersonal;
+				$tipoPersonalArr[$tipoPersonal]['progreso'][] = $progress;
 			}
 		}
 	}
 
-	$tipoPersonalArr = array_unique($tipoPersonalArr);
-
 	foreach($tipoPersonalArr as $tipoPersonal) {
-		$progress = 0;
-		$contUsers = 0;
 		//$personaIds = getTipoPersonalPorDivisionProgress($course, $division, $zona, $enrolledUsersArray)['ids'];
 		$returnHTML .= '<div zona-name="' . $zona . '" course-id="'. $courseId .'" data-open="ss-main-container-personal" class="ss-container ss-main-container-tipo-personal row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
-		$returnHTML .= '<div tipo-personal-name="' . $tipoPersonal . '" division-name="' . $division . '" zona-name="' . $zona . '" course-id="'. $courseId .'" data-open="ss-main-container-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $tipoPersonal .'</div>';
+		$returnHTML .= '<div tipo-personal-name="' . $tipoPersonal['nombre'] . '" division-name="' . $division . '" zona-name="' . $zona . '" course-id="'. $courseId .'" data-open="ss-main-container-personal" class="col-sm element-clickable" style="cursor: pointer;">'. $tipoPersonal['nombre'] .'</div>';
 
-//		foreach($users as $user) {
-//			if(
-//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division  && $user['customfields'][6]['value'] == $tipoPersonal
-//			) {
-//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-//				$contUsers++;
-//			}
-//		}
-
-//	$progress = round($progress/$contUsers);
-		$progress = 50;
-
+		$progress = round(array_sum($tipoPersonal['progreso'])/count($tipoPersonal['progreso']));
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML .= '</div>';
 	}
@@ -310,8 +301,6 @@ function get_personal_detail() {
 		}
 	}
 
-	$personalArr = array_unique($personalArr);
-
 	foreach($personalArr as $personal) {
 		$returnHTML.= '<div zona-name="'. $tipoPersonal . $division . $zona .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">
 											<input class="personaIds" type="hidden" value="'.$personal['id'].'">
@@ -332,10 +321,10 @@ function get_personal_detail() {
 
 function get_areas_funcionales_detail() {
 	global $details;
-	$courseId = $details['courseId'];
-	$returnHTML = '';
 	$areas = array();
-
+	$returnHTML = '';
+	$courseId = $details['courseId'];
+	$course = getCourseById($courseId);
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
@@ -343,21 +332,19 @@ function get_areas_funcionales_detail() {
 		profile_load_custom_fields($user);
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
-			$areas[] = $area;
+			$progress = round(progress::get_course_progress_percentage($course, $user->id));
+			$areas[$area]['nombre'] = $area;
+			$areas[$area]['progreso'][] = $progress;
 		}
 	}
 
-	$areas = array_unique($areas);
-
 	foreach($areas as $area) {
-		$progress = 0;
-		$contUsers = 0;
 		//$personaIds = getAreaProgress($course, $area, $enrolledUsersArray)['ids'];
 		$returnHTML.= '<div zona-name="zona-default-areas" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal-area" class="ss-container ss-main-container-areas-detail row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
-		$returnHTML .= '<div area-name="'. $area .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal-area" class="col-sm element-clickable" style="cursor: pointer;">'. $area .'</div>';
-		//$progress = getAreaProgress($course, $area, $enrolledUsersArray)['progress'];
-		$progress = 50;
+		$returnHTML .= '<div area-name="'. $area['nombre'] .'" course-id="'. $courseId .'" data-open="ss-main-container-tipo-personal-area" class="col-sm element-clickable" style="cursor: pointer;">'. $area['nombre'] .'</div>';
+
+		$progress = round(array_sum($area['progreso'])/count($area['progreso']));
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML.= '</div>';
 	}
@@ -374,6 +361,7 @@ function get_tipo_personal_by_area_funcional_detail() {
 	$area = $details['area'];
 	$returnHTML = '';
 	$tipoPersonalArr = array();
+	$course = getCourseById($courseId);
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -382,32 +370,21 @@ function get_tipo_personal_by_area_funcional_detail() {
 		profile_load_custom_fields($user);
 		if(!empty($user->profile['personal'])) {
 			if($user->profile['area_funcional'] == $area) {
-				$tipoPersonalArr[] = $user->profile['personal'];
+				$tipoPersonal = $user->profile['personal'];
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$tipoPersonalArr[$tipoPersonal]['nombre'] = $tipoPersonal;
+				$tipoPersonalArr[$tipoPersonal]['progreso'][] = $progress;
 			}
 		}
 	}
 
-	$tipoPersonalArr = array_unique($tipoPersonalArr);
-
 	foreach($tipoPersonalArr as $tipoPersonal) {
-		$progress = 0;
-		$contUsers = 0;
 		//$personaIds = getTipoPersonalPorDivisionProgress($course, $division, $zona, $enrolledUsersArray)['ids'];
 		$returnHTML .= '<div area-name="' . $area . '" course-id="'. $courseId .'" data-open="ss-main-container-personal-area" class="ss-container ss-main-container-tipo-personal row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div tipo-personal-name="' . $tipoPersonal . '" area-name="' . $area . '" course-id="'. $courseId .'" data-open="ss-main-container-personal-area" class="col-sm element-clickable" style="cursor: pointer;">'. $tipoPersonal .'</div>';
 
-//		foreach($users as $user) {
-//			if(
-//				$user['customfields'][3]['value'] == $zona && $user['customfields'][4]['value'] == $division  && $user['customfields'][6]['value'] == $tipoPersonal
-//			) {
-//				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-//				$contUsers++;
-//			}
-//		}
-
-//	$progress = round($progress/$contUsers);
-		$progress = 50;
+		$progress = round(array_sum($tipoPersonal['progreso'])/count($tipoPersonal['progreso']));
 
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
 		$returnHTML .= '</div>';
@@ -445,8 +422,6 @@ function get_personal_by_area_detail() {
 		}
 	}
 
-	$personalArr = array_unique($personalArr);
-
 	foreach($personalArr as $personal) {
 		$returnHTML.= '<div zona-name="'. $tipoPersonal . $area .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">
 											<input class="personaIds" type="hidden" value="'.$personal['id'].'">
@@ -465,35 +440,6 @@ function get_personal_by_area_detail() {
 	return $response;
 }
 
-function get_zonas_1_percentage($courseId) {
-	$course = get_course($courseId);
-	$users = core_enrol_external::get_enrolled_users($courseId);
-	$totalPercentage = 0;
-	$totalPercentageCount = 0;
-
-	foreach($users as $user) {
-		//3: zonas
-		if(!empty($user['customfields'][3]['value'])) {
-			$zonas[] = $user['customfields'][3]['value'];
-		}
-	}
-
-	$zonas = array_unique($zonas);
-
-	foreach($zonas as $zona) {
-		$progress = 0;
-		$contUsers = 0;
-
-		foreach($users as $user) {
-			if($user['customfields'][3]['value'] == $zona) {
-				$progress += round(progress::get_course_progress_percentage($course, $user['id']));
-				$contUsers++;
-			}
-		}
-		$progress = round($progress/$contUsers);
-		$totalPercentage += $progress;
-		$totalPercentageCount++;
-	}
-
-	return round($totalPercentage/$totalPercentageCount);
+function getCourseById($courseId) {
+	return get_course($courseId);
 }
