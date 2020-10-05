@@ -343,3 +343,18 @@ body#page-user-profile {
     .cc-course-container-min {margin: auto;}
     .cc-all-cursos-block {margin: auto !important;}
 }
+.labelLogin1 {
+    text-align: left;
+    font: normal normal 600 15px/25px Catamaran;
+    letter-spacing: 0;
+    color: #58656C;
+    opacity: 1;
+}
+
+.volverEnviarCodigo {
+    text-align: right;
+    font: normal normal normal 14px/30px Catamaran;
+    letter-spacing: 0;
+    color: #5cbdeb;
+    opacity: 1;
+}
