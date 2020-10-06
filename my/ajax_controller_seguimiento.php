@@ -81,7 +81,7 @@ function get_courses_by_category($catId) {
 
 		if($courseStats['enrolledusers'] == 0) {
 			$progress = 0;
-			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm">'.$course->fullname.'</div>';
+			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm" style="font-size: 18px;">'.$course->fullname.'</div>';
 		} else {
 			$progress    = round(($courseStats['studentcompleted']/$courseStats['enrolledusers'])*100);
 			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
