@@ -97,10 +97,9 @@ function get_zonas_areas_detail() {
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$completedZonas = 0;
-	$totalZonas = 0;
-	$completedAreas = 0;
+	$contZonasCompletados = $contAreasCompletados = 0;
 	$totalAreas = 0;
+	$zonas = $areas = array();
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -109,10 +108,11 @@ function get_zonas_areas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			$totalZonas++;
 			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
 			if($progressZonas == 100) {
-				$completedZonas++;
+				$zonas[$zona]['completado']++;
+			} else {
+				$zonas[$zona]['no_completado']++;
 			}
 		}
 		$area = $user->profile['area_funcional'];
@@ -120,8 +120,26 @@ function get_zonas_areas_detail() {
 			$totalAreas++;
 			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
 			if($progressAreas == 100) {
-				$completedAreas++;
+				$areas[$area]['completado']++;
+			} else {
+				$areas[$area]['no_completado']++;
 			}
+		}
+	}
+
+	$totalZonas = count($zonas);
+
+	foreach($zonas as $zona) {
+		if(isset($zona['completado'])) {
+			$contZonasCompletados++;
+		}
+	}
+
+	$totalAreas = count($areas);
+
+	foreach($areas as $area) {
+		if(isset($area['completado'])) {
+			$contAreasCompletados++;
 		}
 	}
 
@@ -132,12 +150,12 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round(($completedZonas/$totalZonas)*100);
+			$progress =round(($contZonasCompletados/$totalZonas)*100);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round(($completedAreas/$totalAreas)*100);
+			$progress = round(($contAreasCompletados/$totalAreas)*100);
 		}
 
 		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
