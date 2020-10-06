@@ -432,22 +432,22 @@ require(['theme_remui/loader'], function () {
         window.location = page;
         });
 
-        $(document).ready(function() {
-            var data = {
-                request_type: 'load_data'
-            };
+<!--        $(document).ready(function() {-->
+<!--            var data = {-->
+<!--                request_type: 'load_data'-->
+<!--            };-->
 
-            $.ajax({
-                type: "POST",
-                url: "ajax_controller_seguimiento.php",
-                data: data,
-                beforeSend: function() {
-                    //$('#loadingDiv').show();
-                },
-                success: function(res) {
-                    console.log(res.data);
-                }
-            });
-        });
+<!--            $.ajax({-->
+<!--                type: "POST",-->
+<!--                url: "ajax_controller_seguimiento.php",-->
+<!--                data: data,-->
+<!--                beforeSend: function() {-->
+<!--                    //$('#loadingDiv').show();-->
+<!--                },-->
+<!--                success: function(res) {-->
+<!--                    console.log(res.data);-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
 
 {{/js}}
