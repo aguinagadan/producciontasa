@@ -73,20 +73,15 @@ function get_courses_by_category($catId) {
 	$segModel = new SeguimientoModel();
 	$coursesArr = $segModel->GetCoursesByCategory($catId);
 	$returnHTML = '';
+	$progress = 0;
 
 	foreach($coursesArr as $course) {
-		$progress = 0;
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
 		$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
-		//$courseStats = \block_remuiblck\coursehandler::get_course_stats($course);
-
-		//foreach($courseStats['enrolleduserstotal'] as $enrolledUser) {
-		//	$progress += round(progress::get_course_progress_percentage($course, $enrolledUser->id));
-		//}
-		//$progressAverage = $progress/count($courseStats['enrolleduserstotal']);
-		$progressAverage = 0;
-		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progressAverage,0) .'%</div>';
-		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progressAverage) .'</div>';
+		//$courseStats = getCourseStats($course);
+		//$progress = $courseStats['studentcompleted']/count($courseStats['enrolledusers']);
+		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progress,0) .'%</div>';
+		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progress) .'</div>';
 		$returnHTML .= '</div>';
 	}
 
@@ -102,10 +97,10 @@ function get_zonas_areas_detail() {
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$totalProgressZonas = 0;
-	$totalZonas = 0;
-	$totalProgressAreas = 0;
-	$totalAreas = 0;
+	$notCZonas = 0;
+	$progressTZonas = 0;
+	$notCAreas = 0;
+	$progressTAreas = 0;
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -114,15 +109,19 @@ function get_zonas_areas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
+			$progressTZonas++;
 			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
-			$totalProgressZonas += $progressZonas;
-			$totalZonas++;
+			if($progressZonas<100) {
+				$notCZonas++;
+			}
 		}
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
+			$progressTAreas++;
 			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
-			$totalProgressAreas += $progressAreas;
-			$totalAreas++;
+			if($progressAreas<100) {
+				$notCAreas++;
+			}
 		}
 	}
 
@@ -133,12 +132,12 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round($totalProgressZonas/$totalZonas);
+			$progress = round($notCZonas/$progressTZonas);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round($totalProgressAreas/$totalAreas);
+			$progress = round($notCAreas/$progressTAreas);
 		}
 
 		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
@@ -443,4 +442,8 @@ function get_personal_by_area_detail() {
 
 function getCourseById($courseId) {
 	return get_course($courseId);
+}
+
+function getCourseStats($course) {
+	return \block_remuiblck\coursehandler::get_course_stats($course);
 }
