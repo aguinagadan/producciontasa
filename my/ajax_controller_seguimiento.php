@@ -78,12 +78,13 @@ function get_courses_by_category($catId) {
 		$progress = 0;
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
 		$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
-		$courseStats = \block_remuiblck\coursehandler::get_course_stats($course);
+		//$courseStats = \block_remuiblck\coursehandler::get_course_stats($course);
 
-		foreach($courseStats['enrolleduserstotal'] as $enrolledUser) {
-			$progress += round(progress::get_course_progress_percentage($course, $enrolledUser->id));
-		}
-		$progressAverage = $progress/count($courseStats['enrolleduserstotal']);
+		//foreach($courseStats['enrolleduserstotal'] as $enrolledUser) {
+		//	$progress += round(progress::get_course_progress_percentage($course, $enrolledUser->id));
+		//}
+		//$progressAverage = $progress/count($courseStats['enrolleduserstotal']);
+		$progressAverage = 0;
 		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progressAverage,0) .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progressAverage) .'</div>';
 		$returnHTML .= '</div>';
