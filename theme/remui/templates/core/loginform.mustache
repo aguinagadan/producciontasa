@@ -93,6 +93,14 @@
     }
 }}
 
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
+<!--<script src="/__/firebase/6.2.0/firebase-firestore.js"></script>-->
+
 <div class="row justify-content-center">
     <div class="page-brand-info">
         {{#loginpage_context}}
@@ -174,7 +182,7 @@
                                     <div class="rememberpass mt-3 checkbox-custom">
                                         <input type="checkbox" name="rememberusername" id="rememberusername" value="1" {{#username}}checked="checked"{{/username}} />
                                         <label for="rememberusername">{{#str}} rememberusername, admin {{/str}}</label>
-                                        <a class="float-right" href="{{forgotpasswordurl}}">{{# str }} forgotpassword, theme_remui {{/ str }}</a> 
+                                        <a class="float-right" href="{{forgotpasswordurl}}">{{# str }} forgotpassword, theme_remui {{/ str }}</a>
                                     </div>
                                 {{/rememberusername}}
 
@@ -199,6 +207,13 @@
                                     </form>
                                 </div>
                             {{/canloginasguest}}
+
+                            <div class="mt-2">
+                                <div class="mt-5"> IDENTIFÍQUESE USANDO SU CÓDIGO DE TRABAJADOR</div>
+                                <div class="mt-3">
+                                    <button id="btnCodigoTrabajador" class="btn btn-secondary btn-block" type="submit">CÓDIGO DE TRABAJADOR</button>
+                                </div>
+                            </div>
 
                             {{#hasidentityproviders}}
                                 <h6 class="mt-3">{{#str}} potentialidps, auth {{/str}}</h6>
@@ -250,6 +265,42 @@
                             </footer>
                         </div>
                     </div>
+                    <div id="customLoginTASA" class="hidden">
+                        <div class="labelLogin1">INGRESA USANDO TUS DATOS</div>
+                        <div class="mt-4">
+                            <input type="text" name="dniTASA" id="dniTASA"
+                                   class="form-control"
+                                   placeholder="DNI">
+                        </div>
+                        <div class="mt-4">
+                            <input type="password" name="codigoTrabajadorTASA" id="codigoTrabajadorTASA"
+                                   class="form-control"
+                                   placeholder="CÓDIGO DE TRABAJADOR">
+                        </div>
+                        <div class="mt-4">
+                            <div  id="recaptcha-container"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-4" id="btnLoginTASA">Acceder</button>
+                    </div>
+                    <div id="customLoginTASASMS" class="hidden">
+                        <div class="labelLogin1">Ingresa el código</div>
+                        <div class="mt-4">
+                            Te enviamos un código de verificación al celular que termina en <label id="terminaPhone" style="font-weight: bold"></label>
+                        </div>
+                        <div class="mt-4">
+                            <input type="text" name="tokenSMS" id="tokenSMS"
+                                   class="form-control"
+                                   placeholder="Código">
+                        </div>
+                        <div id="volverEnviarCodigo" class="volverEnviarCodigo" style="cursor: pointer;">
+                            Volver a enviar código
+                        </div>
+                        <input id="dniT" type="hidden" value="">
+                        <input id="codigoT" type="hidden" value="">
+                        <input id="phoneNumber" type="hidden" value="">
+                        <button type="submit" class="btn btn-primary btn-block mt-4" id="btnEnterMoodleTASA">Acceder</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -257,6 +308,115 @@
 </div>
 
 {{#js}}
+    $('#btnCodigoTrabajador').on('click', function(){
+        $('#primaryLoginTASA').hide();
+        $('#customLoginTASA').show();
+    });
+
+    $('#btnLoginTASA').on('click', function(){
+    var dni = $('#dniTASA').val();
+    var codigo = $('#codigoTrabajadorTASA').val();
+
+    var formValues = {
+        dni: dni,
+        codigo: codigo
+    };
+
+    $.ajax ({
+        url: 'ajax_controller_get_number.php',
+        type: 'POST',
+        data: formValues,
+        success: function(res) {
+            var phoneNumber = res.data;
+            $('#dniT').val(dni);
+            $('#codigoT').val(codigo);
+            $('#phoneNumber').val(phoneNumber);
+            phoneAuth(phoneNumber);
+            $('#terminaPhone').text(phoneNumber.substr(phoneNumber.length - 4));
+        },
+        error: function() {
+            alert("Ha ocurrido un error");
+        },
+    });
+
+    $('#customLoginTASA').hide();
+        $('#customLoginTASASMS').show();
+    });
+
+    $('#volverEnviarCodigo').on('click', function() {
+        phoneAuth($('#phoneNumber').val());
+    });
+
+    $('#btnEnterMoodleTASA').on('click', function(){
+        codeverify();
+    });
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+        apiKey: "AIzaSyC5UYlZv66TnOfTIkCe0ixJyB3aGrZqt4E",
+        authDomain: "t4s4sms.firebaseapp.com",
+        databaseURL: "https://t4s4sms.firebaseio.com",
+        projectId: "t4s4sms",
+        storageBucket: "t4s4sms.appspot.com",
+        messagingSenderId: "344655128766",
+        appId: "1:344655128766:web:c24560eca794399100d6ef",
+        measurementId: "G-5B3ZP2YHQK"
+    };
+
+    //Initialize  Firebase
+    firebase.initializeApp(firebaseConfig);
+    //firebase.analytics();
+
+    window.onload=function() {
+        render();
+    }
+
+    function render() {
+        window.recaptchaVerifier  = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+        recaptchaVerifier.render();
+    }
+
+    function phoneAuth(number) {
+        //captura nro cel
+        var appVerifier = window.recaptchaVerifier;
+        firebase.auth().signInWithPhoneNumber(number, appVerifier).then(function (confirmationResult) {
+            window.confirmationResult = confirmationResult;
+            coderesult = confirmationResult;
+            console.log(coderesult);
+            alert("Mensaje enviado");
+        }).catch(function(error){
+            alert(error.message);
+        })
+    }
+
+    function codeverify() {
+        var code = document.getElementById('tokenSMS').value;
+
+        var formValues = {
+            dni: $('#dniT').val(),
+            codigo: $('#codigoT').val(),
+        };
+
+        $.ajax({
+            url: 'loginTASA.php',
+            data: formValues,
+            type: 'POST',
+            success: function(res) {
+                confirmationResult.confirm(code).then(function (result) {
+                alert("REGISTRO EXITOSO");
+                var user = result.user;
+                console.log(user);
+                }).catch(function(error){
+                    alert(error.message);
+                })
+                window.location = 'http://52.0.250.170/moodle';
+            },
+                error: function() {
+                alert("Ha ocurrido un error");
+            }
+        });
+    }
     {{#error}}
         require(['jquery'], function($) {
             $('#loginerrormessage').focus();
