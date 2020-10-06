@@ -97,10 +97,10 @@ function get_zonas_areas_detail() {
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$notCZonas = 0;
-	$progressTZonas = 0;
-	$notCAreas = 0;
-	$progressTAreas = 0;
+	$completedZonas = 0;
+	$totalZonas = 0;
+	$completedAreas = 0;
+	$totalAreas = 0;
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -109,18 +109,18 @@ function get_zonas_areas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			$progressTZonas++;
+			$totalZonas++;
 			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
-			if($progressZonas<100) {
-				$notCZonas++;
+			if($progressZonas == 100) {
+				$completedZonas++;
 			}
 		}
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
-			$progressTAreas++;
+			$totalAreas++;
 			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
-			if($progressAreas<100) {
-				$notCAreas++;
+			if($progressAreas == 100) {
+				$completedAreas++;
 			}
 		}
 	}
@@ -132,12 +132,12 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round($notCZonas/$progressTZonas);
+			$progress = round($completedZonas/$totalZonas);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round($notCAreas/$progressTAreas);
+			$progress = round($completedAreas/$totalAreas);
 		}
 
 		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
