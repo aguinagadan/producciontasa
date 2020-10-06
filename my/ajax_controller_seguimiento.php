@@ -17,6 +17,9 @@ try {
 	$details = $_POST;
 	$returnArr = array();
 	switch ($details['request_type']) {
+		case 'load_data':
+			$returnArr = loadData();
+			break;
 		case 'get_courses_by_category':
 			$returnArr = get_courses_by_category($details['catId']);
 			break;
@@ -53,6 +56,44 @@ try {
 header('Content-type: application/json');
 echo json_encode($returnArr);
 exit();
+
+function loadData() {
+	global $DB;
+
+	$response = $usersArr = array();
+	$progressAVG = 0;
+
+	$categories = $DB->get_records('course_categories');
+
+	foreach ($categories as $category) {
+		$cat = \coursecat::get($category->id);
+		$coursesArr = $cat->get_courses();
+
+		foreach ($coursesArr as $course) {
+			$courseProgress = 0;
+			$context = CONTEXT_COURSE::instance($course->id);
+			$users = get_enrolled_users($context);
+			$usersArr[$category->id][$course->id]['course_name'] = $course->fullname;
+			foreach ($users as $key => $user) {
+				$user->progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$courseProgress += $user->progress;
+				$users[$key] = $user;
+				profile_load_custom_fields($users[$key]);
+			}
+
+			if(count($users) != 0) {
+				$progressAVG = $courseProgress / count($users);
+			}
+
+			$usersArr[$category->id][$course->id]['course_progress_avg'] = round($progressAVG);
+			$usersArr[$category->id][$course->id]['users'] = $users;
+		}
+	}
+
+	$response['status'] = true;
+	$response['data'] = $usersArr;
+	return $response;
+}
 
 function getProgressBarDetailSeguimientoHtml($value, $courseId=null) {
 	$returnHTML = '<div course-id="'. $courseId .'" class="element-progress-bar col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';

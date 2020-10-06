@@ -431,4 +431,23 @@ require(['theme_remui/loader'], function () {
         var page = "excel.php";
         window.location = page;
         });
+
+        $(document).ready(function() {
+            var data = {
+                request_type: 'load_data'
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "ajax_controller_seguimiento.php",
+                data: data,
+                beforeSend: function() {
+                    //$('#loadingDiv').show();
+                },
+                success: function(res) {
+                    console.log(res.data);
+                }
+            });
+        });
+
 {{/js}}
