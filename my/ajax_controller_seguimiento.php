@@ -97,7 +97,7 @@ function get_zonas_areas_detail() {
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$contZonasCompletados = $contAreasCompletados = 0;
+	$contZonasCompletados = $contAreasCompletados = $contZonasNoCompletados = $contAreasNoCompletados = 0;
 	$totalAreas = 0;
 	$zonas = $areas = array();
 
@@ -127,19 +127,21 @@ function get_zonas_areas_detail() {
 		}
 	}
 
-	$totalZonas = count($zonas);
-
 	foreach($zonas as $zona) {
 		if(isset($zona['completado'])) {
-			$contZonasCompletados++;
+			$contZonasCompletados += $zona['completado'];
+		}
+		if(isset($zona['no_completado'])) {
+			$contZonasNoCompletados += $zona['no_completado'];
 		}
 	}
 
-	$totalAreas = count($areas);
-
 	foreach($areas as $area) {
 		if(isset($area['completado'])) {
-			$contAreasCompletados++;
+			$contAreasCompletados += $area['completado'];
+		}
+		if(isset($zona['no_completado'])) {
+			$contAreasNoCompletados += $area['no_completado'];
 		}
 	}
 
@@ -150,12 +152,12 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress =round(($contZonasCompletados/$totalZonas)*100);
+			$progress =round(($contZonasCompletados/($contZonasCompletados+$contZonasNoCompletados))*100);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round(($contAreasCompletados/$totalAreas)*100);
+			$progress = round(($contAreasCompletados/($contAreasCompletados+$contAreasNoCompletados))*100);
 		}
 
 		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
