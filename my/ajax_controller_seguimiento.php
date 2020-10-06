@@ -77,9 +77,15 @@ function get_courses_by_category($catId) {
 
 	foreach($coursesArr as $course) {
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
-		$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
 		$courseStats = getCourseStats($course);
-		$progress    = round(($courseStats['studentcompleted']/$courseStats['enrolledusers'])*100);
+
+		if($courseStats['enrolledusers'] == 0) {
+			$progress = 0;
+			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm">'.$course->fullname.'</div>';
+		} else {
+			$progress    = round(($courseStats['studentcompleted']/$courseStats['enrolledusers'])*100);
+			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
+		}
 		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progress,0) .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progress) .'</div>';
 		$returnHTML .= '</div>';
