@@ -312,6 +312,9 @@ require(['theme_remui/loader'], function () {
                 type: "POST",
                 url: "ajax_controller_seguimiento.php",
                 data: data,
+                beforeSend: function() {
+                    $('#loadingDiv').show();
+                },
                 success: function(res) {
                     var elementToShow = $.parseHTML(res.data.html);
                     $('.carta-general').find('img').css('opacity', 0.5);
@@ -321,6 +324,7 @@ require(['theme_remui/loader'], function () {
                     $('.ss-container').hide();
                     $('#seguimiento-content').append(elementToShow);
                     addBreadcrumb(currentElement);
+                    $('#loadingDiv').hide();
                 }
             });
         });
