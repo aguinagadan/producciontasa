@@ -122,9 +122,10 @@ function get_courses_by_category($catId) {
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
 
 		$new = array();
-		$total = count($DB->get_records('course_completions',array('course'=>$course->id)));
+		$totalData = $DB->get_records_sql("select c.userid from {course_completions} c where c.course = ?", array($course->id));
+		$total = count($totalData);
 
-		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND completion > 0", array($course->id));
+		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND c.completion > 0", array($course->id));
 
 		foreach($modules as $mod) {
 			$new[] = $mod->id;
@@ -136,10 +137,8 @@ function get_courses_by_category($catId) {
 		$query = "select c.userid, COUNT(c.userid) as cont from {course_modules_completion} c where c.completionstate>0 AND c.coursemoduleid in $instring GROUP BY userid";
 		$results = $DB->get_records_sql($query);
 
-		$context = context_course::instance($course->id);
-
 		foreach ($results as $res) {
-			if(is_enrolled($context, $res->userid)) {
+			if(in_array($res->userid, $totalData)) {
 				if($res->cont == $cantidadModulos) {
 					$contCompleted++;
 				}
