@@ -942,8 +942,10 @@ function getCoursePercentage($children_courses) {
 		$results = $DB->get_records_sql($query);
 
 		foreach ($results as $res) {
-			if($res->cont == $cantidadModulos) {
-				$contCompleted++;
+			if(is_enrolled(context_course::instance($course->id), $res->userid)) {
+				if ($res->cont == $cantidadModulos) {
+					$contCompleted++;
+				}
 			}
 		}
 		if($total == 0) {
