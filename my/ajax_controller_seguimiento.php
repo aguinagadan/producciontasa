@@ -177,7 +177,7 @@ function get_zonas_areas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			//$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
+			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
 			if($progressZonas == 100) {
 				$zonas[$zona]['completado']++;
 			} else {
@@ -187,7 +187,7 @@ function get_zonas_areas_detail() {
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
 			$totalAreas++;
-			//$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
+			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
 			if($progressAreas == 100) {
 				$areas[$area]['completado']++;
 			} else {
@@ -259,7 +259,7 @@ function get_zonas_detail() {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 		if(!empty($zona)) {
-			//$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
+			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
 			$zonas[$zona]['nombre'] = $zona;
 			$zonas[$zona]['total']++;
 			if($progressZonas == 100) {
@@ -309,7 +309,7 @@ function get_divisiones_detail() {
 		if(!empty($user->profile['division'])) {
 			if($user->profile['zona'] == $zona) {
 				$division = $user->profile['division'];
-				//$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
 				$divisiones[$division]['nombre'] = $division;
 				$divisiones[$division]['total']++;
 				if($progress == 100) {
@@ -361,7 +361,7 @@ function get_tipo_personal_by_division_detail() {
 			if($user->profile['zona'] == $zona && $user->profile['division'] == $division) {
 				$totalTipo++;
 				$tipoPersonal = $user->profile['personal'];
-				//$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
 				$tipoPersonalArr[$tipoPersonal]['nombre'] = $tipoPersonal;
 				$tipoPersonalArr[$tipoPersonal]['total']++;
 				if($progress == 100) {
@@ -455,7 +455,7 @@ function get_areas_funcionales_detail() {
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
 			$totalAreas++;
-			//$progress = round(progress::get_course_progress_percentage($course, $user->id));
+			$progress = round(progress::get_course_progress_percentage($course, $user->id));
 			$areas[$area]['nombre'] = $area;
 			$areas[$area]['total']++;
 			if($progress == 100) {
@@ -505,7 +505,7 @@ function get_tipo_personal_by_area_funcional_detail() {
 			if($user->profile['area_funcional'] == $area) {
 				$totalTipo++;
 				$tipoPersonal = $user->profile['personal'];
-				//$progress = round(progress::get_course_progress_percentage($course, $user->id));
+				$progress = round(progress::get_course_progress_percentage($course, $user->id));
 				$tipoPersonalArr[$tipoPersonal]['nombre'] = $tipoPersonal;
 				$tipoPersonalArr[$tipoPersonal]['total']++;
 				if($progress == 100) {
