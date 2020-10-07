@@ -123,6 +123,7 @@ function get_courses_by_category($catId) {
 
 		$new = array();
 		$totalData = $DB->get_records_sql("select c.userid from {course_completions} c where c.course = ?", array($course->id));
+		$totalData = array_keys($totalData);
 		$total = count($totalData);
 
 		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND c.completion > 0", array($course->id));

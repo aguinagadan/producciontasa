@@ -929,6 +929,7 @@ function getCoursePercentage($children_courses) {
 		$new = array();
 		$contCompleted = 0;
 		$totalData = $DB->get_records_sql("select c.userid from {course_completions} c where c.course = ?", array($course->id));
+		$totalData = array_keys($totalData);
 		$total = count($totalData);
 		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND completion > 0", array($course->id));
 
