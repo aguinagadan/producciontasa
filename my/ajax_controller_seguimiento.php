@@ -179,49 +179,33 @@ function get_zonas_areas_detail() {
 	}
 
 	$cantidadModulos = count($new);
-
 	$instring = "('".implode("', '",$new)."')";
+
+	$zonasC = $zonasNC = $areasC = $areasNC = 0;
 
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
 
-		$query = "SELECT c.userid as cont from {course_modules_completion} c where c.completionstate > 0 AND c.coursemoduleid in $instring AND c.userid={$user->id}";
+		$query = "SELECT COUNT(c.userid) as cont from {course_modules_completion} c where c.completionstate > 0 AND c.coursemoduleid in $instring AND c.userid={$user->id}";
 		$results = $DB->get_records_sql($query);
-		$resCont = count($results);
+		$resCont = array_shift($results)->cont;
+
 		if(!empty($zona)) {
 			if($resCont == $cantidadModulos) {
-				$zonas[$zona]['completado']++;
+				$zonasC++;
 			} else {
-				$zonas[$zona]['no_completado']++;
+				$zonasNC++;
 			}
 		}
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
 			$totalAreas++;
 			if($resCont == $cantidadModulos) {
-				$areas[$area]['completado']++;
+				$areasC++;
 			} else {
-				$areas[$area]['no_completado']++;
+				$areasNC++;
 			}
-		}
-	}
-
-	foreach($zonas as $zona) {
-		if(isset($zona['completado'])) {
-			$contZonasCompletados += $zona['completado'];
-		}
-		if(isset($zona['no_completado'])) {
-			$contZonasNoCompletados += $zona['no_completado'];
-		}
-	}
-
-	foreach($areas as $area) {
-		if(isset($area['completado'])) {
-			$contAreasCompletados += $area['completado'];
-		}
-		if(isset($zona['no_completado'])) {
-			$contAreasNoCompletados += $area['no_completado'];
 		}
 	}
 
@@ -232,15 +216,15 @@ function get_zonas_areas_detail() {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
 			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round(($contZonasCompletados/($contZonasCompletados+$contZonasNoCompletados))*100);
+			$progress = round(($zonasC/($zonasC+$zonasNC))*100);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
 			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
-			$progress = round(($contAreasCompletados/($contAreasCompletados+$contAreasNoCompletados))*100);
+			$progress = round(($areasC/($areasC+$areasNC))*100);
 		}
 
-		$returnHTML .=	'<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
+		$returnHTML .=  '<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-seguimiento-detail row ss-m-b-05">';
 		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="'. $dataOpen .'"  class="col-sm element-clickable" style="cursor: pointer;">'. $seguimientoDetail .'</div>';
 
@@ -248,6 +232,7 @@ function get_zonas_areas_detail() {
 		$returnHTML.= '-';
 		$returnHTML.= '</div>';
 	}
+
 
 	$response['status'] = true;
 	$response['data']['html'] = $returnHTML;
