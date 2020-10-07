@@ -136,8 +136,10 @@ function get_courses_by_category($catId) {
 		$query = "select c.userid, COUNT(c.userid) as cont from {course_modules_completion} c where c.completionstate>0 AND c.coursemoduleid in $instring GROUP BY userid";
 		$results = $DB->get_records_sql($query);
 
+		$context = context_course::instance($course->id);
+
 		foreach ($results as $res) {
-			if(is_enrolled(context_course::instance($course->id), $res->userid)) {
+			if(is_enrolled($context, $res->userid)) {
 				if($res->cont == $cantidadModulos) {
 					$contCompleted++;
 				}
