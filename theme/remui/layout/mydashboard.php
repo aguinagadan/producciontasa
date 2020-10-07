@@ -921,30 +921,39 @@ function getCoursesHtml($courses) {
 //}
 //
 
-function getCoursesByCategoryProgress($cat) {
-	$coursesArr = $cat->get_courses();
+function getCoursePercentage($children_courses) {
+	global $DB;
+	$progressTotal = 0;
 
-	$progress = 0;
-	$contUsers = 0;
-	$totalPercentage = 0;
-	$totalPercentageCount = 0;
+	foreach($children_courses as $course) {
+		$new = array();
+		$contCompleted = 0;
+		$total = count($DB->get_records('course_completions',array('course'=>$course->id)));
+		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND completion > 0", array($course->id));
 
-	foreach($coursesArr as $course) {
-		$course = get_course($course->id);
-
-		$context = CONTEXT_COURSE::instance($course->id);
-		$users = get_enrolled_users($context);
-
-		foreach($users as $user) {
-			$progress += round(progress::get_course_progress_percentage($course, $user->id));
-			$contUsers++;
+		foreach($modules as $mod) {
+			$new[] = $mod->id;
 		}
-		$progress = round($progress/$contUsers);
-		$totalPercentage += $progress;
-		$totalPercentageCount++;
-	}
 
-	return round($totalPercentage/$totalPercentageCount);
+		$cantidadModulos = count($new);
+
+		$instring = "('".implode("', '",$new)."')";
+		$query = "select c.userid, COUNT(c.userid) as cont from {course_modules_completion} c where c.completionstate>0 AND c.coursemoduleid in $instring GROUP BY userid";
+		$results = $DB->get_records_sql($query);
+
+		foreach ($results as $res) {
+			if($res->cont == $cantidadModulos) {
+				$contCompleted++;
+			}
+		}
+		if($total == 0) {
+			$progress = 0;
+		} else {
+			$progress = round(($contCompleted/$total)*100);
+		}
+		$progressTotal += $progress;
+	}
+	return round($progressTotal/count($children_courses));
 }
 
 function getSSCategories() {
@@ -958,16 +967,15 @@ function getSSCategories() {
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
 			$extraClass = 'cat-clickable';
-			$value = 50;
+			$value = getCoursePercentage($children_courses);
 		} else {
 			$extraStyle = '';
 			$extraClass = '';
-			$value = 50;
 		}
 
 		$returnHTML .= '<div class="ss-container ss-main-container row ss-m-b-05">';
 		$returnHTML .= '<div data-id="'. $cat->id .'" class="col-sm '. $extraClass .'"'.$extraStyle.' style="font-size: 18px;">'.$cat->name.'</div>';
-		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($value,0) .'%</div>';
+		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. $value .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($value) .'</div>';
 		$returnHTML .= '</div>';
 	}
