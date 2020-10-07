@@ -1045,8 +1045,10 @@ border-radius: 4px;">
 				<div class="col-sm-1 pl-0">
 					<div class="row">
 						<div class="col-sm carta-general" data-toggle="modal">
+							<img style="opacity: 0.5; cursor: auto;" src="../theme/remui/pix/ic_email_24px.png">
 						</div>
 						<div id="modalXLS" class="col-sm" style="cursor: pointer;">
+							<img src="../theme/remui/pix/ic_get_app_24px.png">
 						</div>
 					</div>
 				</div>

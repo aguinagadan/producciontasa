@@ -396,58 +396,39 @@ require(['theme_remui/loader'], function () {
         });
 
         $(document).on('click', '#myModalGeneralBtn', function() {
-        var dataGeneral = {
-        idUsersAll: $(this).attr('id-users-all'),
-        message: $('#message-text-all').val()
-        };
+            var dataGeneral = {
+                idUsersAll: $(this).attr('id-users-all'),
+                message: $('#message-text-all').val()
+            };
 
-        $.ajax({
-        type: "POST",
-        url: "email.php",
-        data: dataGeneral,
-        success: function(){
-        $('.success').fadeIn(1000);
-        }
-        });
+            $.ajax({
+                type: "POST",
+                url: "email.php",
+                data: dataGeneral,
+                success: function(){
+                    $('.success').fadeIn(1000);
+                }
+            });
         });
 
         $(document).on('click', '#myModalBtn', function() {
-        var data = {
-        idUser: $(this).attr('id-user'),
-        message: $('#message-text').val()
-        };
+            var data = {
+                idUser: $(this).attr('id-user'),
+                message: $('#message-text').val()
+            };
 
-        $.ajax({
-        type: "POST",
-        url: "email.php",
-        data: data,
-        success: function(){
-        $('.success').fadeIn(1000);
-        }
-        });
+            $.ajax({
+                type: "POST",
+                url: "email.php",
+                data: data,
+                success: function(){
+                    $('.success').fadeIn(1000);
+                }
+            });
         });
 
         $(document).on('click', '#modalXLS', function() {
-        var page = "excel.php";
-        window.location = page;
+            var page = "excel.php";
+            window.location = page;
         });
-
-<!--        $(document).ready(function() {-->
-<!--            var data = {-->
-<!--                request_type: 'load_data'-->
-<!--            };-->
-
-<!--            $.ajax({-->
-<!--                type: "POST",-->
-<!--                url: "ajax_controller_seguimiento.php",-->
-<!--                data: data,-->
-<!--                beforeSend: function() {-->
-<!--                    //$('#loadingDiv').show();-->
-<!--                },-->
-<!--                success: function(res) {-->
-<!--                    console.log(res.data);-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-
 {{/js}}
