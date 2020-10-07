@@ -161,24 +161,36 @@ function get_courses_by_category($catId) {
 }
 
 function get_zonas_areas_detail() {
-	global $details;
+	global $DB, $details;
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
 	$contZonasCompletados = $contAreasCompletados = $contZonasNoCompletados = $contAreasNoCompletados = 0;
 	$totalAreas = 0;
 	$zonas = $areas = array();
-	$progressZonas = $progressAreas = 0;
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 
+	$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND completion > 0", array($course->id));
+
+	foreach($modules as $mod) {
+		$new[] = $mod->id;
+	}
+
+	$cantidadModulos = count($new);
+
+	$instring = "('".implode("', '",$new)."')";
+
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
 		$zona = $user->profile['zona'];
+
+		$query = "SELECT c.userid as cont from {course_modules_completion} c where c.completionstate > 0 AND c.coursemoduleid in $instring AND c.userid={$user->id}";
+		$results = $DB->get_records_sql($query);
+		$resCont = count($results);
 		if(!empty($zona)) {
-			$progressZonas = round(progress::get_course_progress_percentage($course, $user->id));
-			if($progressZonas == 100) {
+			if($resCont == $cantidadModulos) {
 				$zonas[$zona]['completado']++;
 			} else {
 				$zonas[$zona]['no_completado']++;
@@ -187,8 +199,7 @@ function get_zonas_areas_detail() {
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
 			$totalAreas++;
-			$progressAreas = round(progress::get_course_progress_percentage($course, $user->id));
-			if($progressAreas == 100) {
+			if($resCont == $cantidadModulos) {
 				$areas[$area]['completado']++;
 			} else {
 				$areas[$area]['no_completado']++;
