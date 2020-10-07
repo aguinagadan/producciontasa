@@ -115,20 +115,40 @@ function get_courses_by_category($catId) {
 	$segModel = new SeguimientoModel();
 	$coursesArr = $segModel->GetCoursesByCategory($catId);
 	$returnHTML = '';
-	$progress = 0;
 
 	foreach($coursesArr as $course) {
+		$progress = 0;
+		$contCompleted = 0;
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';
-		$pending = count($DB->get_records('course_completions',array('course'=>$course->id, 'timecompleted'=>NULL)));
+
+		$new = array();
 		$total = count($DB->get_records('course_completions',array('course'=>$course->id)));
+
+		$modules = $DB->get_records_sql("select * from {course_modules} c where c.course = ? AND completion > 0", array($course->id));
+
+		foreach($modules as $mod) {
+			$new[] = $mod->id;
+		}
+
+		$cantidadModulos = count($new);
+
+		$instring = "('".implode("', '",$new)."')";
+		$query = "select c.userid, COUNT(c.userid) as cont from {course_modules_completion} c where c.completionstate>0 AND c.coursemoduleid in $instring GROUP BY userid";
+		$results = $DB->get_records_sql($query);
+
+		foreach ($results as $res) {
+			if($res->cont == $cantidadModulos) {
+				$contCompleted++;
+			}
+		}
 
 		if($total == 0) {
 			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm" style="font-size: 18px;">'.$course->fullname.'</div>';
 		} else {
-			$progress    = round((($total - $pending)/$total)*100);
+			$progress    = round(($contCompleted/$total)*100);
 			$returnHTML .= '<div zona-name="zona-default" course-id="'. $course->id .'" data-open="ss-main-container-zonas-areas-detail" data-id="'. $course->id .'" class="col-sm element-clickable" style="cursor: pointer;">'.$course->fullname.'</div>';
 		}
-		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. round($progress,0) .'%</div>';
+		$returnHTML .= '<div class="col-sm" style="max-width: 3.3%; color: #526069;">'. $progress .'%</div>';
 		$returnHTML .= '<div class="col-sm-7">'. getProgressBarDetailSeguimiento($progress) .'</div>';
 		$returnHTML .= '</div>';
 	}
