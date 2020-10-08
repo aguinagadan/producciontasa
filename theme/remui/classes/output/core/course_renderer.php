@@ -33,6 +33,7 @@ use core_course_category;
 use context_system;
 use html_writer;
 use core_text;
+use single_select;
 
 global $CFG;
 
