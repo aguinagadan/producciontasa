@@ -22,6 +22,10 @@
     display: none;
 }
 
+#page-course-index-category #nav-drawer {
+    display: none;
+}
+
 body#page-site-index {
     margin-left: 0 !important;
 }
@@ -34,12 +38,22 @@ body#page-local-induccion-index {
     margin-left: 0 !important;
 }
 
+body#page-user-profile {
+    margin-left: 0 !important;
+}
+
 body#page-course-search {
     margin-left: 0 !important;
 }
 
-body#page-user-profile {
-    margin-left: 0 !important;
+body#page-course-index-category {
+    margin-left: 0;
+}
+
+body#page-course-index-category #region-main {
+    max-width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 #region-main .container {
