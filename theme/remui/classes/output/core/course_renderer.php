@@ -700,6 +700,7 @@ class course_renderer extends \core_course_renderer {
 				$courseslist .=	'<div class="cc-all-cursos-block">
 										<div class="cc-courses-image-container" style="background: url('. \theme_remui\utility::get_course_image($courseElement, 1) .');"></div>
 											<div class="cc-courses-detail-container">
+											'. $this->progressBarHTML($courseElement) .'
 											<div class="cc-courses-cat-name">'. 'Lanzamiento: ' . $this->convertDateToSpanish($courseElement->startdate) .'</div>
 												<div class="cc-courses-course-name">'. $courseElement->fullname .'</div>
 												<a class="cc-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $courseElement->id)). '">Acceder al curso</a>
