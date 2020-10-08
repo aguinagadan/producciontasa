@@ -326,11 +326,12 @@ class course_renderer extends \core_course_renderer {
 		//Custom content (ultimos cursos)
 
 		$allcourses = core_course_category::get(0)->get_courses(
-			array('recursive' => true, 'coursecontacts' => true, 'sort' => array('idnumber' => 1)));
+			array('recursive' => true, 'coursecontacts' => true, 'sort' => array('startdate' => 1)));
 
 		if($all) {
 			$titulo = 'Todos nuestros cursos';
 			$offset = count($allcourses);
+			$allcourses = array_slice($allcourses, 0, $offset, true);
 			$divClass = "cc-ultimos-cursos-container-all";
 			$divClassList = "cc-all-cursos-list";
 			$width = "cc-all-cursos-block";
@@ -338,6 +339,8 @@ class course_renderer extends \core_course_renderer {
 		} else {
 			$titulo = 'Nuestros últimos cursos';
 			$offset = 3;
+			$allcourses = array_slice($allcourses, -3, $offset, true);
+			$allcourses = array_reverse($allcourses, true);
 			$divClass = "cc-ultimos-cursos-container";
 			$divClassList = "cc-ultimos-cursos-list";
 			$width = "col-sm";

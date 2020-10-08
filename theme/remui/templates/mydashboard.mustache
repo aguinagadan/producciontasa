@@ -170,14 +170,14 @@ require(['theme_remui/loader'], function () {
         }
 
         function addIds() {
-        var Ids = '';
-        $('.carta-general').attr('ids', '');
+            var Ids = '';
+            $('.carta-general').attr('ids', '');
 
-        $('.ss-container:visible').each(function(){
-        Ids = Ids + $(this).find('.personaIds').val() + ',';
-        });
-        Ids = Ids.replace(/,\s*$/, "");
-        $('.carta-general').attr('user-ids', Ids);
+            $('.ss-container:visible').each(function(){
+                Ids = Ids + $(this).find('.personaIds').val() + ',';
+            });
+            Ids = Ids.replace(/,\s*$/, "");
+            $('.carta-general').attr('user-ids', Ids);
         }
 
         var total = $(".d-total").attr('data-value');
@@ -376,7 +376,7 @@ require(['theme_remui/loader'], function () {
                     $('#seguimiento-content').append(elementToShow);
                     addBreadcrumb($this);
                     $('#loadingDiv').hide();
-                    //addIds();
+                    addIds();
                 }
             });
         }
