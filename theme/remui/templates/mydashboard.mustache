@@ -175,7 +175,7 @@ require(['theme_remui/loader'], function () {
 
             $('.ss-container:visible').each(function(){
                 if($(this).find('.personaIds').val() !== undefined) {
-        Ids = Ids + $(this).find('.personaIds').val() + ',';
+                    Ids = Ids + $(this).find('.personaIds').val() + ',';
                 }
             });
             Ids = Ids.replace(/,\s*$/, "");
@@ -374,7 +374,8 @@ require(['theme_remui/loader'], function () {
                         dataOpen == 'ss-main-container-division' ||
                         dataOpen == 'ss-main-container-tipo-personal' ||
                         dataOpen == 'ss-main-container-tipo-personal-area' ||
-                        dataOpen == 'ss-main-container-personal'
+                        dataOpen == 'ss-main-container-personal' ||
+                        dataOpen == 'ss-main-container-personal-area'
                     ) {
                         $('.carta-general').find('img').css('opacity', 1);
                         $('.carta-general').find('img').css('cursor', 'pointer');
