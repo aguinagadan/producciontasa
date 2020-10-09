@@ -409,7 +409,7 @@ function get_personal_detail() {
 	$division = $details['division'];
 	$tipoPersonal = $details['tipoPersonal'];
 	$returnHTML = '';
-	$personalArr = $personaIdsPersonal = array();
+	$personalArr = array();
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -431,13 +431,11 @@ function get_personal_detail() {
 	foreach($personalArr as $personal) {
 		$progress = round(progress::get_course_progress_percentage($course, $personal['id']));
 
+		$returnHTML.= '<div zona-name="'. $tipoPersonal . $division . $zona .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">';
 		if($progress < 100) {
-			$personaIdsPersonal[] = $personal['id'];
+			$returnHTML .= '<input class="personaIds" type="hidden" value="' . $personal['id'] . '">';
 		}
-
-		$returnHTML.= '<div zona-name="'. $tipoPersonal . $division . $zona .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">
-											<input class="personaIds" type="hidden" value="'.$personal['id'].'">
-											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-sm personal-clickable" style="cursor: pointer; font-size: 18px;" data-toggle="modal" data-target="#myModal">'. $personal['firstname'] . ' ' . $personal['lastname'] . '</div>
+		$returnHTML.= '<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-sm personal-clickable" style="cursor: pointer; font-size: 18px;" data-toggle="modal" data-target="#myModal">'. $personal['firstname'] . ' ' . $personal['lastname'] . '</div>
 											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-xs logo-mail-clickable" data-toggle="modal" data-target="#myModal" style="cursor: pointer;">
 													<img src="../theme/remui/pix/ic_email_24px.png">
 											</div>';
@@ -445,8 +443,6 @@ function get_personal_detail() {
 		$returnHTML.= '</div>';
 	}
 
-	$personaIdsPersonal = getPersonaIdsSeparatedByCommas($personaIdsPersonal);
-	$returnHTML .= '<input class="personaIds" type="hidden" value="'.$personaIdsPersonal.'">';
 	$response['status'] = true;
 	$response['data']['html'] = $returnHTML;
 
@@ -565,7 +561,7 @@ function get_personal_by_area_detail() {
 	$area = $details['area'];
 	$tipoPersonal = $details['tipoPersonal'];
 	$returnHTML = '';
-	$personalArr = $personaIdsPersonal = array();
+	$personalArr = array();
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -586,12 +582,11 @@ function get_personal_by_area_detail() {
 	foreach($personalArr as $personal) {
 		$progress = round(progress::get_course_progress_percentage($course, $personal['id']));
 
+		$returnHTML.= '<div zona-name="'. $tipoPersonal . $area .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">';
 		if($progress < 100) {
-			$personaIdsPersonal[] = $personal['id'];
+			$returnHTML .= '<input class="personaIds" type="hidden" value="' . $personal['id'] . '">';
 		}
-
-		$returnHTML.= '<div zona-name="'. $tipoPersonal . $area .'" course-id="'. $courseId .'" class="ss-container ss-main-container-personal row ss-m-b-05">
-											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-sm personal-clickable" style="cursor: pointer; font-size: 18px;" data-toggle="modal" data-target="#myModal">'. $personal['firstname'] . ' ' . $personal['lastname'] . '</div>
+		$returnHTML.= '<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-sm personal-clickable" style="cursor: pointer; font-size: 18px;" data-toggle="modal" data-target="#myModal">'. $personal['firstname'] . ' ' . $personal['lastname'] . '</div>
 											<div data-id="'. $personal['id'] . '" data-val="'.strtoupper($personal['firstname']).'" class="col-xs logo-mail-clickable" data-toggle="modal" data-target="#myModal" style="cursor: pointer;">
 													<img src="../theme/remui/pix/ic_email_24px.png">
 											</div>';
@@ -599,8 +594,6 @@ function get_personal_by_area_detail() {
 		$returnHTML.= '</div>';
 	}
 
-	$personaIdsPersonal = getPersonaIdsSeparatedByCommas($personaIdsPersonal);
-	$returnHTML .= '<input class="personaIds" type="hidden" value="'.$personaIdsPersonal.'">';
 	$response['status'] = true;
 	$response['data']['html'] = $returnHTML;
 
