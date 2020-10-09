@@ -12,14 +12,22 @@ $subject = 'Correo de prueba para Seguimiento';
 if($_POST['idUsersAll']) {
 	$userIds = explode( ',', $_POST['idUsersAll']);
 
+	$existingMails = array();
+
 	foreach($userIds as $userId) {
 		$foruser = core_user::get_user($userId);
 		$emailTo = $foruser->email;
-		var_dump('email => ' . $emailTo);
-		var_dump('mensaje => ' . $message);
-		var_dump('de => '. $from);
-		var_dump('subject => ' . $subject);
-		//email_to_user($foruser, $from, $subject, $message);
+
+		if(in_array($emailTo, $existingMails)) {
+			continue;
+		} else {
+			var_dump('email => ' . $emailTo);
+			var_dump('mensaje => ' . $message);
+			var_dump('de => '. $from);
+			var_dump('subject => ' . $subject);
+			$existingMails[] = $emailTo;
+			//email_to_user($foruser, $from, $subject, $message);
+		}
 	}
 } else {
 	$foruser = core_user::get_user($_POST['idUser']);

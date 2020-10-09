@@ -169,9 +169,9 @@ function get_zonas_areas_detail() {
 	$courseId = $details['courseId'];
 	$course = getCourseById($courseId);
 	$returnHTML = '';
-	$contZonasCompletados = $contAreasCompletados = $contZonasNoCompletados = $contAreasNoCompletados = 0;
 	$totalAreas = 0;
-	$zonas = $areas = array();
+	$personaIds = '';
+	$personaIdsZona = $personaIdsArea = array();
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -199,6 +199,7 @@ function get_zonas_areas_detail() {
 			if($resCont == $cantidadModulos) {
 				$zonasC++;
 			} else {
+				$personaIdsZona[] = $user->id;
 				$zonasNC++;
 			}
 		}
@@ -208,6 +209,7 @@ function get_zonas_areas_detail() {
 			if($resCont == $cantidadModulos) {
 				$areasC++;
 			} else {
+				$personaIdsArea[] = $user->id;
 				$areasNC++;
 			}
 		}
@@ -219,17 +221,19 @@ function get_zonas_areas_detail() {
 		if($seguimientoDetail == 'Seguimiento por zonas') {
 			$dataOpen = 'ss-main-container-zonas-detail';
 			$zona = 'zona-default-zonas';
-			//$personaIds = getSeguimientoDetailsZonaProgress($course, $enrolledUsersArray)['ids'];
+			$personaIdsZona = array_unique($personaIdsZona);
+			$personaIds = implode(',', $personaIdsZona);
 			$progress = round(($zonasC/($zonasC+$zonasNC))*100);
 		} elseif($seguimientoDetail == 'Seguimiento por área funcional') {
 			$dataOpen = 'ss-main-container-areas-detail';
 			$zona = 'zona-default-areas';
-			//$personaIds = getSeguimientoDetailsAreaProgress($course, $enrolledUsersArray)['ids'];
+			$personaIdsZona = array_unique($personaIdsArea);
+			$personaIds = implode(',', $personaIdsArea);
 			$progress = round(($areasC/($areasC+$areasNC))*100);
 		}
 
 		$returnHTML .=  '<div zona-name="zona-default" course-id="'. $courseId .'" data-open="'. $dataOpen .'" class="ss-container ss-main-container-zonas-areas-detail row ss-m-b-05">';
-		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
+		$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona .'" course-id="'. $courseId .'" data-open="'. $dataOpen .'"  class="col-sm element-clickable" style="cursor: pointer;">'. $seguimientoDetail .'</div>';
 
 		$returnHTML.= getProgressBarDetailSeguimientoHtml($progress);
@@ -250,7 +254,7 @@ function get_zonas_detail() {
 	$course = getCourseById($courseId);
 	$returnHTML = '';
 	$zonas = array();
-	$progressZonas = 0;
+	$personaIds = array();
 
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
@@ -264,15 +268,18 @@ function get_zonas_detail() {
 			$zonas[$zona]['total']++;
 			if($progressZonas == 100) {
 				$zonas[$zona]['nro_completado']++;
+			} else {
+				$personaIds[] = $user->id;
 			}
 		}
 	}
 
+	$personaIds = array_unique($personaIds);
+	$personaIds = implode(',', $personaIds);
 
 	foreach($zonas as $zona) {
-		//$personaIds = getZonasProgressById($course, $zona, $enrolledUsersArray)['ids'];
 		$returnHTML .= '<div zona-name="zona-default-zonas" course-id="'. $courseId .'" data-open="ss-main-container-division" class="ss-container ss-main-container-zonas-detail row ss-m-b-05">';
-		//$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
+		$returnHTML .= '<input class="personaIds" type="hidden" value="'. $personaIds .'">';
 		$returnHTML .= '<div zona-name="'. $zona['nombre'] .'" course-id="'. $courseId .'" data-open="ss-main-container-division" class="col-sm element-clickable" style="cursor: pointer;">' . $zona['nombre'] . '</div>';
 
 		if(!isset($zona['nro_completado'])) {
