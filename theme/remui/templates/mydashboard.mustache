@@ -366,7 +366,14 @@ require(['theme_remui/loader'], function () {
                     $('.carta-general').find('img').css('cursor', 'auto');
                     $('.carta-general').attr('data-target', '');
 
-                    if(dataOpen == 'ss-main-container-seguimiento-detail') {
+                    if( dataOpen == 'ss-main-container-zonas-areas-detail' ||
+                        dataOpen == 'ss-main-container-zonas-detail' ||
+                        dataOpen == 'ss-main-container-areas-detail' ||
+                        dataOpen == 'ss-main-container-division' ||
+                        dataOpen == 'ss-main-container-tipo-personal' ||
+                        dataOpen == 'ss-main-container-tipo-personal-area' ||
+                        dataOpen == 'ss-main-container-personal'
+                    ) {
                         $('.carta-general').find('img').css('opacity', 1);
                         $('.carta-general').find('img').css('cursor', 'pointer');
                         $('.carta-general').attr('data-target', '#myModalGeneral');
@@ -376,7 +383,7 @@ require(['theme_remui/loader'], function () {
                     $('#seguimiento-content').append(elementToShow);
                     addBreadcrumb($this);
                     $('#loadingDiv').hide();
-                    addIds();
+                    //addIds();
                 }
             });
         }
