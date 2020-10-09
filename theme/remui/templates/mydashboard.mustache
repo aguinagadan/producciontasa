@@ -174,7 +174,9 @@ require(['theme_remui/loader'], function () {
             $('.carta-general').attr('ids', '');
 
             $('.ss-container:visible').each(function(){
-                Ids = Ids + $(this).find('.personaIds').val() + ',';
+                if($(this).find('.personaIds').val() !== undefined) {
+        Ids = Ids + $(this).find('.personaIds').val() + ',';
+                }
             });
             Ids = Ids.replace(/,\s*$/, "");
             $('.carta-general').attr('user-ids', Ids);
