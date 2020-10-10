@@ -133,6 +133,7 @@ function getADUsers($key, $skipToken='') {
 	return $responseData;
 }
 function updateUser($user, $userAD) {
+	global $DB;
 
 	$dni           = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] : '';
 
@@ -162,4 +163,10 @@ function updateUser($user, $userAD) {
 	$user->profile_field_posicion = $posicion;
 
 	profile_save_data($user);
+
+	$user->firstname = $userAD['givenName'];
+	$user->lastname = $userAD['surname'];
+	$user->email = !empty($userAD['mail']) ? $userAD['mail'] : $userAD['otherMails'][0];
+
+	$DB->update_record('user', $user);
 }
