@@ -125,9 +125,10 @@ foreach($usersTotal as $user) {
 			$html .= '<td>-</td>';
 			continue;
 		}
-/*
+
 		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
 		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
+		/*
 		$quizIdInicio = array_shift($quiz);
 		$quizIdFin = end($quiz);
 
