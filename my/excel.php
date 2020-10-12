@@ -127,7 +127,7 @@ foreach($usersTotal as $user) {
 		}
 
 		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
-		//$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
+		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
 
 		$quizIdInicio = array_shift($quiz);
 		$quizIdFin = end($quiz);
@@ -138,19 +138,14 @@ foreach($usersTotal as $user) {
 		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
 		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
-		$inicialItems = $inicial->items[0];
-		$finalItems = $final->items[0];
+		$inicialGrade = array_shift(array_shift($inicial->items)->grades)->grade;
+		$finalGrade = array_shift(array_shift($final->items)->grades)->grade;
 
-		$inicialGrade = array_shift($inicialItems->grades)->grade;
-		$finalGrade = array_shift($finalItems->grades)->grade;
+		$inicial = $inicialGrade != '' ? $inicialGrade : '-';
+		$final = $finalGrade  != '' ? $finalGrade : '-';
 
-		$inicial = $inicialGrade ? $inicialGrade : '-';
-		$final = $finalGrade ? $finalGrade : '-';
-
-		$timeCompleted = '01/01/2020';
-
-		//$timeCompleted = array_shift($courseCompletion)->timecompleted;
-		//$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
+		$timeCompleted = array_shift($courseCompletion)->timecompleted;
+		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
 
 		if($inicial != '-' && $final != '-' && $timeCompleted != '-') {
 			$cumplimiento = 1;

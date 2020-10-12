@@ -19,14 +19,11 @@ $quizIdFin = end($quiz);
 $inicial = grade_get_grades(10, 'mod', 'quiz', $quizIdInicio->id, 27);
 $final = grade_get_grades(10, 'mod', 'quiz', $quizIdFin->id, 27);
 
-$inicialItems = $inicial->items[0];
-$finalItems = $final->items[0];
+$inicialGrade = array_shift(array_shift($inicial->items)->grades)->grade;
+$finalGrade = array_shift(array_shift($final->items)->grades)->grade;
 
-$inicialGrade = array_shift($inicialItems->grades)->grade;
-$finalGrade = array_shift($finalItems->grades)->grade;
-
-$inicial = $inicialGrade ? $inicialGrade : '-';
-$final = $finalGrade ? $finalGrade : '-';
+$inicial = $inicialGrade != '' ? $inicialGrade : '-';
+$final = $finalGrade  != '' ? $finalGrade : '-';
 
 $timeCompleted = array_shift($courseCompletion)->timecompleted;
 $timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
