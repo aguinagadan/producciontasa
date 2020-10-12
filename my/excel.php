@@ -136,8 +136,14 @@ foreach($usersTotal as $user) {
 		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
 		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
-		$inicial = $inicial->items[0]->grades[4]->grade ? $inicial->items[0]->grades[4]->grade : '-';
-		$final = $final->items[0]->grades[4]->grade ? $final->items[0]->grades[4]->grade : '-';
+		$inicialItems = array_shift($inicial->items);
+		$finalItems = array_shift($final->items);
+
+		$inicialGrade = array_shift($inicialItems->grades)->grade;
+		$finalGrade = array_shift($finalItems->grades)->grade;
+
+		$inicial = $inicialGrade ? $inicialGrade : '-';
+		$final = $finalGrade ? $finalGrade : '-';
 
 		$timeCompleted = array_shift($courseCompletion)->timecompleted;
 		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
