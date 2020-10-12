@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/../config.php');
 
 use moodle_url;
 
-global $USER, $CFG;
+global $USER, $CFG, $DB;
 
 require_once($CFG->dirroot . '/lib/gradelib.php');
 require_once($CFG->dirroot . '/enrol/externallib.php');
@@ -133,6 +133,9 @@ foreach($usersTotal as $user) {
 		$quizIdInicio = array_shift($quiz);
 		$quizIdFin = end($quiz);
 
+		$inicial = 0;
+		$final = 0;
+		/*
 		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
 		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
@@ -144,7 +147,7 @@ foreach($usersTotal as $user) {
 
 		$inicial = $inicialGrade ? $inicialGrade : '-';
 		$final = $finalGrade ? $finalGrade : '-';
-
+		*/
 		$timeCompleted = array_shift($courseCompletion)->timecompleted;
 		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
 
