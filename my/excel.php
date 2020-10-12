@@ -2,8 +2,6 @@
 error_reporting(E_ALL);
 require_once(dirname(__FILE__) . '/../config.php');
 
-use moodle_url;
-
 global $USER, $CFG, $DB;
 
 require_once($CFG->dirroot . '/lib/gradelib.php');
@@ -129,7 +127,7 @@ foreach($usersTotal as $user) {
 		}
 
 		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
-		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId,$user->id));
+		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
 		$quizIdInicio = array_shift($quiz);
 		$quizIdFin = end($quiz);
 
