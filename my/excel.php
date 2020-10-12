@@ -136,8 +136,8 @@ foreach($usersTotal as $user) {
 		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
 		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
-		$inicialItems = array_shift($inicial->items);
-		$finalItems = array_shift($final->items);
+		$inicialItems = $inicial->items[0];
+		$finalItems = $final->items[0];
 
 		$inicialGrade = array_shift($inicialItems->grades)->grade;
 		$finalGrade = array_shift($finalItems->grades)->grade;
