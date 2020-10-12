@@ -127,8 +127,8 @@ foreach($usersTotal as $user) {
 		}
 
 		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
-		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
-		/*
+		//$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
+
 		$quizIdInicio = array_shift($quiz);
 		$quizIdFin = end($quiz);
 
@@ -147,19 +147,21 @@ foreach($usersTotal as $user) {
 		$inicial = $inicialGrade ? $inicialGrade : '-';
 		$final = $finalGrade ? $finalGrade : '-';
 
-		$timeCompleted = array_shift($courseCompletion)->timecompleted;
-		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
+		$timeCompleted = '01/01/2020';
+
+		//$timeCompleted = array_shift($courseCompletion)->timecompleted;
+		//$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
 
 		if($inicial != '-' && $final != '-' && $timeCompleted != '-') {
 			$cumplimiento = 1;
 		} else {
 			$cumplimiento = 0;
 		}
-*/
-		$html .= '<td>' . '-' .  '</td>';
-		$html .= '<td>' . '-' .  '</td>';
-		$html .= '<td>' . '-' .  '</td>';
-		$html .= '<td>' . '-' .  '</td>';
+
+		$html .= '<td>' . $cumplimiento .  '</td>';
+		$html .= '<td>' . $inicial .  '</td>';
+		$html .= '<td>' . $final .  '</td>';
+		$html .= '<td>' . $timeCompleted .  '</td>';
 		$cont++;
 	}
 
