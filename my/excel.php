@@ -125,7 +125,7 @@ foreach($usersTotal as $user) {
 			$html .= '<td>-</td>';
 			continue;
 		}
-
+/*
 		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
 		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
 		$quizIdInicio = array_shift($quiz);
@@ -133,7 +133,7 @@ foreach($usersTotal as $user) {
 
 		$inicial = 0;
 		$final = 0;
-		/*
+
 		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
 		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
@@ -145,7 +145,7 @@ foreach($usersTotal as $user) {
 
 		$inicial = $inicialGrade ? $inicialGrade : '-';
 		$final = $finalGrade ? $finalGrade : '-';
-		*/
+
 		$timeCompleted = array_shift($courseCompletion)->timecompleted;
 		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
 
@@ -154,11 +154,11 @@ foreach($usersTotal as $user) {
 		} else {
 			$cumplimiento = 0;
 		}
-
-		$html .= '<td>' . $cumplimiento .  '</td>';
-		$html .= '<td>' . round($inicial) .  '</td>';
-		$html .= '<td>' . round($final) .  '</td>';
-		$html .= '<td>' . $timeCompleted .  '</td>';
+*/
+		$html .= '<td>' . '-' .  '</td>';
+		$html .= '<td>' . '-' .  '</td>';
+		$html .= '<td>' . '-' .  '</td>';
+		$html .= '<td>' . '-' .  '</td>';
 		$cont++;
 	}
 
