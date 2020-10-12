@@ -60,16 +60,16 @@ $html = '
 <table>
  <thead>
   <tr>
-   <th rowspan="2">Código</th>
-   <th rowspan="2">Nombre de Trabajador</th>
-   <th rowspan="2">DNI</th>
-   <th rowspan="2">E-Mail Tasa</th>
-   <th rowspan="2">Gerencia</th>
-   <th rowspan="2">ZONA</th>
-   <th rowspan="2">DIVISIÓN</th>
-   <th rowspan="2">ÁREA FUNCIONAL</th>
-   <th rowspan="2">TIPO DE EMPLEADO</th>
-   <th rowspan="2">FUNCIÓN</th>';
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Código</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Nombre de Trabajador</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">DNI</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">E-Mail Tasa</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Gerencia</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Zona</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">División</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Área</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Tipo de empleado</font></th>
+   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Función</font></th>';
 
 function cmpBySort($a, $b) {
 	return $a->id - $b->id;
@@ -80,7 +80,7 @@ foreach($cursos as $c) {
 	if($c->category == 0) {
 		continue;
 	}
-	$html .= '<th colspan="4">'. $c->fullname .'</th>';
+	$html .= '<th BGCOLOR="#5CBDEB;" colspan="4"><font FACE="Arial" color="#FFFFFF">'. $c->fullname .'</font></th>';
 	$cursoIds[] = $c->id;
 }
 
@@ -90,26 +90,26 @@ $html .= '</tr>
 
 foreach($cursos as $c) {
 	$html .= '
-	<td>Cumplimiento</td>
-	<td>Nota Inicial</td>
-	<td>Nota Final</td>
-	<td>Fecha</td>';
+	<td><font FACE="Arial">Cumplimiento</font></td>
+	<td><font FACE="Arial">Nota Inicial</font></td>
+	<td><font FACE="Arial">Nota Final</font></td>
+	<td><font FACE="Arial">Fecha</font></td>';
 }
 
 $html .= '</tr>';
 
 foreach($usersTotal as $user) {
 	$html .= '<tr>';
-	$html .= '<td>' . $user->profile['codigo'] . '</td>';
-	$html .= '<td>' . $user->lastname . ' ' . $user->firstname .  '</td>';
-	$html .= '<td>' . $user->profile['DNI'] .  '</td>';
-	$html .= '<td>' . $user->email .  '</td>';
-	$html .= '<td>' . $user->profile['gerencia'] .  '</td>';
-	$html .= '<td>' . $user->profile['zona'] .  '</td>';
-	$html .= '<td>' . $user->profile['division'] .  '</td>';
-	$html .= '<td>' . $user->profile['area_funcional'] .  '</td>';
-	$html .= '<td>' . $user->profile['personal'] .  '</td>';
-	$html .= '<td>' . $user->profile['posicion'] .  '</td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['codigo']) . '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->lastname) . ' ' . strtoupper($user->firstname) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['DNI']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->email) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['gerencia']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['zona']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['division']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['area_funcional']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['personal']) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['posicion']) .  '</font></td>';
 
 	$coursesUser = enrol_get_all_users_courses($user->id, true);
 
@@ -119,10 +119,10 @@ foreach($usersTotal as $user) {
 
 	foreach($cursoIds as $key=>$cursoId) {
 		if($cursoId != $coursesUser[$cont]->id) {
-			$html .= '<td>-</td>';
-			$html .= '<td>-</td>';
-			$html .= '<td>-</td>';
-			$html .= '<td>-</td>';
+			$html .= '<td><font FACE="Arial">-</font></td>';
+			$html .= '<td><font FACE="Arial">-</font></td>';
+			$html .= '<td><font FACE="Arial">-</font></td>';
+			$html .= '<td><font FACE="Arial">-</font></td>';
 			continue;
 		}
 
@@ -153,10 +153,10 @@ foreach($usersTotal as $user) {
 			$cumplimiento = 0;
 		}
 
-		$html .= '<td>' . $cumplimiento .  '</td>';
-		$html .= '<td>' . $inicial .  '</td>';
-		$html .= '<td>' . $final .  '</td>';
-		$html .= '<td>' . $timeCompleted .  '</td>';
+		$html .= '<td><font FACE="Arial">' . $cumplimiento .  '</font></td>';
+		$html .= '<td><font FACE="Arial">' . round($inicial) .  '</font></td>';
+		$html .= '<td><font FACE="Arial">' . round($final) .  '</font></td>';
+		$html .= '<td><font FACE="Arial">' . $timeCompleted .  '</font></td>';
 		$cont++;
 	}
 
