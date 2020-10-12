@@ -128,18 +128,30 @@ foreach($usersTotal as $user) {
 			continue;
 		}
 
-		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', 1, $user->id);
-		$final = grade_get_grades($cursoId, 'mod', 'quiz', 2, $user->id);
+		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
+		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId,$user->id));
+		$quizIdInicio = array_shift($quiz);
+		$quizIdFin = end($quiz);
 
-		$inicial = $inicial->items[0]->grades[4]->str_grade ? $inicial->items[0]->grades[4]->str_grade : '-';
-		$final = $final->items[0]->grades[4]->str_grade ? $final->items[0]->grades[4]->str_grade : '-';
+		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
+		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
-		$date = $coursesUser[$cont]->enddate ? date("d-m-Y", $coursesUser[$cont]->enddate) : '-';
-		$cumplimiento = $coursesUser[$cont]->enddate ? 1 : 0;
+		$inicial = $inicial->items[0]->grades[4]->grade ? $inicial->items[0]->grades[4]->grade : '-';
+		$final = $final->items[0]->grades[4]->grade ? $final->items[0]->grades[4]->grade : '-';
+
+		$timeCompleted = array_shift($courseCompletion)->timecompleted;
+		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
+
+		if($inicial != '-' && $final != '-' && $timeCompleted != '-') {
+			$cumplimiento = 1;
+		} else {
+			$cumplimiento = 0;
+		}
+
 		$html .= '<td>' . $cumplimiento .  '</td>';
 		$html .= '<td>' . round($inicial) .  '</td>';
 		$html .= '<td>' . round($final) .  '</td>';
-		$html .= '<td>' . $date .  '</td>';
+		$html .= '<td>' . $timeCompleted .  '</td>';
 		$cont++;
 	}
 
