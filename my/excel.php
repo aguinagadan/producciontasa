@@ -7,6 +7,9 @@ use moodle_url;
 global $USER, $CFG;
 
 require_once($CFG->dirroot . '/lib/gradelib.php');
+require_once($CFG->dirroot . '/enrol/externallib.php');
+require_once($CFG->dirroot. '/course/lib.php');
+require_once($CFG->dirroot . '/user/profile/lib.php');
 
 function getEnrolledUsersDetail($courseId) {
 	global $DB;
@@ -39,10 +42,16 @@ function getUserAllDataByCourseId($courseId) {
 }
 
 $cursos = get_courses();
-$users = array();
+$usersTotal = array();
 
 foreach($cursos as $curso) {
-	$users += getUserAllDataByCourseId($curso->id);
+	$context = CONTEXT_COURSE::instance($curso->id);
+	$users = get_enrolled_users($context);
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		$users[$key] = $user;
+	}
+	$usersTotal += $users;
 }
 
 $html = '
@@ -91,18 +100,18 @@ foreach($cursos as $c) {
 
 $html .= '</tr>';
 
-foreach($users as $user) {
+foreach($usersTotal as $user) {
 	$html .= '<tr>';
-	$html .= '<td>' . $user->profile_field_codigo . '</td>';
+	$html .= '<td>' . $user->profile['codigo'] . '</td>';
 	$html .= '<td>' . $user->lastname . ' ' . $user->firstname .  '</td>';
-	$html .= '<td>' . $user->profile_field_DNI .  '</td>';
+	$html .= '<td>' . $user->profile['DNI'] .  '</td>';
 	$html .= '<td>' . $user->email .  '</td>';
-	$html .= '<td>' . $user->profile_field_gerencia .  '</td>';
-	$html .= '<td>' . $user->profile_field_zona .  '</td>';
-	$html .= '<td>' . $user->profile_field_division .  '</td>';
-	$html .= '<td>' . $user->profile_field_area_funcional .  '</td>';
-	$html .= '<td>' . $user->profile_field_personal .  '</td>';
-	$html .= '<td>' . $user->profile_field_posicion .  '</td>';
+	$html .= '<td>' . $user->profile['gerencia'] .  '</td>';
+	$html .= '<td>' . $user->profile['zona'] .  '</td>';
+	$html .= '<td>' . $user->profile['division'] .  '</td>';
+	$html .= '<td>' . $user->profile['area_funcional'] .  '</td>';
+	$html .= '<td>' . $user->profile['personal'] .  '</td>';
+	$html .= '<td>' . $user->profile['posicion'] .  '</td>';
 
 	$coursesUser = enrol_get_all_users_courses($user->id, true);
 
