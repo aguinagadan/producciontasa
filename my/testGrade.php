@@ -19,8 +19,8 @@ $quizIdFin = end($quiz);
 $inicial = grade_get_grades(10, 'mod', 'quiz', $quizIdInicio->id, 27);
 $final = grade_get_grades(10, 'mod', 'quiz', $quizIdFin->id, 27);
 
-$inicialItems = array_shift($inicial->items);
-$finalItems = array_shift($final->items);
+$inicialItems = $inicial->items[0];
+$finalItems = $final->items[0];
 
 $inicialGrade = array_shift($inicialItems->grades)->grade;
 $finalGrade = array_shift($finalItems->grades)->grade;
