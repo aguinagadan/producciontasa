@@ -182,6 +182,10 @@ require(['theme_remui/loader'], function () {
             $('.carta-general').attr('user-ids', Ids);
         }
 
+        function addExcel(courseId) {
+            $('.excel-general').attr('course-id', courseId);
+        }
+
         var total = $(".d-total").attr('data-value');
 
         $(".d-progress").each(function() {
@@ -299,6 +303,9 @@ require(['theme_remui/loader'], function () {
             $('.carta-general').find('img').css('opacity', 0.5);
             $('.carta-general').find('img').css('cursor', 'auto');
             $('.carta-general').attr('data-target', '');
+            $('.excel-general').find('img').css('opacity', 0.5);
+            $('.excel-general').find('img').css('cursor', 'auto');
+            $('.excel-general').attr('data-target', '');
         });
 
         $(document).on('click', '.cat-clickable', function() {
@@ -322,6 +329,9 @@ require(['theme_remui/loader'], function () {
                     $('.carta-general').find('img').css('opacity', 0.5);
                     $('.carta-general').find('img').css('cursor', 'auto');
                     $('.carta-general').attr('data-target', '');
+                    $('.excel-general').find('img').css('opacity', 0.5);
+                    $('.excel-general').find('img').css('cursor', 'auto');
+                    $('.excel-general').attr('data-target', '');
 
                     $('.ss-container').hide();
                     $('#seguimiento-content').append(elementToShow);
@@ -367,6 +377,8 @@ require(['theme_remui/loader'], function () {
                     $('.carta-general').find('img').css('opacity', 0.5);
                     $('.carta-general').find('img').css('cursor', 'auto');
                     $('.carta-general').attr('data-target', '');
+                    $('.excel-general').find('img').css('opacity', 0.5);
+                    $('.excel-general').find('img').css('cursor', 'auto');
 
                     if( dataOpen == 'ss-main-container-zonas-areas-detail' ||
                         dataOpen == 'ss-main-container-zonas-detail' ||
@@ -380,6 +392,9 @@ require(['theme_remui/loader'], function () {
                         $('.carta-general').find('img').css('opacity', 1);
                         $('.carta-general').find('img').css('cursor', 'pointer');
                         $('.carta-general').attr('data-target', '#myModalGeneral');
+                        $('.excel-general').find('img').css('opacity', 1);
+                        $('.excel-general').find('img').css('cursor', 'pointer');
+                        $('.excel-general').attr('data-target', '#myModalGeneral');
                     }
 
                     $('.ss-container').hide();
@@ -387,6 +402,7 @@ require(['theme_remui/loader'], function () {
                     addBreadcrumb($this);
                     $('#loadingDiv').hide();
                     addIds();
+                    addExcel($this.attr('course-id'));
                 }
             });
         }
@@ -438,7 +454,8 @@ require(['theme_remui/loader'], function () {
         });
 
         $(document).on('click', '#modalXLS', function() {
-            var page = "excel.php";
+            courseId = $(this).attr('course-id')
+            var page = "excel.php?course_id="+courseId;
             window.location = page;
         });
 {{/js}}

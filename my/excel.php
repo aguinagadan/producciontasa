@@ -9,6 +9,10 @@ require_once($CFG->dirroot . '/enrol/externallib.php');
 require_once($CFG->dirroot. '/course/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
+global $courseId;
+
+$courseId = $_GET['course_id'];
+
 function getEnrolledUsersDetail($courseId) {
 	global $DB;
 	$enrolledusers = $DB->get_records_sql(
@@ -39,17 +43,11 @@ function getUserAllDataByCourseId($courseId) {
 	return $users;
 }
 
-$cursos = get_courses();
-$usersTotal = array();
-
-foreach($cursos as $curso) {
-	$context = CONTEXT_COURSE::instance($curso->id);
-	$users = get_enrolled_users($context);
-	foreach($users as $key=>$user) {
-		profile_load_custom_fields($user);
-		$users[$key] = $user;
-	}
-	$usersTotal += $users;
+$context = CONTEXT_COURSE::instance($courseId);
+$users = get_enrolled_users($context);
+foreach($users as $key=>$user) {
+	profile_load_custom_fields($user);
+	$users[$key] = $user;
 }
 
 $html = '
@@ -71,34 +69,23 @@ $html = '
    <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Tipo de empleado</font></th>
    <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">Función</font></th>';
 
-function cmpBySort($a, $b) {
-	return $a->id - $b->id;
-}
-usort($cursos, 'cmpBySort');
-
-foreach($cursos as $c) {
-	if($c->category == 0) {
-		continue;
-	}
-	$html .= '<th BGCOLOR="#5CBDEB;" colspan="4"><font FACE="Arial" color="#FFFFFF">'. $c->fullname .'</font></th>';
-	$cursoIds[] = $c->id;
-}
+$curso = get_course($courseId);
+$html .= '<th BGCOLOR="#5CBDEB;" colspan="4"><font FACE="Arial" color="#FFFFFF">'. $curso->fullname .'</font></th>';
 
 $html .= '</tr>
  </thead>
  <tbody><tr>';
 
-foreach($cursos as $c) {
-	$html .= '
-	<td><font FACE="Arial">Cumplimiento</font></td>
-	<td><font FACE="Arial">Nota Inicial</font></td>
-	<td><font FACE="Arial">Nota Final</font></td>
-	<td><font FACE="Arial">Fecha</font></td>';
-}
+$html .= '
+<td><font FACE="Arial">Cumplimiento</font></td>
+<td><font FACE="Arial">Nota Inicial</font></td>
+<td><font FACE="Arial">Nota Final</font></td>
+<td><font FACE="Arial">Fecha</font></td>';
+
 
 $html .= '</tr>';
 
-foreach($usersTotal as $user) {
+foreach($users as $user) {
 	$html .= '<tr>';
 	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['codigo']) . '</font></td>';
 	$html .= '<td><font FACE="Arial">' . strtoupper($user->lastname) . ' ' . strtoupper($user->firstname) .  '</font></td>';
@@ -111,54 +98,37 @@ foreach($usersTotal as $user) {
 	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['personal']) .  '</font></td>';
 	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['posicion']) .  '</font></td>';
 
-	$coursesUser = enrol_get_all_users_courses($user->id, true);
+	$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($courseId));
+	$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($courseId, $user->id));
 
-	usort($coursesUser, 'cmpBySort');
+	$quizIdInicio = array_shift($quiz);
+	$quizIdFin = end($quiz);
 
-	$cont = 0;
+	$inicial = 0;
+	$final = 0;
 
-	foreach($cursoIds as $key=>$cursoId) {
-		if($cursoId != $coursesUser[$cont]->id) {
-			$html .= '<td><font FACE="Arial">-</font></td>';
-			$html .= '<td><font FACE="Arial">-</font></td>';
-			$html .= '<td><font FACE="Arial">-</font></td>';
-			$html .= '<td><font FACE="Arial">-</font></td>';
-			continue;
-		}
+	$inicial = grade_get_grades($courseId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
+	$final = grade_get_grades($courseId, 'mod', 'quiz', $quizIdFin->id, $user->id);
 
-		$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($cursoId));
-		$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($cursoId, $user->id));
+	$inicialGrade = array_shift(array_shift($inicial->items)->grades)->grade;
+	$finalGrade = array_shift(array_shift($final->items)->grades)->grade;
 
-		$quizIdInicio = array_shift($quiz);
-		$quizIdFin = end($quiz);
+	$inicial = $inicialGrade != '' ? $inicialGrade : '-';
+	$final = $finalGrade  != '' ? $finalGrade : '-';
 
-		$inicial = 0;
-		$final = 0;
+	$timeCompleted = array_shift($courseCompletion)->timecompleted;
+	$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
 
-		$inicial = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdInicio->id, $user->id);
-		$final = grade_get_grades($cursoId, 'mod', 'quiz', $quizIdFin->id, $user->id);
-
-		$inicialGrade = array_shift(array_shift($inicial->items)->grades)->grade;
-		$finalGrade = array_shift(array_shift($final->items)->grades)->grade;
-
-		$inicial = $inicialGrade != '' ? $inicialGrade : '-';
-		$final = $finalGrade  != '' ? $finalGrade : '-';
-
-		$timeCompleted = array_shift($courseCompletion)->timecompleted;
-		$timeCompleted = $timeCompleted != NULL ? date('d/m/Y', $timeCompleted) : '-';
-
-		if($inicial != '-' && $final != '-' && $timeCompleted != '-') {
-			$cumplimiento = 1;
-		} else {
-			$cumplimiento = 0;
-		}
-
-		$html .= '<td><font FACE="Arial">' . $cumplimiento .  '</font></td>';
-		$html .= '<td><font FACE="Arial">' . round($inicial) .  '</font></td>';
-		$html .= '<td><font FACE="Arial">' . round($final) .  '</font></td>';
-		$html .= '<td><font FACE="Arial">' . $timeCompleted .  '</font></td>';
-		$cont++;
+	if($inicial != '-' && $final != '-' && $timeCompleted != '-') {
+		$cumplimiento = 1;
+	} else {
+		$cumplimiento = 0;
 	}
+
+	$html .= '<td><font FACE="Arial">' . $cumplimiento .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . round($inicial) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . round($final) .  '</font></td>';
+	$html .= '<td><font FACE="Arial">' . $timeCompleted .  '</font></td>';
 
 	$html .= '</tr>';
 }
