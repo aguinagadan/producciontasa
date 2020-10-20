@@ -137,9 +137,10 @@ function updateUser($user, $userAD) {
 
 	$user->firstname = $userAD['givenName'];
 	$user->lastname = $userAD['surname'];
-	$user->email = !empty($userAD['mail']) ? $userAD['mail'] : $userAD['otherMails'][0];
+	$user->email = $userAD['mail'];
 
 	$DB->update_record('user', $user);
+	$user = $DB->get_record('user', array('username' => $user->username));
 
 	$dni           = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] : '';
 
