@@ -133,14 +133,13 @@ function getADUsers($key, $skipToken='') {
 	return $responseData;
 }
 function updateUser($user, $userAD) {
-	global $DB;
+// global $DB;
 
-	$user->firstname = $userAD['givenName'];
-	$user->lastname = $userAD['surname'];
-	$user->email = $userAD['mail'];
-
-	$DB->update_record('user', $user);
-	$user = $DB->get_record('user', array('username' => $user->username));
+//	$user->firstname = $userAD['givenName'];
+//	$user->lastname = $userAD['surname'];
+//	$user->email = $userAD['mail'];
+//
+//	$DB->update_record('user', $user);
 
 	$dni           = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] : '';
 
