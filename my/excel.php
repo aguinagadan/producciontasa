@@ -67,10 +67,10 @@ $html = '
    <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">AREA</font></th>
    <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">CARGO</font></th>
    <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">ESTADO</font></th>
-   <th><font FACE="Arial" color="#FFFFFF">Cumplimiento</font></th>
-   <th><font FACE="Arial" color="#FFFFFF">Nota I</font></th>
-   <th><font FACE="Arial" color="#FFFFFF">Nota F</font></th>
-   <th><font FACE="Arial" color="#FFFFFF">Fecha</font></th>
+   <th><font FACE="Arial">Cumplimiento</font></th>
+   <th><font FACE="Arial">Nota I</font></th>
+   <th><font FACE="Arial">Nota F</font></th>
+   <th><font FACE="Arial">Fecha</font></th>
    ';
 
 $curso = get_course($courseId);
