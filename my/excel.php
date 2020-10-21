@@ -58,32 +58,23 @@ $html = '
 <table>
  <thead>
   <tr>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">CODIGO</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">NOMBRE</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">DNI</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">CORREO</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">SEDE</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">GERENCIA</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">AREA</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">CARGO</font></th>
-   <th BGCOLOR="#154A7D;" rowspan="2"><font FACE="Arial" color="#FFFFFF">ESTADO</font></th>';
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">CODIGO</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">NOMBRE</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">DNI</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">CORREO</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">SEDE</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">GERENCIA</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">AREA</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">CARGO</font></th>
+   <th BGCOLOR="#154A7D;"><font FACE="Arial" color="#FFFFFF">ESTADO</font></th>
+   <th><font FACE="Arial" color="#FFFFFF">Cumplimiento</font></th>
+   <th><font FACE="Arial" color="#FFFFFF">Nota I</font></th>
+   <th><font FACE="Arial" color="#FFFFFF">Nota F</font></th>
+   <th><font FACE="Arial" color="#FFFFFF">Fecha</font></th>
+   ';
 
 $curso = get_course($courseId);
-$html .= '<th BGCOLOR="#5CBDEB;" colspan="4"><font FACE="Arial" color="#FFFFFF">'. $curso->fullname .'</font></th>';
-
-$html .= '</tr>
- </thead>
- <tbody><tr>';
-
-$html .= '
-<td><font FACE="Arial">Cumplimiento</font></td>
-<td><font FACE="Arial">Nota I</font></td>
-<td><font FACE="Arial">Nota F</font></td>
-<td><font FACE="Arial">Fecha</font></td>';
-
-
-$html .= '</tr>';
-
+$html .= '</tr></thead><tbody>';
 $userEstado = 'ACTIVO';
 
 foreach($users as $user) {
@@ -138,7 +129,7 @@ foreach($users as $user) {
 	$html .= '</tr>';
 }
 
-$file = "dashboard_detalles.xls";
+$file = $curso->fullname."_lista_seguimiento.xls";
 
 $html .= '</tbody></table></html>';
 
