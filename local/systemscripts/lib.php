@@ -71,10 +71,14 @@ function migrate_tasa_users_task() {
 		if(isset($userAD['mail'])) {
 			$userMainDataObj->email = $userAD['mail'];
 		} else {
-			if(isset($userAD['otherMails'])) {
+			if(isset($userAD['otherMails']) && !empty($userAD['otherMails'])) {
 				$userMainDataObj->email = array_shift($userAD['otherMails']);
 			} else {
-				$userMainDataObj->email = '';
+				if(isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])) {
+					$userMainDataObj->email = $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'].'@aulavirtual.tasa.com.pe';
+				} else {
+					$userMainDataObj->email = ' ';
+				}
 			}
 		}
 
