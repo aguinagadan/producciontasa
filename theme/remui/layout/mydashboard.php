@@ -36,8 +36,6 @@ use moodle_url;
 use block_xp\local\xp\level_with_name;
 use block_xp\local\xp\level_with_badge;
 use core_completion\progress;
-use core_course_renderer;
-use coursecat_helper;
 use theme_remui\usercontroller as usercontroller;
 
 $userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
@@ -185,7 +183,7 @@ function getPendingCoursesHtml($courses) {
 										<div class="cc-courses-detail-container dd-ultimos-desc"> '. progressBarHTML($course->progress) .'
 											<div class="text-left" style="font-size: 12px; color: #A3AFB7; padding: 2% 4% 0 7%; height: 35px;">'. getCategoryById($course->id)->name .'</div>
 											<div class="dd-courses-course-name">'. $course->fullname .'</div>
-											<a class="dd-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">Acceder al curso</a>
+											<a class="dd-courses-button" type="button" href="#">Acceder al curso</a>
 				</div>
 				</div>
 			</div>';
