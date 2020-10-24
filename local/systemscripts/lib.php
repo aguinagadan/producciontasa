@@ -66,9 +66,9 @@ function migrate_tasa_users_task() {
 
 		$userMainDataObj = new stdClass();
 		$userMainDataObj->id = $user->id;
-		$userMainDataObj->firstname = $userAD['givenName'];
-		$userMainDataObj->lastname = $userAD['surname'];
-		$userMainDataObj->email = $userAD['mail'];
+		$userMainDataObj->firstname = isset($userAD['givenName']) ? $userAD['givenName'] : ' ';
+		$userMainDataObj->lastname =  isset($userAD['surname']) ? $userAD['surname'] : ' ';
+		$userMainDataObj->email = isset($userAD['mail']) ? $userAD['mail'] : ' ';
 
 		$DB->update_record('user', $userMainDataObj);
 
