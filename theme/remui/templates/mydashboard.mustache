@@ -306,6 +306,7 @@ require(['theme_remui/loader'], function () {
             $('.excel-general').find('img').css('opacity', 0.5);
             $('.excel-general').find('img').css('cursor', 'auto');
             $('.excel-general').attr('data-target', '');
+            $('.excel-general').removeClass('excel-clickable');
         });
 
         $(document).on('click', '.cat-clickable', function() {
@@ -332,6 +333,7 @@ require(['theme_remui/loader'], function () {
                     $('.excel-general').find('img').css('opacity', 0.5);
                     $('.excel-general').find('img').css('cursor', 'auto');
                     $('.excel-general').attr('data-target', '');
+                    $('.excel-general').removeClass('excel-clickable');
 
                     $('.ss-container').hide();
                     $('#seguimiento-content').append(elementToShow);
@@ -379,6 +381,7 @@ require(['theme_remui/loader'], function () {
                     $('.carta-general').attr('data-target', '');
                     $('.excel-general').find('img').css('opacity', 0.5);
                     $('.excel-general').find('img').css('cursor', 'auto');
+                    $('.excel-general').removeClass('excel-clickable');
 
                     if( dataOpen == 'ss-main-container-zonas-areas-detail' ||
                         dataOpen == 'ss-main-container-zonas-detail' ||
@@ -395,6 +398,7 @@ require(['theme_remui/loader'], function () {
                         $('.excel-general').find('img').css('opacity', 1);
                         $('.excel-general').find('img').css('cursor', 'pointer');
                         $('.excel-general').attr('data-target', '#myModalGeneral');
+                        $('.excel-general').addClass('excel-clickable');
                     }
 
                     $('.ss-container').hide();
@@ -454,8 +458,10 @@ require(['theme_remui/loader'], function () {
         });
 
         $(document).on('click', '#modalXLS', function() {
-            courseId = $(this).attr('course-id')
-            var page = "excel.php?course_id="+courseId;
-            window.location = page;
+            if($(this).hasClass('excel-clickable')) {
+                courseId = $(this).attr('course-id')
+                var page = "excel.php?course_id="+courseId;
+                window.location = page;
+            }
         });
 {{/js}}
