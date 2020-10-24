@@ -272,14 +272,14 @@ function getCoursesHtml($courses) {
 
 			if(isset($course->enddate) && !empty($course->enddate)) {
 				$html.= '<div class="col-sm" style="width: 50%; height: 100%;">
-											<div class="row">
-												 <div class="col-sm" style="max-width: 30% !important;">';
-				$html.= getProgressBarDetail($daysLeftPercentage);
-			$html.= '					 </div>
-													<div class="col-sm dd-line-height pr-0" style="font-size: 13px; color: #A3AFB7">
-															Cierra en '. $daysLeft .' días';
-						$html.= '			</div>
-											</div>
+											<div class="row">';
+//				$html.= '<div class="col-sm" style="max-width: 30% !important;">';
+//				$html.= getProgressBarDetail($daysLeftPercentage);
+//				$html.= '					 </div>
+//													<div class="col-sm dd-line-height pr-0" style="font-size: 13px; color: #A3AFB7">
+//															Cierra en '. $daysLeft .' días';
+//						$html.= '			</div>';
+						$html.= '</div>
 									</div>';
 			} else {
 				$html.= '<div class="col-sm" style="width: 50%">
