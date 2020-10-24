@@ -117,6 +117,9 @@ function get_courses_by_category($catId) {
 	$returnHTML = '';
 
 	foreach($coursesArr as $course) {
+		if($course->visible != 1) {
+			continue;
+		}
 		$progress = 0;
 		$contCompleted = 0;
 		$returnHTML .= '<div data-id="'. $course->category .'" class="ss-container ss-main-container-course row ss-m-b-05">';

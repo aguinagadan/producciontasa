@@ -346,6 +346,9 @@ function getSSCategories() {
 	$categories = $DB->get_records('course_categories');
 
 	foreach($categories as $category) {
+		if($category->visible != 1) {
+			continue;
+		}
 		$cat = \coursecat::get($category->id);
 		$children_courses = $cat->get_courses();
 		if(!empty($children_courses)) {
