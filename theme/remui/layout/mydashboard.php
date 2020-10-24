@@ -176,7 +176,7 @@ function getPendingCoursesHtml($courses) {
 			continue;
 		}
 
-		$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : ' ';
+		$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : '-';
 
 		$content = '<div class="cc-courses-info">
 										<div class="dd-category-box-secundary">
@@ -249,7 +249,7 @@ function getCoursesHtml($courses) {
 			$daysLeft = getDaysLeft($course->startdate, $course->enddate);
 			$daysLeftPercentage = getDaysLeftPercentage($course->startdate, $course->enddate);
 
-			$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : ' ';
+			$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : '-';
 
 			$html.= '<div class="column d-course-row" style="height: 149px; width: 610px; background-color: white; box-shadow: 2px 2px 4px #00000029; border-radius: 4px; margin: 0 0 1% 1%; padding: 1%;">
 							<div class="row" style="position: relative; height: 100%;">
