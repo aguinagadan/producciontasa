@@ -177,13 +177,15 @@ function getPendingCoursesHtml($courses) {
 			continue;
 		}
 
+		$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : ' ';
+
 		$content = '<div class="cc-courses-info">
 										<div class="dd-category-box-secundary">
 									<div class="dd-h3-courses-info" style="background: url('. getCourseImageById($course->id) .');"></div>
 										<div class="cc-courses-detail-container dd-ultimos-desc"> '. progressBarHTML($course->progress) .'
-											<div class="text-left" style="font-size: 12px; color: #A3AFB7; padding: 2% 4% 0 7%; height: 35px;">'. getCategoryById($course->id)->name .'</div>
+											<div class="text-left" style="font-size: 12px; color: #A3AFB7; padding: 2% 4% 0 7%; height: 35px;">'. $categoryName .'</div>
 											<div class="dd-courses-course-name">'. $course->fullname .'</div>
-											<a class="dd-courses-button" type="button" href="#">Acceder al curso</a>
+											<a class="dd-courses-button" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">Acceder al curso</a>
 				</div>
 				</div>
 			</div>';
@@ -248,13 +250,15 @@ function getCoursesHtml($courses) {
 			$daysLeft = getDaysLeft($course->startdate, $course->enddate);
 			$daysLeftPercentage = getDaysLeftPercentage($course->startdate, $course->enddate);
 
+			$categoryName = isset(getCategoryById($course->id)->name) ? getCategoryById($course->id)->name : ' ';
+
 			$html.= '<div class="column d-course-row" style="height: 149px; width: 610px; background-color: white; box-shadow: 2px 2px 4px #00000029; border-radius: 4px; margin: 0 0 1% 1%; padding: 1%;">
 							<div class="row" style="position: relative; height: 100%;">
 								<div class="col-sm" style="position: relative; max-width: 40% !important; text-align: left; height: 100%;">
 									<img class="dd-image-card" src="'. getCourseImageById($course->id) .'">
 								</div>
 								<div class="col-sm pl-0 pr-0" style="width: 50%;left: 1%;position: relative;text-align: left;">
-									<div class="text-left" style="font-size: 12px; color: #A3AFB7">'. getCategoryById($categoryId)->name .'</div>
+									<div class="text-left" style="font-size: 12px; color: #A3AFB7">'. $categoryName .'</div>
 									<div class="text-left dd-line-height-name" style="font-size: 22px; font-weight: 525; color: #526069; overflow: hidden; height: 40px;"><a style="text-decoration: none !important; color: #526069 !important;" type="button" href="'. new moodle_url("/course/view.php",array("id" => $course->id)). '">'. $course->fullname .'</a></div>
 									<div class="row dd-rounded-progress-box" style="width: 100%; height: auto; padding-top: 6%;">
 										<div class="col-sm" style="width: 50%; height: 100%;">
