@@ -58,15 +58,15 @@ $html = '
 <table>
  <thead>
   <tr>
-   <th style="background-color:#154A7D; color=#FFFFFF;">CODIGO</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">NOMBRE</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">DNI</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">CORREO</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">SEDE</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">GERENCIA</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">AREA</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">CARGO</th>
-   <th style="background-color:#154A7D; color=#FFFFFF;">ESTADO</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">CODIGO</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">NOMBRE</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">DNI</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">CORREO</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">SEDE</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">GERENCIA</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">AREA</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">CARGO</th>
+   <th style="background-color:#154A7D; color:#FFFFFF;">ESTADO</th>
    <th>Cumplimiento</th>
    <th>Nota I</th>
    <th>Nota F</th>
