@@ -155,6 +155,14 @@ foreach($usersValues as $key=>$userAD) {
 		continue;
 	}
 
+	$userMainDataObj = new stdClass();
+	$userMainDataObj->id = $user->id;
+	$userMainDataObj->firstname = $userAD['givenName'];
+	$userMainDataObj->lastname = $userAD['surname'];
+	$userMainDataObj->email = $userAD['mail'];
+
+	$DB->update_record('user', $userMainDataObj);
+
 	//consultar: filtrando si tiene datos extra (?)
 	if(
 		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ||
