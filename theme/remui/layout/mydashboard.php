@@ -29,7 +29,6 @@ global $USER, $CFG;
 
 require_once('common.php');
 require_once($CFG->dirroot. '/course/lib.php');
-require_once($CFG->libdir. '/coursecatlib.php');
 require_once($CFG->dirroot . '/enrol/externallib.php');
 
 use moodle_url;
@@ -351,7 +350,7 @@ function getSSCategories() {
 		if($category->visible != 1) {
 			continue;
 		}
-		$cat = \coursecat::get($category->id);
+		$cat = \core_course_category::get($category->id);
 		$children_courses = $cat->get_courses();
 		if(!empty($children_courses)) {
 			$extraStyle = ' style="cursor: pointer; font-size: 18px;"';
