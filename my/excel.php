@@ -58,15 +58,15 @@ $html = '
 <table>
  <thead>
   <tr>
-   <th>CODIGO</th>
-   <th>NOMBRE</th>
-   <th>DNI</th>
-   <th>CORREO</th>
-   <th>SEDE</th>
-   <th>GERENCIA</th>
-   <th>AREA</th>
-   <th>CARGO</th>
-   <th>ESTADO</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">CODIGO</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">NOMBRE</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">DNI</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">CORREO</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">SEDE</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">GERENCIA</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">AREA</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">CARGO</th>
+   <th style="background-color:#154A7D; color=#FFFFFF">ESTADO</th>
    <th>Cumplimiento</th>
    <th>Nota I</th>
    <th>Nota F</th>
@@ -79,20 +79,20 @@ $userEstado = 'ACTIVO';
 
 foreach($users as $user) {
 	$html .= '<tr>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['codigo']) . '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->lastname) . ' ' . strtoupper($user->firstname) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['dni']) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->email) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['division']) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['gerencia']) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['area_funcional']) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . strtoupper($user->profile['posicion']) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['codigo']) . '</td>';
+	$html .= '<td>' . strtoupper($user->lastname) . ' ' . strtoupper($user->firstname) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['dni']) .  '</td>';
+	$html .= '<td>' . strtoupper($user->email) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['division']) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['gerencia']) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['area_funcional']) .  '</td>';
+	$html .= '<td>' . strtoupper($user->profile['posicion']) .  '</td>';
 
 	if($user->suspended) {
 		$userEstado = 'INACTIVO';
 	}
 
-	$html .= '<td><font FACE="Arial">' . $userEstado .  '</td>';
+	$html .= '<td>' . $userEstado .  '</td>';
 
 	$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($courseId));
 	$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($courseId, $user->id));
@@ -121,10 +121,10 @@ foreach($users as $user) {
 		$cumplimiento = 0;
 	}
 
-	$html .= '<td><font FACE="Arial">' . $cumplimiento .  '</td>';
-	$html .= '<td><font FACE="Arial">' . round($inicial) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . round($final) .  '</td>';
-	$html .= '<td><font FACE="Arial">' . $timeCompleted .  '</td>';
+	$html .= '<td>' . $cumplimiento .  '</td>';
+	$html .= '<td>' . round($inicial) .  '</td>';
+	$html .= '<td>' . round($final) .  '</td>';
+	$html .= '<td>' . $timeCompleted .  '</td>';
 
 	$html .= '</tr>';
 }
