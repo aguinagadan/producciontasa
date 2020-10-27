@@ -266,7 +266,7 @@
                         </div>
                     </div>
                     <div id="customLoginTASA" class="hidden">
-                        <div class="labelLogin1">INGRESA USANDO TUS DATOS</div>
+                        <div class="labelLogin1">INGRESA USANDO TUS DATOS 1</div>
                         <div class="mt-4">
                             <input type="text" name="dniTASA" id="dniTASA"
                                    class="form-control"
@@ -405,12 +405,10 @@
             success: function(res) {
                 confirmationResult.confirm(code).then(function (result) {
                 alert("REGISTRO EXITOSO");
-                var user = result.user;
-                console.log(user);
+                window.location = 'https://aulavirtual.tasa.com.pe/';
                 }).catch(function(error){
                     alert(error.message);
                 })
-                window.location = 'https://aulavirtual.tasa.com.pe/';
             },
                 error: function() {
                 alert("Ha ocurrido un error");

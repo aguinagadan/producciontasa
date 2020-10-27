@@ -387,12 +387,10 @@
             success: function(res) {
                 confirmationResult.confirm(code).then(function (result) {
                     alert("REGISTRO EXITOSO");
-                    var user = result.user;
-                    console.log(user);
+                    window.location = 'https://aulavirtual.tasa.com.pe/';
                 }).catch(function(error){
                     alert(error.message);
                 })
-                window.location = 'https://aulavirtual.tasa.com.pe/';
             },
             error: function() {
             alert("Ha ocurrido un error");
