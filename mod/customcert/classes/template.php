@@ -26,6 +26,9 @@ namespace mod_customcert;
 
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
+require_once($CFG->dirroot . '/local/aws/sdk/aws-autoloader.php');
+
 /**
  * Class represents a customcert template.
  *
@@ -308,7 +311,26 @@ class template {
             if ($return) {
                 return $pdf->Output('', 'S');
             }
-            $pdf->Output($filename, 'D');
+
+          var_dump($pdf);
+          exit;
+
+					$s3 = new Aws\S3\S3Client([
+						'region'  => '-- your region --',
+						'version' => 'latest',
+						'credentials' => [
+							'key'    => "-- access key id --",
+							'secret' => "-- secret access key --",
+						]
+					]);
+
+					$result = $s3->putObject([
+						'Bucket' => '-- bucket name --',
+						'Key'    => $filename,
+						'SourceFile' => $pdf
+					]);
+
+					$pdf->Output($filename, 'D');
         }
     }
 
