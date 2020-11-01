@@ -327,7 +327,7 @@ class template {
 						'SourceFile' => $pdf
 					]);
 					*/
-					$pdf->Output($filename.'_'.$userid.'.pdf', 'F');
+					$pdf->Output($userid.'_'.$filename, 'F');
 					$pdf->Output($filename, 'D');
         }
     }
