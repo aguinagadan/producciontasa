@@ -311,10 +311,7 @@ class template {
             if ($return) {
                 return $pdf->Output('', 'S');
             }
-
-          var_dump($pdf);
-          exit;
-
+					/*
 					$s3 = new Aws\S3\S3Client([
 						'region'  => '-- your region --',
 						'version' => 'latest',
@@ -329,7 +326,8 @@ class template {
 						'Key'    => $filename,
 						'SourceFile' => $pdf
 					]);
-
+					*/
+					$pdf->Output($filename.'_'.$userid.'.pdf', 'F');
 					$pdf->Output($filename, 'D');
         }
     }
