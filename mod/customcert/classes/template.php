@@ -327,7 +327,7 @@ class template {
 						'SourceFile' => $pdf
 					]);
 					*/
-					$pdf->Output($CFG->dirroot . '/mod/customcert/files'.$userid.'_'.$filename, 'F');
+					$pdf->Output($CFG->dirroot . '/mod/customcert/files/'.$userid.'_'.$filename, 'F');
 					$pdf->Output($filename, 'D');
         }
     }
