@@ -256,7 +256,7 @@ class template {
      * @param bool $return Do we want to return the contents of the PDF?
      * @return string|void Can return the PDF in string format if specified.
      */
-    public function generate_pdf($preview = false, $userid = null, $return = false) {
+    public function generate_pdf($preview = false, $userid = null, $return = false, $course) {
         global $CFG, $DB, $USER;
 
         if (empty($userid)) {
@@ -285,8 +285,8 @@ class template {
             $pdf->SetTitle($this->name);
             $pdf->SetAutoPageBreak(true, 0);
             // Remove full-stop at the end, if it exists, to avoid "..pdf" being created and being filtered by clean_filename.
-            $filename = rtrim($this->name, '.');
-            $filename = clean_filename($filename . '.pdf');
+            $filenamePrev = rtrim($this->name, '.');
+            $filename = clean_filename($filenamePrev . '.pdf');
             // Loop through the pages and display their content.
             foreach ($pages as $page) {
                 // Add the page to the PDF.
@@ -311,23 +311,7 @@ class template {
             if ($return) {
                 return $pdf->Output('', 'S');
             }
-					/*
-					$s3 = new Aws\S3\S3Client([
-						'region'  => '-- your region --',
-						'version' => 'latest',
-						'credentials' => [
-							'key'    => "-- access key id --",
-							'secret' => "-- secret access key --",
-						]
-					]);
-
-					$result = $s3->putObject([
-						'Bucket' => '-- bucket name --',
-						'Key'    => $filename,
-						'SourceFile' => $pdf
-					]);
-					*/
-					$pdf->Output($CFG->dirroot . '/mod/customcert/files/'.$userid.'_'.$filename, 'F');
+					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' .$user->fullname. '.pdf', 'F');
 					$pdf->Output($filename, 'D');
         }
     }
