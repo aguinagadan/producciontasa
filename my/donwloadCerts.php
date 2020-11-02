@@ -2,6 +2,7 @@
 
 global $CFG;
 
+use SplFileInfo;
 use ZipArchive;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -12,6 +13,9 @@ $rootPath = realpath(__DIR__ . '/../../mod/customcert/files');
 // Initialize archive object
 $zip = new ZipArchive();
 $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+var_dump($rootPath);
+exit;
 
 // Create recursive directory iterator
 /** @var SplFileInfo[] $files */
