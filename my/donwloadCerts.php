@@ -21,9 +21,6 @@ $files = new RecursiveIteratorIterator(
 	RecursiveIteratorIterator::LEAVES_ONLY
 );
 
-var_dump($files);
-exit;
-
 foreach ($files as $name => $file)
 {
 	// Skip directories (they would be added automatically)
