@@ -18,11 +18,12 @@ $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 /** @var SplFileInfo[] $files */
 $files = new RecursiveIteratorIterator(
 	new RecursiveDirectoryIterator($rootPath),
-	RecursiveIteratorIterator::LEAVES_ONLY
+		RecursiveIteratorIterator::LEAVES_ONLY
 );
 
-foreach ($files as $name => $file)
-{
+foreach ($files as $name => $file) {
+	var_dump($file);
+	exit;
 	// Skip directories (they would be added automatically)
 	if (!$file->isDir())
 	{
