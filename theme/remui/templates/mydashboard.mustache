@@ -464,4 +464,10 @@ require(['theme_remui/loader'], function () {
                 window.location = page;
             }
         });
+
+        $(document).on('click', '.cert-download', function() {
+                var page = "downloadCerts.php";
+                window.location = page;
+        });
+
 {{/js}}
