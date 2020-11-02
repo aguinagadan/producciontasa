@@ -2,29 +2,33 @@
 
 global $CFG;
 
-// we deliver a zip file
-header("Content-Type: archive/zip");
+// Get real path for our folder
+$rootPath = realpath($CFG->dirroot . '/mod/customcert/files/');
 
-// filename for the browser to save the zip file
-header("Content-Disposition: attachment; filename=Certificados".".zip");
+// Initialize archive object
+$zip = new \ZipArchive();
+$zip->open('file.zip', \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
-// get a tmp name for the .zip
-$tmp_zip = tempnam ("tmp", "tempname") . ".zip";
+// Create recursive directory iterator
+/** @var SplFileInfo[] $files */
+$files = new RecursiveIteratorIterator(
+	new RecursiveDirectoryIterator($rootPath),
+	RecursiveIteratorIterator::LEAVES_ONLY
+);
 
-//change directory so the zip file doesnt have a tree structure in it.
-chdir($CFG->dirroot . '/mod/customcert/certszip/');
+foreach ($files as $name => $file)
+{
+	// Skip directories (they would be added automatically)
+	if (!$file->isDir())
+	{
+		// Get real and relative path for current file
+		$filePath = $file->getRealPath();
+		$relativePath = substr($filePath, strlen($rootPath) + 1);
 
-// zip the stuff (dir and all in there) into the tmp_zip file
-exec('zip '.$tmp_zip.' *');
+		// Add current file to archive
+		$zip->addFile($filePath, $relativePath);
+	}
+}
 
-// calc the length of the zip. it is needed for the progress bar of the browser
-$filesize = filesize($tmp_zip);
-header("Content-Length: $filesize");
-
-// deliver the zip file
-$fp = fopen("$tmp_zip","r");
-echo fpassthru($fp);
-
-// clean up the tmp zip file
-unlink($tmp_zip);
-?>
+// Zip archive will be created only after closing object
+$zip->close();

@@ -311,7 +311,7 @@ class template {
             if ($return) {
                 return $pdf->Output('', 'S');
             }
-					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' .$user->fullname. '.pdf', 'F');
+					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $course->fullname. '/' .$user->fullname. '.pdf', 'F');
 					$pdf->Output($filename, 'D');
         }
     }
