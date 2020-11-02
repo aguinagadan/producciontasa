@@ -3,6 +3,8 @@
 global $CFG;
 
 use ZipArchive;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 // Get real path for our folder
 $rootPath = realpath($CFG->dirroot . '/mod/customcert/files/');
