@@ -22,8 +22,6 @@ $files = new RecursiveIteratorIterator(
 );
 
 foreach ($files as $name => $file) {
-	var_dump($file);
-	exit;
 	// Skip directories (they would be added automatically)
 	if (!$file->isDir())
 	{
@@ -35,6 +33,9 @@ foreach ($files as $name => $file) {
 		$zip->addFile($filePath, $relativePath);
 	}
 }
+
+var_dump($files);
+exit;
 
 // Zip archive will be created only after closing object
 $zip->close();
