@@ -311,7 +311,11 @@ class template {
             if ($return) {
                 return $pdf->Output('', 'S');
             }
-					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $course->fullname. '/' . $user->firstname . '_' . $user->lastname . '.pdf', 'F');
+
+					$courseName = str_replace(' ', '_', $course->fullname);
+					$userName = str_replace(' ', '_;', $user->firstname . '_' . $user->lastname);
+
+					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $courseName . '/' . $userName . '.pdf', 'F');
 					$pdf->Output($filename, 'D');
         }
     }
