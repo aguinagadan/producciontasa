@@ -12,7 +12,8 @@ $rootPath = realpath(__DIR__ . '/../mod/customcert/files');
 
 // Initialize archive object
 $zip = new ZipArchive();
-$zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+$tmpFile = 'myZip.zip';
+$zip->open($tmpFile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 // Create recursive directory iterator
 /** @var SplFileInfo[] $files */
@@ -34,8 +35,10 @@ foreach ($files as $name => $file) {
 	}
 }
 
-var_dump($files);
-exit;
+echo 'Archive created!';
+header('Content-disposition: attachment; filename=files.zip');
+header('Content-type: application/zip');
+readfile($tmpFile);
 
 // Zip archive will be created only after closing object
 $zip->close();
