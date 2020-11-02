@@ -36,6 +36,8 @@ foreach ($files as $name => $file) {
 }
 
 echo 'Archivo creado!';
+ob_clean();
+ob_end_flush();
 header('Content-disposition: attachment; filename=Certificados.zip');
 header('Content-type: application/zip');
 readfile($tmpFile);
