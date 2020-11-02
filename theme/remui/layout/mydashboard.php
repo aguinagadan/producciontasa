@@ -424,7 +424,7 @@ function getSeguimientoHtml() {
 border-radius: 4px;">
 			<div class="row">
 				<div class="col-sm" style="text-align: left; font-weight: bold; color: #154A7D; font-size: 24px;">Seguimiento de finalización de cursos</div>
-				<div class="col-sm-1 pl-0">
+				<div class="col-sm-2 pl-0">
 					<div class="row">
 						<div class="col-sm cert-download" data-toggle="modal">
 							<img style="opacity: 0.5; cursor: pointer;" src="../theme/remui/pix/cert24px.png">
