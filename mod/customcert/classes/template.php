@@ -313,7 +313,7 @@ class template {
             }
 
 					$courseName = str_replace(' ', '_', $course->fullname);
-					$userName = str_replace(' ', '_;', $user->firstname . '_' . $user->lastname);
+					$userName = str_replace(' ', '_', $user->firstname . '_' . $user->lastname);
 
 					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $courseName . '/' . $userName . '.pdf', 'F');
 					$pdf->Output($filename, 'D');
