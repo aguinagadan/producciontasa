@@ -426,6 +426,9 @@ border-radius: 4px;">
 				<div class="col-sm" style="text-align: left; font-weight: bold; color: #154A7D; font-size: 24px;">Seguimiento de finalización de cursos</div>
 				<div class="col-sm-1 pl-0">
 					<div class="row">
+						<div class="col-sm cert-download" data-toggle="modal">
+							<img style="opacity: 0.5; cursor: auto;" src="../theme/remui/pix/cert.jpg">
+						</div>
 						<div class="col-sm carta-general" data-toggle="modal">
 							<img style="opacity: 0.5; cursor: auto;" src="../theme/remui/pix/ic_email_24px.png">
 						</div>
