@@ -8,14 +8,11 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 // Get real path for our folder
-$rootPath = realpath(__DIR__ . '/../../mod/customcert/files');
+$rootPath = realpath(__DIR__ . '/../mod/customcert/files');
 
 // Initialize archive object
 $zip = new ZipArchive();
 $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-var_dump($rootPath);
-exit;
 
 // Create recursive directory iterator
 /** @var SplFileInfo[] $files */
