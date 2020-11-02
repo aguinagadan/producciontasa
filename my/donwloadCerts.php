@@ -7,7 +7,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
 // Get real path for our folder
-$rootPath = realpath($CFG->dirroot . '/mod/customcert/files/');
+$rootPath = realpath(__DIR__ . '/../../mod/customcert/files');
 
 // Initialize archive object
 $zip = new ZipArchive();
@@ -19,6 +19,9 @@ $files = new RecursiveIteratorIterator(
 	new RecursiveDirectoryIterator($rootPath),
 	RecursiveIteratorIterator::LEAVES_ONLY
 );
+
+var_dump($files);
+exit;
 
 foreach ($files as $name => $file)
 {
