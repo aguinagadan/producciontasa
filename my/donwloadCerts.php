@@ -2,12 +2,14 @@
 
 global $CFG;
 
+use ZipArchive;
+
 // Get real path for our folder
 $rootPath = realpath($CFG->dirroot . '/mod/customcert/files/');
 
 // Initialize archive object
-$zip = new \ZipArchive();
-$zip->open('file.zip', \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+$zip = new ZipArchive();
+$zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 // Create recursive directory iterator
 /** @var SplFileInfo[] $files */
