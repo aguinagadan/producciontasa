@@ -5,9 +5,8 @@ error_reporting( E_ALL );
 require_once('../config.php');
 
 $message = $_POST['message'];
-//cambiar produccion - samuel
-$from = 'samuelro444@gmail.com';
-$subject = 'Correo de prueba para Seguimiento';
+$from = 'webmaster@tasa.com.pe';
+$subject = 'TASA - Mensaje de seguimiento';
 
 if($_POST['idUsersAll']) {
 	$userIds = explode( ',', $_POST['idUsersAll']);
@@ -26,7 +25,7 @@ if($_POST['idUsersAll']) {
 			var_dump('de => '. $from);
 			var_dump('subject => ' . $subject);
 			$existingMails[] = $emailTo;
-			//email_to_user($foruser, $from, $subject, $message);
+			email_to_user($foruser, $from, $subject, $message);
 		}
 	}
 } else {
@@ -38,5 +37,5 @@ if($_POST['idUsersAll']) {
 	var_dump('mensaje => ' . $message);
 	var_dump('de => '. $from);
 	var_dump('subject => ' . $subject);
-	//email_to_user($foruser, $from, $subject, $message);
+	email_to_user($foruser, $from, $subject, $message);
 }
