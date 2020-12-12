@@ -12,7 +12,8 @@ var explorer = new Vue({
             listPorcent: {},
             totalUsers: 0,
             completedUsers: 0,
-            currentCourseId: 0
+            currentCourseId: 0,
+            isCalculatedCompleted: false,
         }
     },
     created(){
@@ -68,7 +69,10 @@ var explorer = new Vue({
             this.list = this.list.slice().reverse()
         },
         viewGerencia: function(item){
-            this.getCourseTotalUsers(item.id);
+            if(!this.isCalculatedCompleted) {
+                this.getCourseTotalUsers(item.id);
+                this.isCalculatedCompleted = true;
+            }
             this.currentCourseId = item.id;
             this.general = false;
             this.gerencia = true;
@@ -109,7 +113,10 @@ var explorer = new Vue({
                 });
         },
         viewAreas: function(item){
-            this.getCourseTotalUsers(item.id);
+            if(!this.isCalculatedCompleted) {
+                this.getCourseTotalUsers(item.id);
+                this.isCalculatedCompleted = true;
+            }
             this.currentCourseId = item.id;
             this.general = false;
             this.gerencia = false;
@@ -149,7 +156,10 @@ var explorer = new Vue({
                 });
         },
         viewZonas: function(item){
-            this.getCourseTotalUsers(item.id);
+            if(!this.isCalculatedCompleted) {
+                this.getCourseTotalUsers(item.id);
+                this.isCalculatedCompleted = true;
+            }
             this.currentCourseId = item.id;
             this.general = false;
             this.gerencia = false;
@@ -193,6 +203,7 @@ var explorer = new Vue({
             this.gerencia = false;
             this.areas = false;
             this.zonas = false;
+            this.isCalculatedCompleted = false;
         },
         activeOptions: function(key){
             if(!document.querySelector('#option_'+key).classList.contains('active')){
