@@ -31,7 +31,7 @@ var explorer = new Vue({
             axios.post('../local/dashboard/ajax_controller.php',frm)
                 .then((response) => {
                     let data = response.data;
-                    this.total = data.total;
+                    this.totalUsers = data.total;
                     this.completedUsers = data.completed;
                 });
         },

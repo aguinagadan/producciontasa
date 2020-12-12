@@ -179,15 +179,12 @@ function getCursoTotals($courseId) {
 	$users = get_enrolled_users($context);
 
 	foreach($users as $key=>$user) {
-		var_dump($user->id);
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
-		var_dump($progress);
-		$completed++;
+		$total++;
 		if($progress == 100) {
-			$total++;
+			$completed++;
 		}
 	}
-	exit;
 
 	$response['status'] = true;
 	$response['total'] = $total;
