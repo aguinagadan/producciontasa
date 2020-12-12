@@ -457,6 +457,7 @@ border-radius: 4px;">
 
 if($isManager) {
 	$seguimientoHtml = getSeguimientoHtml();
+	$seguimientoHtml = '<div></div>';
 }
 
 $templatecontextDashboard = [
