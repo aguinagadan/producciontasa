@@ -135,7 +135,10 @@ function getAreas($courseId) {
 }
 
 function getZonas($courseId) {
+	var_dump($courseId);
 	$course = get_course($courseId);
+	var_dump($course);
+	exit;
 	$zonas = array();
 	$personaIds = array();
 
