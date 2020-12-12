@@ -476,4 +476,5 @@ $templatecontextDashboard = [
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
 
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
+echo $OUTPUT->render_from_template('theme_remui/seguimientotasa', $templatecontext);
 echo $OUTPUT->render_from_template('theme_remui/mydashboardremuiblock', $templatecontext);

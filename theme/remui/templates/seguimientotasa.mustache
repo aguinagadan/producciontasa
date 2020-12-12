@@ -1,0 +1,72 @@
+<div id="app">
+    <div class="explorer" id="explorer">
+        <h3>EXPLORADOR DE FINALIZACIÓN DE CURSOS</h3>
+        <table v-if="general">
+            <thead>
+            <tr>
+                <td class="pointer" @click="changeOrder()">
+                    <div class="icon"><span v-bind:class="{ disabled: order }">▲</span><span v-bind:class="{ disabled: !order }">▼</span></div><span>Cursos</span>
+                </td>
+                <td></td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(item, key) in list">
+                <td>{(item.name)}</td>
+                <td>
+                    <button class="btn btn-options" @click="activeOptions(key)"><img src="/local/dashboard/img/responsive.svg" alt="" srcset=""/></button>
+                    <div class="acordeon" :id="'option_'+key">
+                        <button class="btn btn-defauld" @click="viewGerencia(item)"><img src="/local/dashboard/img/gerencias.svg" alt="" srcset=""/><span>VER GERENCIA</span></button>
+                        <button class="btn btn-defauld" @click="viewAreas(item)"><img src="/local/dashboard/img/areas.svg" alt="" srcset=""/><span>VER ÁREAS</span></button>
+                        <button class="btn btn-defauld" @click="viewZonas(item)"><img src="/local/dashboard/img/zonas.svg" alt="" srcset=""/><span>VER ZONAS</span></button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="general" v-if="gerencia || areas || zonas">
+            <h4><span class="title">{(listPorcent.item.name)}</span><span class="subtitle">{(totalUsers)} usuarios han Completado el curso de {(completedUsers)}</span></h4>
+            <div class="close" @click="close()">X</div>
+            <div class="content">
+                <div class="title">
+                    <div class="item" v-bind:class="{ active: gerencia }" @click="viewGerencia(listPorcent.item)">PROGRESO GENERAL</div>
+                    <div class="item" v-bind:class="{ active: areas }" @click="viewAreas(listPorcent.item)">PROGRESO ÁREAS</div>
+                    <div class="item" v-bind:class="{ active: zonas }" @click="viewZonas(listPorcent.item)">PROGRESO ZONAS</div>
+                </div>
+                <div class="body">
+                    <div class="item" v-for="item in listPorcent.list">
+                        <div class="name">{(item.name)}</div>
+                        <div class="porcent">{(item.porcent)}%</div>
+                        <div class="progress-bar">
+                            <div class="success" :style="'width: '+item.porcent+'%'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <a :href="'../user/index.php?id='+ currentCourseId">
+                    <img src="/local/dashboard/img/usuario.svg" alt=""/>
+                </a>
+                <a :href="'../grade/report/index.php?id='+ currentCourseId">
+                    <img src="/local/dashboard/img/estadistica.svg" alt=""/>
+                </a>
+                <a :href="'excel.php?course_id='+ currentCourseId">
+                    <img src="/local/dashboard/img/excel.svg" alt=""/>
+                </a>
+                <a href="#">
+                    <img src="/local/dashboard/img/mail.svg" alt=""/>
+                </a>
+                <a href="#">
+                    <img src="/local/dashboard/img/explora.svg" alt=""/>
+                </a>
+                <a :href="'downloadCerts.php?idCurso=' + currentCourseId">
+                    <img src="/local/dashboard/img/descargar.svg" alt=""/>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script src="/local/dashboard/js/main.js"></script>
+<link rel="stylesheet" href="/local/dashboard/css/main.css">
