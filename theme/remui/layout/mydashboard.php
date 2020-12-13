@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-global $USER, $CFG;
+global $USER, $CFG, $DB;
 
 require_once('common.php');
 require_once($CFG->dirroot. '/course/lib.php');
@@ -36,6 +36,8 @@ use block_xp\local\xp\level_with_name;
 use block_xp\local\xp\level_with_badge;
 use core_completion\progress;
 use theme_remui\usercontroller as usercontroller;
+
+$roleassignment = array_shift($DB->get_records('role_assignments', ['userid' => $USER->id]))->roleid;
 
 $userCourses = array_values(usercontroller::get_users_courses_with_progress($USER));
 
@@ -476,7 +478,7 @@ $templatecontextDashboard = [
 $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
 
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
-if($isManager) {
+if($roleassignment == 1) {
 	echo $OUTPUT->render_from_template('theme_remui/seguimientotasa', $templatecontext);
 }
 echo $OUTPUT->render_from_template('theme_remui/mydashboardremuiblock', $templatecontext);
