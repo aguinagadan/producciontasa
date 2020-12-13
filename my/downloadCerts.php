@@ -63,12 +63,14 @@ if(count($files) == $cont) {
 	exit;
 }
 
+// Zip archive will be created only after closing object
+$zip->close();
+
 echo 'Archivo creado!';
 ob_clean();
 ob_end_flush();
 header('Content-disposition: attachment; filename=Certificados.zip');
 header('Content-type: application/zip');
 readfile($tmpFile);
-
-// Zip archive will be created only after closing object
-$zip->close();
+// remove zip file is exists in temp path
+unlink($tmpFile);
