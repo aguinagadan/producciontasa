@@ -24,17 +24,24 @@ $files = new RecursiveIteratorIterator(
 		RecursiveIteratorIterator::LEAVES_ONLY
 );
 
+function get_string_between($string, $start, $end){
+	$string = ' ' . $string;
+	$ini = strpos($string, $start);
+	if ($ini == 0) return '';
+	$ini += strlen($start);
+	$len = strpos($string, $end, $ini) - $ini;
+	return substr($string, $ini, $len);
+}
+
 $cont = 0;
 
 foreach ($files as $name => $file) {
 	// Skip directories (they would be added automatically)
-	$idCursoStr = substr($name, strpos($name, "|||") -1,1);
+	$idGet = get_string_between($name,
+		'/var/www/html/moodle/mod/customcert/files/',
+		'|||');
 
-	if($idCursoStr == '.') {
-		continue;
-	}
-
-	if($idCursoStr != $idCurso) {
+	if($idGet != $idCurso) {
 		$cont++;
 		continue;
 	}
