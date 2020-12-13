@@ -312,10 +312,12 @@ class template {
                 return $pdf->Output('', 'S');
             }
 
+					$delimiter = '|||';
+					$courseId = $course->id;
 					$courseName = str_replace(' ', '_', $course->fullname);
 					$userName = str_replace(' ', '_', $user->firstname . '_' . $user->lastname);
 
-					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $courseName . '_' . $userName . '.pdf', 'F');
+					$pdf->Output($CFG->dirroot . '/mod/customcert/files/' . $courseId . $delimiter . $courseName . '_' . $userName . '.pdf', 'F');
 					$pdf->Output($filename, 'D');
         }
     }
