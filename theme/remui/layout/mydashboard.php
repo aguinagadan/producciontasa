@@ -480,5 +480,7 @@ $templatecontext = array_merge($templatecontext, $templatecontextDashboard);
 echo $OUTPUT->render_from_template('theme_remui/mydashboard', $templatecontext);
 if($roleassignment == 1) {
 	echo $OUTPUT->render_from_template('theme_remui/seguimientotasa', $templatecontext);
+} else if ($roleassignment == 9) {
+	echo $OUTPUT->render_from_template('theme_remui/paneltasa', $templatecontext);
 }
 echo $OUTPUT->render_from_template('theme_remui/mydashboardremuiblock', $templatecontext);

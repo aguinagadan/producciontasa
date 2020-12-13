@@ -1,0 +1,390 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+    font-family: sans-serif;
+}
+
+.explorer h3 {
+    font-family: sans-serif;
+    color: #828282;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.explorer h4 {
+    color: #828282;
+    font-weight: normal;
+}
+.explorer h4.primary {
+    color: #184A7D;
+}
+.explorer table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+}
+.explorer table thead, .explorer table tbody {
+    display: block;
+}
+.explorer table thead tr, .explorer table tbody tr {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+.explorer table thead tr td, .explorer table tbody tr td {
+    padding: 10px;
+    width: auto;
+}
+.explorer table thead tr td:nth-child(1), .explorer table tbody tr td:nth-child(1) {
+    width: 35%;
+}
+.explorer table thead tr td:nth-child(2), .explorer table tbody tr td:nth-child(2) {
+    width: 65%;
+}
+@media (max-width: 860px) {
+    .explorer table thead tr td:nth-child(1), .explorer table tbody tr td:nth-child(1) {
+        width: 80%;
+    }
+    .explorer table thead tr td:nth-child(2), .explorer table tbody tr td:nth-child(2) {
+        width: 20%;
+    }
+}
+.explorer table thead {
+    background: #184A7D;
+    color: white;
+}
+.explorer table thead tr td {
+    position: relative;
+}
+.explorer table thead tr td .icon {
+    position: absolute;
+}
+.explorer table thead tr td .icon span {
+    display: block;
+    font-size: 8px;
+}
+.explorer table thead tr td .icon span.disabled {
+    opacity: 0.5;
+}
+.explorer table thead tr td > span {
+    padding-left: 20px;
+}
+.explorer table tbody {
+    color: #184A7D;
+    height: 270px;
+    overflow-y: auto;
+    display: block;
+    width: 100%;
+}
+.explorer table tbody tr:nth-child(2n) {
+    background: #FBFDFD;
+}
+.explorer table tbody tr td button {
+    position: relative;
+    cursor: pointer;
+}
+.explorer table tbody tr td button:hover, .explorer table tbody tr td button:focus, .explorer table tbody tr td button:active {
+    outline: none;
+}
+.explorer table tbody tr td button * {
+    display: inline-block;
+}
+.explorer table tbody tr td button img {
+    height: 16px;
+    width: auto;
+    position: absolute;
+    top: 4px;
+}
+.explorer table tbody tr td button span {
+    line-height: 16px;
+    padding-left: 22px;
+    color: #184A7D;
+}
+.explorer table tbody tr td button.btn-options {
+    width: 32px !important;
+}
+.explorer table tbody tr td button.btn-options img {
+    left: 5px !important;
+}
+.explorer table tbody tr td .acordeon {
+    display: inline-block;
+}
+@media (max-width: 860px) {
+    .explorer table tbody tr td .acordeon {
+        display: none;
+        position: absolute;
+        background: #E5ECEF;
+        z-index: 200;
+    }
+    .explorer table tbody tr td .acordeon.active {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        right: 0;
+        top: 45px;
+    }
+    .explorer table tbody tr td .acordeon.active button {
+        text-align: left;
+        padding: 10px;
+        margin-top: 1px;
+    }
+    .explorer table tbody tr td .acordeon.active button:last-child {
+        margin-bottom: 1px;
+    }
+}
+.explorer .btn {
+    padding: 5px;
+    border: none;
+}
+.explorer .btn.btn-defauld {
+    background: #F1F4F5;
+}
+.explorer .btn.btn-options {
+    width: 25px;
+    height: 25px;
+}
+.explorer .general {
+    position: relative;
+}
+.explorer .general h4 {
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+.explorer .general h4 .title {
+    color: #184A7D;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.explorer .general h4 .subtitle {
+    color: #828282;
+    font-size: 12px;
+}
+.explorer .general .close {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #184A7D;
+}
+.explorer .general .content {
+    background: #F1F4F5;
+}
+.explorer .general .content .title {
+    display: flex;
+    margin-left: 160px;
+    padding: 10px;
+}
+@media (max-width: 860px) {
+    .explorer .general .content .title {
+        margin-left: 0;
+        flex-wrap: wrap;
+    }
+}
+.explorer .general .content .title .item {
+    padding: 10px 5px;
+    margin: 0 5px;
+    color: #828282;
+    cursor: pointer;
+    opacity: 0.5;
+}
+.explorer .general .content .title .item.active, .explorer .general .content .title .item:hover {
+    color: #184A7D;
+    position: relative;
+    opacity: 0.8;
+}
+.explorer .general .content .title .item.active:after, .explorer .general .content .title .item:hover:after {
+    background: #184A7D;
+    content: "";
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+}
+.explorer .general .content .body {
+    padding: 10px;
+    height: 305px;
+    overflow-y: auto;
+}
+.explorer .general .content .body .item {
+    background: white;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border-top: 1px solid #E5ECEF;
+    border-bottom: 1px solid #E5ECEF;
+}
+.explorer .general .content .body .item:last-child {
+    margin-bottom: 0;
+}
+.explorer .general .content .body .item .name {
+    width: 160px;
+    font-size: 15px;
+    color: #526069;
+}
+.explorer .general .content .body .item .porcent {
+    color: #828282;
+    font-size: 12px;
+    width: 30px;
+    opacity: 0.5;
+}
+.explorer .general .content .body .item .progress-bar {
+    background: #F1F4F5;
+    height: 5px;
+    width: calc(100% - 210px);
+    border-radius: 3px;
+    margin-left: 15px;
+}
+.explorer .general .content .body .item .progress-bar .success {
+    background: #89B063;
+    height: 5px;
+    border-radius: 3px;
+}
+.explorer .general .footer {
+    text-align: center;
+    margin-top: 20px;
+}
+.explorer .general .footer a {
+    margin: 0 6px;
+}
+.explorer .general .footer a img {
+    height: 16px;
+}
+.explorer .primary {
+    margin-top: 10px;
+    border-top: 1px solid #F2F2F2;
+}
+.explorer .primary .search {
+    padding: 10px 0;
+    text-align: right;
+}
+.explorer .primary .search input {
+    padding: 5px;
+    border: 1px solid #E5ECEF;
+}
+.explorer .primary .search a {
+    color: #184A7D;
+    text-decoration: none;
+    margin-right: 15px;
+}
+.explorer .primary .search a img {
+    height: 20px;
+    margin-right: 5px;
+}
+.explorer .primary .header {
+    background: #184A7D;
+    display: flex;
+    color: white;
+    font-weight: bold;
+}
+.explorer .primary .header .item {
+    display: flex;
+    padding: 10px;
+}
+.explorer .primary .header .item .icon {
+    display: flex;
+    flex-direction: column;
+    font-size: 8px;
+    margin-right: 10px;
+}
+.explorer .primary .header .item:nth-child(1) {
+    width: 40%;
+}
+.explorer .primary .header .item:nth-child(2) {
+    width: 15%;
+}
+.explorer .primary .header .item:nth-child(3) {
+    width: 17%;
+}
+.explorer .primary .header .item:nth-child(4) {
+    width: 10%;
+}
+.explorer .primary .header .item:nth-child(5) {
+    width: 18%;
+}
+.explorer .primary .body {
+    display: flex;
+    flex-direction: column;
+    color: #707070;
+}
+.explorer .primary .body .list {
+    display: flex;
+    border-bottom: 1px solid #F2F2F2;
+}
+.explorer .primary .body .list:nth-child(2n) {
+    background: #FBFDFD;
+}
+.explorer .primary .body .list:last-child {
+    border-bottom: none;
+}
+.explorer .primary .body .list .item {
+    padding: 10px;
+}
+.explorer .primary .body .list .item:nth-child(1) {
+    width: 40%;
+}
+.explorer .primary .body .list .item:nth-child(2) {
+    width: 15%;
+}
+.explorer .primary .body .list .item:nth-child(3) {
+    width: 17%;
+}
+.explorer .primary .body .list .item:nth-child(4) {
+    width: 10%;
+}
+.explorer .primary .body .list .item:nth-child(5) {
+    width: 18%;
+    display: flex;
+    justify-content: space-between;
+}
+.explorer .primary .body .list .item a img {
+    height: 20px;
+}
+.explorer .primary.usuarios .header .item {
+    position: relative;
+}
+.explorer .primary.usuarios .header .item .icon-menu {
+    margin-left: 10px;
+    margin-top: -2px;
+}
+.explorer .primary.usuarios .header .item .icon-menu span {
+    font-size: 12px;
+}
+.explorer .primary.usuarios .header .item .sub-menu {
+    position: absolute;
+    background: #FBFDFD;
+    top: 45px;
+    color: #828282;
+    font-weight: normal;
+    width: 220px;
+    font-size: 14px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
+    right: 0;
+    border-radius: 3px;
+    display: none;
+}
+.explorer .primary.usuarios .header .item .sub-menu .item {
+    width: 100%;
+    padding: 10px;
+}
+.explorer .primary.usuarios .header .item:nth-child(1), .explorer .primary.usuarios .body .item:nth-child(1) {
+    width: 30px;
+}
+.explorer .primary.usuarios .header .item:nth-child(2), .explorer .primary.usuarios .body .item:nth-child(2) {
+    width: 30%;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.show {
+    display: block !important;
+}

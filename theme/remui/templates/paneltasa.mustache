@@ -1,0 +1,81 @@
+<div id="app">
+    <div class="explorer" id="explorer">
+        <h3>SEGUIMIENTO DE USUARIOS</h3>
+        <div id="general" v-if="general">
+            <h4>Selecciona un curso para ver el progreso de los estudiantes</h4>
+            <div class="primary">
+                <div class="search">
+                    <input type="text" placeholder="buscar curso"/>
+                </div>
+                <div class="header">
+                    <div class="item pointer">
+                        <div class="icon"><span v-bind:class="{ disabled: order }">▲</span><span v-bind:class="{ disabled: !order }">▼</span></div><span>Curso</span>
+                    </div>
+                    <div class="item">Estudiante</div>
+                    <div class="item">Lanzamiento</div>
+                    <div class="item">Progreso</div>
+                </div>
+                <div class="body">
+                    <div class="list" v-for="item in cursosList">
+                        <div class="item pointer" @click="viewUser()">{(item.name)}</div>
+                        <div class="item">{(item.numEstu)} estudiantes</div>
+                        <div class="item">{(item.date)}</div>
+                        <div class="item">{(item.progress)}%</div>
+                        <div class="item"><a href="#"><img src="/local/dashboard/imgpanel/usuario.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/estadistica.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/excel.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/mail.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/explora.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/descargar.svg" alt=""/></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cursos" v-if="users">
+            <h4 class="primary">{(act.name)}</h4>
+            <div class="primary usuarios">
+                <div class="search"><a href="#"><img src="/local/dashboard/imgpanel/excel.svg"/><span>Descargar Excel</span></a><a href="#"><img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span></a>
+                    <input type="text" placeholder="Buscar usuario"/>
+                </div>
+                <div class="header">
+                    <div class="item">
+                        <input type="checkbox" name=""/>
+                    </div>
+                    <div class="item pointer">
+                        <div class="icon"><span v-bind:class="{ disabled: order }">▲</span><span v-bind:class="{ disabled: !order }">▼</span></div><span>Usuario</span>
+                    </div>
+                    <div class="item pointer" @click="activeSubmenu('gerencia')"><span>Gerencia</span>
+                        <div class="icon-menu"><span>▼</span></div>
+                        <div class="sub-menu" id="gerencia">
+                            <div class="item" v-for="item in gereniasList">{(item.name)}</div>
+                        </div>
+                    </div>
+                    <div class="item pointer" @click="activeSubmenu('area')"><span>Área</span>
+                        <div class="icon-menu"><span>▼</span></div>
+                        <div class="sub-menu" id="area">
+                            <div class="item" v-for="item in areasList">{(item.name)}</div>
+                        </div>
+                    </div>
+                    <div class="item pointer" @click="activeSubmenu('zona')"><span>Zona</span>
+                        <div class="icon-menu"><span>▼</span></div>
+                        <div class="sub-menu" id="zona">
+                            <div class="item" v-for="item in zonasList">{(item.name)}</div>
+                        </div>
+                    </div>
+                    <div class="item">Progreso</div>
+                </div>
+                <div class="body">
+                    <div class="list" v-for="item in usuarios">
+                        <div class="item">
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="item pointer">{(item.name)}</div>
+                        <div class="item">{(item.gerencia)}</div>
+                        <div class="item">{(item.area)}</div>
+                        <div class="item">{(item.zona)}</div>
+                        <div class="item">{(item.progress)}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+<script src="/local/dashboard/js/panel.js"></script>
+<link rel="stylesheet" href="/local/dashboard/css/panel.css">
