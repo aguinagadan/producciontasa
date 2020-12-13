@@ -10,6 +10,8 @@ use RecursiveIteratorIterator;
 // Get real path for our folder
 $rootPath = realpath(__DIR__ . '/../mod/customcert/files');
 
+$idCurso = $_GET['idCurso'];
+
 // Initialize archive object
 $zip = new ZipArchive();
 $tmpFile = 'myZip.zip';
@@ -22,8 +24,21 @@ $files = new RecursiveIteratorIterator(
 		RecursiveIteratorIterator::LEAVES_ONLY
 );
 
+$cont = 0;
+
 foreach ($files as $name => $file) {
 	// Skip directories (they would be added automatically)
+	$idCursoStr = substr($name, strpos($name, "|||") -1,1);
+
+	if($idCursoStr == '.') {
+		continue;
+	}
+
+	if($idCursoStr != $idCurso) {
+		$cont++;
+		continue;
+	}
+
 	if (!$file->isDir())
 	{
 		// Get real and relative path for current file
@@ -33,6 +48,12 @@ foreach ($files as $name => $file) {
 		// Add current file to archive
 		$zip->addFile($filePath, $relativePath);
 	}
+}
+
+if(count($files) == $cont) {
+	echo 'Este curso no tiene certificados';
+	echo '<br><a href="/moodle/my">Regresar al inicio</a>';
+	exit;
 }
 
 echo 'Archivo creado!';
