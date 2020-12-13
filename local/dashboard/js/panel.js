@@ -3,57 +3,7 @@ var explorer = new Vue({
     delimiters: ['{(', ')}'],
     data(){
         return{
-            cursosList: [
-                {
-                    id: '1',
-                    name: 'Ergonomia 2020',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'IPERC',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'Riesgo en instalaciones 2020',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'Material desing',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'Inducción SSOMA',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'Habilidades bladas',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-                {
-                    id: '1',
-                    name: 'Operacciones pesqueras',
-                    numEstu: 751,
-                    date: "6 de junio de 2020",
-                    progress: 90
-                },
-            ],
+            cursosList: [],
             usuarios: [
                 {
                     name: 'Juan Matias Rodriguez',
@@ -111,9 +61,37 @@ var explorer = new Vue({
 
     },
     mounted(){
-
+        this.getCourseList();
     },
     methods: {
+        getCourseList: function() {
+            let frm = new FormData();
+            frm.append('request_type','PanelUserCursos');
+            axios.post('../local/dashboard/ajax_controller.php', frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    let courses = Array();
+
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let id = dataVal.id;
+                        let name = dataVal.name;
+                        let numEstu = dataVal.numEstu;
+                        let date = dataVal.date;
+                        let progress = dataVal.progress;
+
+                        let newElem = {
+                            'id': id,
+                            'name': name,
+                            'numEstu': numEstu,
+                            'date': date,
+                            'progress': progress
+                        };
+                        courses.push(newElem);
+                    });
+                    this.cursosList = courses;
+                });
+        },
         sizeWeb: function(){
             if (window.innerWidth < 768)
                 this.menu = false;

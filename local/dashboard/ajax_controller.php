@@ -33,6 +33,9 @@ try {
 		case 'getCursoTotals':
 			$returnArr = getCursoTotals($details['courseId']);
 			break;
+		case 'PanelUserCursos':
+			$returnArr = PanelUserCursos();
+			break;
 	}
 } catch (Exception $e) {
 	$returnArr['status'] = false;
@@ -189,6 +192,29 @@ function getCursoTotals($courseId) {
 	$response['status'] = true;
 	$response['total'] = $total;
 	$response['completed'] = $completed;
+
+	return $response;
+}
+
+function PanelUserCursos() {
+	global $USER;
+	$allCourses = enrol_get_users_courses($USER->id, true);
+
+	foreach($allCourses as $course) {
+		if($course->visible == 0) {
+			continue;
+		}
+		$courses[] = [
+			'name'=> $course->fullname,
+			'id'=> $course->id,
+			'numEstu' => 10,
+			'date' => 'test date',
+			'progress' => '50%'
+		];
+	}
+
+	$response['status'] = true;
+	$response['data'] = $courses;
 
 	return $response;
 }
