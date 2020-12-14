@@ -247,7 +247,7 @@ function getUsuariosByCurso($courseId) {
 
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
-		if(empty($user->firstname . $user->lastname)) {
+		if($user->firstname == '') {
 			continue;
 		}
 
