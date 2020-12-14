@@ -102,7 +102,7 @@ var explorer = new Vue({
 
                     Object.keys(data).forEach(key => {
                         let dataVal = data[key];
-                        let name = dataVal.id;
+                        let name = dataVal.name;
                         let gerencia = dataVal.gerencia;
                         let area = dataVal.area;
                         let zona = dataVal.zona;
