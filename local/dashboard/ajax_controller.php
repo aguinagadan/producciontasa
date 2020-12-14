@@ -239,9 +239,10 @@ function getUsuariosByCurso($courseId) {
 	$users = get_enrolled_users($context);
 	$return = array();
 
+	var_dump($users);
+	exit;
+
 	foreach($users as $key=>$user) {
-		var_dump($user);
-		exit;
 		profile_load_custom_fields($user);
 		$gerencia = $user->profile['gerencia'];
 		$area = $user->profile['area_funcional'];
