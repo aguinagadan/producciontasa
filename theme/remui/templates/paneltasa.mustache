@@ -57,8 +57,8 @@
                     <div class="item">
                         <input type="checkbox" name=""/>
                     </div>
-                    <div class="item pointer">
-                        <div class="icon"><span v-bind:class="{ disabled: order }">▲</span><span v-bind:class="{ disabled: !order }">▼</span></div><span>Usuario</span>
+                    <div class="item pointer" @click="changeOrderUser()">
+                        <div class="icon"><span v-bind:class="{ disabled: orderUser }">▲</span><span v-bind:class="{ disabled: !orderUser }">▼</span></div><span>Usuario</span>
                     </div>
                     <div class="item pointer" @click="activeSubmenu('gerencia')"><span>Gerencia</span>
                         <div class="icon-menu"><span>▼</span></div>

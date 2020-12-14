@@ -28,6 +28,7 @@ var explorer = new Vue({
             ],
             act: {},
             order: true,
+            orderUser: true,
             users: false,
             general: true,
             listPorcent: {},
@@ -79,6 +80,10 @@ var explorer = new Vue({
         changeOrder: function(){
             this.order = this.order ? false : true;
             this.cursosList = this.cursosList.slice().reverse();
+        },
+        changeOrderUser: function(){
+            this.orderUser = this.orderUser ? false : true;
+            this.usuarios = this.usuarios.slice().reverse();
         },
         viewUser: function(cursoId){
             this.general = false;

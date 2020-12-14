@@ -242,13 +242,13 @@ function getUsuariosByCurso($courseId) {
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
 		$gerencia = $user->profile['gerencia'];
-		$area = $user->profile['area'];
+		$area = $user->profile['area_funcional'];
 		$zona = $user->profile['zona'];
 
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
 		$return[] = [
-			'name'=> $user->fullname,
+			'name'=> $user->firstname . ' ' . $user->lastname,
 			'gerencia'=> $gerencia,
 			'area' => $area,
 			'zona' => $zona,
