@@ -21,7 +21,26 @@
                         <div class="item">{(item.numEstu)} estudiantes</div>
                         <div class="item">{(item.date)}</div>
                         <div class="item">{(item.progress)}%</div>
-                        <div class="item"><a href="#"><img src="/local/dashboard/imgpanel/usuario.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/estadistica.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/excel.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/mail.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/explora.svg" alt=""/></a><a href="#"><img src="/local/dashboard/imgpanel/descargar.svg" alt=""/></a></div>
+                        <div class="item">
+                            <a :href="'../user/index.php?id=' + item.id">
+                                <img src="/local/dashboard/imgpanel/usuario.svg" alt=""/>
+                            </a>
+                            <a :href="'../grade/report/index.php?id=' + item.id">
+                                <img src="/local/dashboard/imgpanel/estadistica.svg" alt=""/>
+                            </a>
+                            <a :href="'excel.php?course_id=' + item.id">
+                                <img src="/local/dashboard/imgpanel/excel.svg" alt=""/>
+                            </a>
+                            <a href="#">
+                                <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
+                            </a>
+                            <a href="#">
+                                <img src="/local/dashboard/imgpanel/explora.svg" alt=""/>
+                            </a>
+                            <a :href="'downloadCerts.php?idCurso=' + item.id">
+                                <img src="/local/dashboard/imgpanel/descargar.svg" alt=""/>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
