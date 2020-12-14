@@ -252,13 +252,15 @@ function getUsuariosByCurso($courseId) {
 		}
 
 		$return[] = [
-			'name'=> $user->firstname . ' ' . $user->lastname,
-			'gerencia'=> !empty($gerencia) ? $gerencia: '-',
+			'name' => $user->firstname . ' ' . $user->lastname,
+			'gerencia' => !empty($gerencia) ? $gerencia: '-',
 			'area' => !empty($area) ? $area: '-',
 			'zona' => !empty($zona) ? $zona: '-',
 			'progress' => $progress
 		];
 	}
+
+	array_multisort( array_column( $return, 'name' ), SORT_ASC);
 
 	$response['status'] = true;
 	$response['data'] = $return;
