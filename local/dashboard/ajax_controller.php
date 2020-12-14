@@ -196,7 +196,7 @@ function getCursoTotals($courseId) {
 	return $response;
 }
 
-private function convertDateToSpanish($timestamp) {
+function convertDateToSpanish($timestamp) {
 	setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
 	return strftime("%d de %B de %Y", $timestamp);
 }
