@@ -233,6 +233,17 @@ function panelUserCursos() {
 	return $response;
 }
 
+function getUnique($data) {
+	$result = array_filter(
+		$data,
+		function ($value, $key) use ($data) {
+			return $key === array_search($value['name'], array_column($data,'name'));
+		},
+		ARRAY_FILTER_USE_BOTH
+	);
+	return $result;
+}
+
 function getUsuariosByCurso($courseId) {
 	$course = get_course($courseId);
 	$context = CONTEXT_COURSE::instance($courseId);
@@ -269,9 +280,9 @@ function getUsuariosByCurso($courseId) {
 
 	array_multisort( $return);
 
-	$gerenciasList = array_unique($gerenciasList);
-	$areasList = array_unique($areasList);
-	$zonasList = array_unique($zonasList);
+	$gerenciasList = getUnique($gerenciasList);
+	$areasList = getUnique($areasList);
+	$zonasList = getUnique($zonasList);
 
 	$response['status'] = true;
 	$response['data'] = $return;
