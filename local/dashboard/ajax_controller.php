@@ -260,12 +260,7 @@ function getUsuariosByCurso($courseId) {
 		];
 	}
 
-	var_dump($return);
-
-	array_multisort( array_column( $return, 'name' ), SORT_ASC);
-
-	var_dump($return);
-	exit;
+	array_multisort( $return);
 
 	$response['status'] = true;
 	$response['data'] = $return;
