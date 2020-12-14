@@ -66,7 +66,7 @@ var explorer = new Vue({
         },
         changeOrder: function(){
             this.order = this.order ? false : true;
-            this.list = this.list.slice().reverse()
+            this.list = this.list.slice().reverse();
         },
         viewGerencia: function(item){
             if(!this.isCalculatedCompleted) {

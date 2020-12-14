@@ -100,7 +100,7 @@ var explorer = new Vue({
         },
         changeOrder: function(){
             this.order = this.order ? false : true;
-            //   aqui adjuntar el codigo de ordenamiendo desde la api
+            this.cursosList = this.cursosList.slice().reverse();
         },
         viewUser: function(){
             this.general = false;
