@@ -247,7 +247,7 @@ function getUsuariosByCurso($courseId) {
 
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
-		if(empty($user->firstname . ' ' . $user->lastname)) {
+		if(empty($user->firstname . $user->lastname)) {
 			continue;
 		}
 
@@ -260,7 +260,12 @@ function getUsuariosByCurso($courseId) {
 		];
 	}
 
+	var_dump($return);
+
 	array_multisort( array_column( $return, 'name' ), SORT_ASC);
+
+	var_dump($return);
+	exit;
 
 	$response['status'] = true;
 	$response['data'] = $return;
