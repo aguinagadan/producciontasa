@@ -196,6 +196,11 @@ function getCursoTotals($courseId) {
 	return $response;
 }
 
+private function convertDateToSpanish($timestamp) {
+	setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
+	return strftime("%d de %B de %Y", $timestamp);
+}
+
 function PanelUserCursos() {
 	global $USER;
 	$allCourses = enrol_get_users_courses($USER->id, true);
@@ -204,12 +209,18 @@ function PanelUserCursos() {
 		if($course->visible == 0) {
 			continue;
 		}
+
+		$context = CONTEXT_COURSE::instance($course->id);
+		$users = get_enrolled_users($context);
+
+		$progress = round(progress::get_course_progress_percentage($course, $USER->id));
+
 		$courses[] = [
 			'name'=> $course->fullname,
 			'id'=> $course->id,
-			'numEstu' => 10,
-			'date' => 'test date',
-			'progress' => '50%'
+			'numEstu' => count($users),
+			'date' => convertDateToSpanish($course->startdate),
+			'progress' => $progress
 		];
 	}
 
