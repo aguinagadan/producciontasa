@@ -14,7 +14,7 @@ var explorer = new Vue({
             completedUsers: 0,
             currentCourseId: 0,
             isCalculatedCompleted: false,
-        }
+        };
     },
     created(){
         this.sizeWeb();

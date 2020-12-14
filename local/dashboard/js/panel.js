@@ -5,34 +5,16 @@ var explorer = new Vue({
         return{
             cursosList: [],
             usuarios: [],
-            gereniasList: [
-                {name:"Gerencia de mantenimiento"},
-                {name:"Gerencia de operaciones"},
-                {name:"Gerencia GH"},
-                {name:"Gerencia finanzas"},
-                {name:"Gerencia general"},
-                {name:"Gerencia TI"},
-            ],
-            areasList: [
-                {name:"Contabilidad"},
-                {name:"Operaciones"},
-                {name:"Auditoria"},
-                {name:"Administracion y finanzas"},
-                {name:"TI"},
-                {name:"Mantenimiento"},
-            ],
-            zonasList:[
-                {name:"Zona Este"},
-                {name:"Zona Este"},
-                {name:"Zona Este"},
-            ],
+            gerenciasList: [],
+            areasList: [],
+            zonasList:[],
             act: {},
             order: true,
             orderUser: true,
             users: false,
             general: true,
             listPorcent: {},
-        }
+        };
     },
     created(){
         this.sizeWeb();
@@ -99,6 +81,10 @@ var explorer = new Vue({
                         name: response.data.nombreCurso
                     };
 
+                    let gerenciasList = response.data.gerenciasList;
+                    let areasList = response.data.areasList;
+                    let zonasList = response.data.zonasList;
+
                     let data = response.data.data;
 
                     Object.keys(data).forEach(key => {
@@ -119,6 +105,9 @@ var explorer = new Vue({
                         usuarios.push(newElem);
                     });
                     this.usuarios = usuarios;
+                    this.gerenciasList = gerenciasList;
+                    this.areasList = areasList;
+                    this.zonasList = zonasList;
                 });
         },
         close: function(){

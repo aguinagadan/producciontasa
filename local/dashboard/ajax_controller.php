@@ -238,6 +238,9 @@ function getUsuariosByCurso($courseId) {
 	$context = CONTEXT_COURSE::instance($courseId);
 	$users = get_enrolled_users($context);
 	$return = array();
+	$gerenciasList = array();
+	$areasList = array();
+	$zonasList = array();
 
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
@@ -251,6 +254,10 @@ function getUsuariosByCurso($courseId) {
 			continue;
 		}
 
+		$gerenciasList[] = ['name' => $gerencia];
+		$areasList[] = ['name' => $area];
+		$zonasList[] = ['name' => $zona];
+
 		$return[] = [
 			'name' => $user->firstname . ' ' . $user->lastname,
 			'gerencia' => !empty($gerencia) ? $gerencia: '-',
@@ -262,9 +269,16 @@ function getUsuariosByCurso($courseId) {
 
 	array_multisort( $return);
 
+	$gerenciasList = array_unique($gerenciasList);
+	$areasList = array_unique($areasList);
+	$zonasList = array_unique($zonasList);
+
 	$response['status'] = true;
 	$response['data'] = $return;
 	$response['nombreCurso'] = $course->fullname;
+	$response['gerenciasList'] = $gerenciasList;
+	$response['areasList'] = $areasList;
+	$response['zonasList'] = $zonasList;
 
 	return $response;
 
