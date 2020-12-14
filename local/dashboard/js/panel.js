@@ -4,29 +4,7 @@ var explorer = new Vue({
     data(){
         return{
             cursosList: [],
-            usuarios: [
-                {
-                    name: 'Juan Matias Rodriguez',
-                    gerencia: "Gerencia GH",
-                    area: "logistica",
-                    zona: "Corporativo",
-                    progress: 0
-                },
-                {
-                    name: 'Juan Matias Rodriguez',
-                    gerencia: "Gerencia GH",
-                    area: "logistica",
-                    zona: "Corporativo",
-                    progress: 0
-                },
-                {
-                    name: 'Juan Matias Rodriguez',
-                    gerencia: "Gerencia GH",
-                    area: "logistica",
-                    zona: "Corporativo",
-                    progress: 0
-                },
-            ],
+            usuarios: [],
             gereniasList: [
                 {name:"Gerencia de mantenimiento"},
                 {name:"Gerencia de operaciones"},
@@ -105,9 +83,36 @@ var explorer = new Vue({
         viewUser: function(){
             this.general = false;
             this.users = true;
-            this.act = {
-                name: "Ergonomia 2020"
-            }
+            let frm = new FormData();
+            frm.append('request_type','getUsuariosByCurso');
+            axios.post('../local/dashboard/ajax_controller.php', frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    let usuarios = Array();
+
+                    this.act = {
+                        name: data.nombreCurso
+                    };
+
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let name = dataVal.id;
+                        let gerencia = dataVal.gerencia;
+                        let area = dataVal.area;
+                        let zona = dataVal.zona;
+                        let progress = dataVal.progress;
+
+                        let newElem = {
+                            'name': name,
+                            'gerencia': gerencia,
+                            'area': area,
+                            'zona': zona,
+                            'progress': progress
+                        };
+                        usuarios.push(newElem);
+                    });
+                    this.usuarios = usuarios;
+                });
         },
         close: function(){
             this.general = true;

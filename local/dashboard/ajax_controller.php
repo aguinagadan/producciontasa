@@ -229,3 +229,34 @@ function PanelUserCursos() {
 
 	return $response;
 }
+
+function getUsuariosByCurso($courseId) {
+	$course = get_course($courseId);
+	$context = CONTEXT_COURSE::instance($courseId);
+	$users = get_enrolled_users($context);
+	$return = array();
+
+	foreach($users as $key=>$user) {
+		profile_load_custom_fields($user);
+		$gerencia = $user->profile['gerencia'];
+		$area = $user->profile['area'];
+		$zona = $user->profile['zona'];
+
+		$progress = round(progress::get_course_progress_percentage($course, $user->id));
+
+		$return[] = [
+			'name'=> $user->fullname,
+			'gerencia'=> $gerencia,
+			'area' => $area,
+			'zona' => $zona,
+			'progress' => $progress
+		];
+	}
+
+	$response['status'] = true;
+	$response['data'] = $return;
+	$response['data']['nombreCurso'] = $course->fullname;
+
+	return $response;
+
+}
