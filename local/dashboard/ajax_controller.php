@@ -239,9 +239,6 @@ function getUsuariosByCurso($courseId) {
 	$users = get_enrolled_users($context);
 	$return = array();
 
-	var_dump($users);
-	exit;
-
 	foreach($users as $key=>$user) {
 		profile_load_custom_fields($user);
 		$gerencia = $user->profile['gerencia'];
@@ -251,7 +248,7 @@ function getUsuariosByCurso($courseId) {
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
 		$return[] = [
-			'name'=> $user->firstname . ' ' . $user->lastname,
+			'name'=> !empty($user->firstname . ' ' . $user->lastname) ? $user->firstname . ' ' . $user->lastname : '-',
 			'gerencia'=> $gerencia,
 			'area' => $area,
 			'zona' => $zona,
