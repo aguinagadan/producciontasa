@@ -240,6 +240,8 @@ function getUsuariosByCurso($courseId) {
 	$return = array();
 
 	foreach($users as $key=>$user) {
+		var_dump($user);
+		exit;
 		profile_load_custom_fields($user);
 		$gerencia = $user->profile['gerencia'];
 		$area = $user->profile['area_funcional'];
