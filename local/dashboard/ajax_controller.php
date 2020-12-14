@@ -247,11 +247,15 @@ function getUsuariosByCurso($courseId) {
 
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
+		if(empty($user->firstname . ' ' . $user->lastname)) {
+			continue;
+		}
+
 		$return[] = [
-			'name'=> !empty($user->firstname . ' ' . $user->lastname) ? $user->firstname . ' ' . $user->lastname : '-',
-			'gerencia'=> $gerencia,
-			'area' => $area,
-			'zona' => $zona,
+			'name'=> $user->firstname . ' ' . $user->lastname,
+			'gerencia'=> !empty($gerencia) ? $gerencia: '-',
+			'area' => !empty($area) ? $area: '-',
+			'zona' => !empty($zona) ? $zona: '-',
 			'progress' => $progress
 		];
 	}
