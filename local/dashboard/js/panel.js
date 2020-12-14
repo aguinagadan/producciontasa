@@ -93,12 +93,13 @@ var explorer = new Vue({
             frm.append('request_type','getUsuariosByCurso');
             axios.post('../local/dashboard/ajax_controller.php', frm)
                 .then((response) => {
-                    let data = response.data.data;
                     let usuarios = Array();
 
                     this.act = {
-                        name: data.nombreCurso
+                        name: response.data.nombreCurso
                     };
+
+                    let data = response.data.data;
 
                     Object.keys(data).forEach(key => {
                         let dataVal = data[key];

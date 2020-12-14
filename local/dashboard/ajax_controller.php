@@ -247,7 +247,7 @@ function getUsuariosByCurso($courseId) {
 
 		$progress = round(progress::get_course_progress_percentage($course, $user->id));
 
-		if($user->firstname == '') {
+		if(empty($user->firstname)) {
 			continue;
 		}
 
@@ -264,7 +264,7 @@ function getUsuariosByCurso($courseId) {
 
 	$response['status'] = true;
 	$response['data'] = $return;
-	$response['data']['nombreCurso'] = $course->fullname;
+	$response['nombreCurso'] = $course->fullname;
 
 	return $response;
 
