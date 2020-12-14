@@ -33,7 +33,10 @@ try {
 		case 'getCursoTotals':
 			$returnArr = getCursoTotals($details['courseId']);
 			break;
-		case 'PanelUserCursos':
+		case 'panelUserCursos':
+			$returnArr = panelUserCursos();
+			break;
+		case 'getUsuariosByCurso':
 			$returnArr = PanelUserCursos();
 			break;
 	}
@@ -201,7 +204,7 @@ function convertDateToSpanish($timestamp) {
 	return strftime("%d de %B de %Y", $timestamp);
 }
 
-function PanelUserCursos() {
+function panelUserCursos() {
 	global $USER;
 	$allCourses = enrol_get_users_courses($USER->id, true);
 

@@ -44,7 +44,7 @@ var explorer = new Vue({
     methods: {
         getCourseList: function() {
             let frm = new FormData();
-            frm.append('request_type','PanelUserCursos');
+            frm.append('request_type','panelUserCursos');
             axios.post('../local/dashboard/ajax_controller.php', frm)
                 .then((response) => {
                     let data = response.data.data;
