@@ -80,10 +80,11 @@ var explorer = new Vue({
             this.order = this.order ? false : true;
             this.cursosList = this.cursosList.slice().reverse();
         },
-        viewUser: function(){
+        viewUser: function(cursoId){
             this.general = false;
             this.users = true;
             let frm = new FormData();
+            frm.append('courseId', cursoId);
             frm.append('request_type','getUsuariosByCurso');
             axios.post('../local/dashboard/ajax_controller.php', frm)
                 .then((response) => {

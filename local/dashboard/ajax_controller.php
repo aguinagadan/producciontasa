@@ -37,7 +37,7 @@ try {
 			$returnArr = panelUserCursos();
 			break;
 		case 'getUsuariosByCurso':
-			$returnArr = PanelUserCursos();
+			$returnArr = getUsuariosByCurso($details['courseId']);
 			break;
 	}
 } catch (Exception $e) {
