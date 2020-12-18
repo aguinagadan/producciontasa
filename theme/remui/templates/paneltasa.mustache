@@ -36,9 +36,9 @@
                             <span @click="showModal()">
                                 <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
                             </span>
-<!--                            <a href="#">-->
-<!--                                <img src="/local/dashboard/imgpanel/explora.svg" alt=""/>-->
-<!--                            </a>-->
+<!--                        <a href="#">-->
+<!--                           <img src="/local/dashboard/imgpanel/explora.svg" alt=""/>-->
+<!--                        </a>-->
                             <a :href="'downloadCerts.php?idCurso=' + item.id">
                                 <img src="/local/dashboard/imgpanel/descargar.svg" alt=""/>
                             </a>
@@ -53,13 +53,13 @@
             <div class="close" @click="close()">X</div>
             <div class="primary usuarios">
                 <div class="search">
-<!--                    <a href="#">-->
-<!--                        <img src="/local/dashboard/imgpanel/excel.svg"/>-->
-<!--                        <span>Descargar Excel</span>-->
-<!--                    </a>-->
-<!--                    <a href="#">-->
-<!--                        <img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span>-->
-<!--                    </a>-->
+                    <a href="#">
+                        <img src="/local/dashboard/imgpanel/excel.svg"/>
+                        <span>Descargar Excel</span>
+                    </a>
+                    <a href="#">
+                        <img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span>
+                    </a>
                     <input type="text" placeholder="Buscar usuario" v-model="searchAlumnos" @keyup="searchName()"/>
                 </div>
                 <div class="header">
@@ -72,19 +72,19 @@
                     <div class="item pointer" @click="activeSubmenu('gerencia')"><span>Gerencia</span>
                         <div class="icon-menu"><span>▼</span></div>
                         <div class="sub-menu" id="gerencia">
-                            <div class="item" v-for="item in gerenciasList">{(item.name)}</div>
+                            <div class="item" v-for="item in gerenciasList" @click="filterGerencia(item.name)">{(item.name)}</div>
                         </div>
                     </div>
                     <div class="item pointer" @click="activeSubmenu('area')"><span>Área</span>
                         <div class="icon-menu"><span>▼</span></div>
                         <div class="sub-menu" id="area">
-                            <div class="item" v-for="item in areasList">{(item.name)}</div>
+                            <div class="item" v-for="item in areasList" @click="filterArea(item.name)">{(item.name)}</div>
                         </div>
                     </div>
                     <div class="item pointer" @click="activeSubmenu('zona')"><span>Zona</span>
                         <div class="icon-menu"><span>▼</span></div>
                         <div class="sub-menu" id="zona">
-                            <div class="item" v-for="item in zonasList">{(item.name)}</div>
+                            <div class="item" v-for="item in zonasList" @click="filterZona(item.name)">{(item.name)}</div>
                         </div>
                     </div>
                     <div class="item">Progreso</div>
