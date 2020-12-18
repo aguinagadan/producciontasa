@@ -3,7 +3,64 @@ var explorer = new Vue({
     delimiters: ['{(', ')}'],
     data(){
         return{
-            cursosList: [],
+            cursosList: [
+                {
+                    id: '1',
+                    name: 'Ergonomia 2020',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'IPERC',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Riesgo en instalaciones 2020',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Material desing',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Inducción SSOMA',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Habilidades bladas',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Operacciones pesqueras',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+                {
+                    id: '1',
+                    name: 'Ergonomia 2020',
+                    numEstu: 751,
+                    date: "6 de junio de 2020",
+                    progress: 90
+                },
+            ],
             usuarios: [],
             gerenciasList: [],
             areasList: [],
@@ -25,7 +82,7 @@ var explorer = new Vue({
 
     },
     mounted(){
-        this.getCourseList();
+
     },
     computed: {
         searchCurse: function (){
