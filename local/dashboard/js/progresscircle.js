@@ -19,6 +19,7 @@ function makesvg(percentage){
 (function( $ ) {
     $.fn.circlechart = function() {
         console.log("circle");
+        console.log(this);
         this.each(function() {
             console.log($(this));
             var percentage = $(this).data("percentage");
