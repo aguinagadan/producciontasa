@@ -10,6 +10,10 @@
     font-family: sans-serif;
 }
 
+.explorer {
+    padding: 20px;
+    background: white;
+}
 .explorer h3 {
     font-family: sans-serif;
     color: #828282;
@@ -85,6 +89,9 @@
 .explorer table tbody tr:nth-child(2n) {
     background: #FBFDFD;
 }
+.explorer table tbody tr td:last-child {
+    text-align: right;
+}
 .explorer table tbody tr td button {
     position: relative;
     cursor: pointer;
@@ -111,6 +118,14 @@
 }
 .explorer table tbody tr td button.btn-options img {
     left: 5px !important;
+}
+.explorer table tbody tr td > button {
+    display: none;
+}
+@media (max-width: 860px) {
+    .explorer table tbody tr td > button {
+        display: block;
+    }
 }
 .explorer table tbody tr td .acordeon {
     display: inline-block;
@@ -141,6 +156,7 @@
 .explorer .btn {
     padding: 5px;
     border: none;
+    border-radius: 6px;
 }
 .explorer .btn.btn-defauld {
     background: #F1F4F5;
@@ -155,6 +171,7 @@
 .explorer .general h4 {
     font-weight: normal;
     margin-bottom: 20px;
+    position: relative;
 }
 .explorer .general h4 .title {
     color: #184A7D;
@@ -313,6 +330,8 @@
     display: flex;
     flex-direction: column;
     color: #707070;
+    height: 310px;
+    overflow-y: auto;
 }
 .explorer .primary .body .list {
     display: flex;
@@ -344,7 +363,10 @@
     display: flex;
     justify-content: space-between;
 }
-.explorer .primary .body .list .item a img {
+.explorer .primary .body .list .item a, .explorer .primary .body .list .item span {
+    cursor: pointer;
+}
+.explorer .primary .body .list .item a img, .explorer .primary .body .list .item span img {
     height: 20px;
 }
 .explorer .primary.usuarios .header .item {
@@ -369,16 +391,50 @@
     right: 0;
     border-radius: 3px;
     display: none;
+    max-height: 150px;
+    overflow-y: au;
 }
 .explorer .primary.usuarios .header .item .sub-menu .item {
     width: 100%;
     padding: 10px;
 }
 .explorer .primary.usuarios .header .item:nth-child(1), .explorer .primary.usuarios .body .item:nth-child(1) {
-    width: 30px;
+    width: 62px;
+}
+.explorer .primary.usuarios .header .item:nth-child(1) span, .explorer .primary.usuarios .body .item:nth-child(1) span {
+    margin-left: 10px;
+}
+.explorer .primary.usuarios .header .item:nth-child(1) span img, .explorer .primary.usuarios .body .item:nth-child(1) span img {
+    height: 14px;
 }
 .explorer .primary.usuarios .header .item:nth-child(2), .explorer .primary.usuarios .body .item:nth-child(2) {
     width: 30%;
+}
+.explorer .primary.usuarios .footer {
+    padding: 20px;
+}
+.explorer .primary.usuarios .footer a {
+    text-decoration: none;
+}
+.explorer .primary.usuarios .footer a span {
+    margin-right: 10px;
+    color: #5CBDEB;
+}
+.explorer .primary.usuarios .footer a span img {
+    height: 20px;
+}
+.explorer #cursos {
+    position: relative;
+}
+.explorer #cursos .close {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #184A7D;
+}
+.explorer #cursos .primary .body {
+    height: 195px !important;
 }
 
 .pointer {
@@ -387,4 +443,75 @@
 
 .show {
     display: block !important;
+}
+
+.back {
+    background: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.back .modal {
+    font-family: sans-serif;
+    width: 600px;
+    background: #F1F4F5;
+    padding: 20px;
+    border-radius: 6px;
+}
+@media (max-width: 860px) {
+    .back .modal {
+        width: 80%;
+    }
+}
+.back .modal .title {
+    position: relative;
+    margin-bottom: 10px;
+}
+.back .modal .title h4 {
+    color: #707070;
+    position: relative;
+}
+.back .modal .title .close {
+    cursor: pointer;
+    color: #707070;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.back .modal .content textarea {
+    width: 100%;
+    border: 1px solid rgba(130, 130, 130, 0.5);
+    border-radius: 6px;
+}
+.back .modal .footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+.back .modal .footer .btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+}
+.back .modal .btn {
+    cursor: pointer;
+    padding: 5px;
+    border: none;
+    border-radius: 6px;
+}
+.back .modal .btn.btn-defauld {
+    background: #F1F4F5;
+    color: #184A7D;
+}
+.back .modal .btn.btn-info {
+    background: #5CBDEB;
+    color: white;
+}
+.back .modal .btn.btn-options {
+    width: 25px;
+    height: 25px;
 }
