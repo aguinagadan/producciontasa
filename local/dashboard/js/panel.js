@@ -3,7 +3,15 @@ var explorer = new Vue({
     delimiters: ['{(', ')}'],
     data(){
         return{
-            cursosList: [],
+            cursosList: [
+                {
+                    id: '1',
+                    name: '',
+                    numEstu: 0,
+                    date: "",
+                    progress: 50
+                }
+            ],
             usuarios: [],
             gerenciasList: [],
             areasList: [],
