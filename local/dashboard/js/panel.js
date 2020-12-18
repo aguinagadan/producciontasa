@@ -130,3 +130,5 @@ var explorer = new Vue({
         }
     }
 });
+
+$('.circlechart').circlechart();
