@@ -14,6 +14,9 @@ var explorer = new Vue({
             users: false,
             general: true,
             listPorcent: {},
+            searchCursos: '',
+            searchAlumnos: '',
+            searchUsers:[],
         };
     },
     created(){
@@ -23,6 +26,14 @@ var explorer = new Vue({
     },
     mounted(){
         this.getCourseList();
+    },
+    computed: {
+        searchCurse: function (){
+            return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
+        },
+        // searchUsers: function(){
+        //   return this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
+        // },
     },
     methods: {
         getCourseList: function() {
@@ -52,6 +63,26 @@ var explorer = new Vue({
                     });
                     this.cursosList = courses;
                 });
+        },
+        searchName: function(){
+            if(this.searchAlumnos != ''){
+                this.searchUsers = this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
+            } else{
+                this.searchUsers = this.usuarios;
+            }
+            $('.circlechart').circlechart();
+        },
+        filterGerencia: function(name){
+            this.searchUsers = this.usuarios.filter((item) => item.gerencia.includes(name));
+            $('.circlechart').circlechart();
+        },
+        filterArea: function(name){
+            this.searchUsers = this.usuarios.filter((item) => item.area.includes(name));
+            $('.circlechart').circlechart();
+        },
+        filterZona: function(name){
+            this.searchUsers = this.usuarios.filter((item) => item.zona.includes(name));
+            $('.circlechart').circlechart();
         },
         sizeWeb: function(){
             if (window.innerWidth < 768)
@@ -104,7 +135,7 @@ var explorer = new Vue({
                         };
                         usuarios.push(newElem);
                     });
-                    this.usuarios = usuarios;
+                    this.searchUsers = this.usuarios;
                     this.gerenciasList = gerenciasList;
                     this.areasList = areasList;
                     this.zonasList = zonasList;
@@ -127,6 +158,12 @@ var explorer = new Vue({
             } else{
                 document.querySelector('#'+elem).classList.remove('show');
             }
+        },
+        closeModal: function(){
+            document.querySelector(".back").style.display = "none";
+        },
+        showModal: function(){
+            document.querySelector(".back").style.display = "flex";
         }
     }
 });

@@ -90,9 +90,9 @@
                     <div class="item">Progreso</div>
                 </div>
                 <div class="body">
-                    <div class="list" v-for="item in usuarios">
+                    <div class="list" v-for="item in searchUsers">
                         <div class="item">
-                            <input type="checkbox"/>
+                            <input type="checkbox"/><span @click="showModal()"><img src="/local/dashboard/imgpanel/mail.svg" alt=""/></span>
                         </div>
                         <div class="item pointer">{(item.name)}</div>
                         <div class="item">{(item.gerencia)}</div>
@@ -103,8 +103,33 @@
                         </div>
                     </div>
                 </div>
+                <div class="footer">
+                    <a href="">
+                        <span>
+                            <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
+                        </span>
+                        <span>
+                            Enviar recordatorio a seleccionados
+                        </span>
+                    </a>
+                </div>
             </div>
             <div style="height: 200px;"></div>
+        </div>
+        <div class="back">
+            <div class="modal">
+                <div class="title">
+                    <h4>Enviar mensaje</h4>
+                    <div class="close" @click="closeModal()">X</div>
+                </div>
+                <div class="content">
+                    <textarea name="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="footer">
+                    <div class="btn btn-defauld">Cancelar</div>
+                    <div class="btn btn-info">Aceptar</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
