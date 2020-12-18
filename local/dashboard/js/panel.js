@@ -3,15 +3,7 @@ var explorer = new Vue({
     delimiters: ['{(', ')}'],
     data(){
         return{
-            cursosList: [
-                {
-                    id: '1',
-                    name: '',
-                    numEstu: 0,
-                    date: "",
-                    progress: 0
-                }
-            ],
+            cursosList: [],
             usuarios: [],
             gerenciasList: [],
             areasList: [],
@@ -36,6 +28,22 @@ var explorer = new Vue({
     },
     computed: {
         searchCourse: function (){
+            this.cursosList =  [
+                {
+                    id: '1',
+                    name: '',
+                    numEstu: 0,
+                    date: "",
+                    progress: 0
+                },
+                {
+                    id: '1',
+                    name: '',
+                    numEstu: 0,
+                    date: "",
+                    progress: 50
+                }
+            ];
             return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
