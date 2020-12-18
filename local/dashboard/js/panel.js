@@ -24,7 +24,7 @@ var explorer = new Vue({
         window.onresize = this.sizeWeb;
     },
     mounted(){
-        this.getCourseList();
+
     },
     computed: {
         searchCourse: function (){
