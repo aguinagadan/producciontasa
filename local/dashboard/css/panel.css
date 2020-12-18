@@ -283,8 +283,8 @@
     text-align: right;
 }
 .explorer .primary .search input {
-    padding: 5px;
-    border: 1px solid #E5ECEF;
+    padding: 5px !important;
+    border: 1px solid #E5ECEF !important;
 }
 .explorer .primary .search a {
     color: #184A7D;
