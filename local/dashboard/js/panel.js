@@ -28,22 +28,32 @@ var explorer = new Vue({
     },
     computed: {
         searchCourse: function (){
-            this.cursosList =  [
-                {
-                    id: '1',
-                    name: '',
-                    numEstu: 0,
-                    date: "",
-                    progress: 0
-                },
-                {
-                    id: '1',
-                    name: '',
-                    numEstu: 0,
-                    date: "",
-                    progress: 50
-                }
-            ];
+            let frm = new FormData();
+            frm.append('request_type','panelUserCursos');
+            axios.post('../local/dashboard/ajax_controller.php', frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    let courses = Array();
+
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let id = dataVal.id;
+                        let name = dataVal.name;
+                        let numEstu = dataVal.numEstu;
+                        let date = dataVal.date;
+                        let progress = dataVal.progress;
+
+                        let newElem = {
+                            'id': id,
+                            'name': name,
+                            'numEstu': numEstu,
+                            'date': date,
+                            'progress': progress
+                        };
+                        courses.push(newElem);
+                    });
+                    this.cursosList = courses;
+                });
             return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
@@ -84,34 +94,6 @@ var explorer = new Vue({
         changeOrderUser: function(){
             this.orderUser = this.orderUser ? false : true;
             this.usuarios = this.usuarios.slice().reverse();
-        },
-        getCourseList: function() {
-            let frm = new FormData();
-            frm.append('request_type','panelUserCursos');
-            axios.post('../local/dashboard/ajax_controller.php', frm)
-                .then((response) => {
-                    let data = response.data.data;
-                    let courses = Array();
-
-                    Object.keys(data).forEach(key => {
-                        let dataVal = data[key];
-                        let id = dataVal.id;
-                        let name = dataVal.name;
-                        let numEstu = dataVal.numEstu;
-                        let date = dataVal.date;
-                        let progress = dataVal.progress;
-
-                        let newElem = {
-                            'id': id,
-                            'name': name,
-                            'numEstu': numEstu,
-                            'date': date,
-                            'progress': progress
-                        };
-                        courses.push(newElem);
-                    });
-                    this.cursosList = courses;
-                });
         },
         viewUser: function(cursoId){
             this.general = false;
