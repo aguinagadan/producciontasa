@@ -9,7 +9,7 @@ var explorer = new Vue({
                     name: '',
                     numEstu: 0,
                     date: "",
-                    progress: 50
+                    progress: 0
                 }
             ],
             usuarios: [],
@@ -35,7 +35,7 @@ var explorer = new Vue({
         this.getCourseList();
     },
     computed: {
-        searchCurse: function (){
+        searchCourse: function (){
             return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
