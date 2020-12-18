@@ -26,7 +26,7 @@ var explorer = new Vue({
     mounted(){
 
     },
-    asyncComputed: {
+    computed: {
         searchCourse: function (){
             let frm = new FormData();
             frm.append('request_type','panelUserCursos');
