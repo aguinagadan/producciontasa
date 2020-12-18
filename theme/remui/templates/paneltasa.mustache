@@ -5,7 +5,7 @@
             <h4>Selecciona un curso para ver el progreso de los estudiantes</h4>
             <div class="primary">
                 <div class="search">
-                    <input type="text" placeholder="buscar curso"/>
+                    <input type="text" placeholder="buscar curso" v-model="searchCursos"/>
                 </div>
                 <div class="header">
                     <div class="item pointer" @click="changeOrder()">
@@ -16,7 +16,7 @@
                     <div class="item">Progreso</div>
                 </div>
                 <div class="body">
-                    <div class="list" v-for="item in cursosList">
+                    <div class="list" v-for="item in searchCurse">
                         <div class="item pointer" @click="viewUser(item.id)">{(item.name)}</div>
                         <div class="item">{(item.numEstu)} estudiantes</div>
                         <div class="item">{(item.date)}</div>
@@ -33,9 +33,9 @@
                             <a :href="'excel.php?course_id=' + item.id">
                                 <img src="/local/dashboard/imgpanel/excel.svg" alt=""/>
                             </a>
-                            <a href="#">
+                            <span @click="showModal()">
                                 <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
-                            </a>
+                            </span>
 <!--                            <a href="#">-->
 <!--                                <img src="/local/dashboard/imgpanel/explora.svg" alt=""/>-->
 <!--                            </a>-->
@@ -60,7 +60,7 @@
 <!--                    <a href="#">-->
 <!--                        <img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span>-->
 <!--                    </a>-->
-                    <input type="text" placeholder="Buscar usuario"/>
+                    <input type="text" placeholder="Buscar usuario" v-model="searchAlumnos" @keyup="searchName()"/>
                 </div>
                 <div class="header">
                     <div class="item">
