@@ -140,7 +140,7 @@ var explorer = new Vue({
                         let name = dataVal.name;
                         let numEstu = dataVal.numEstu;
                         let date = dataVal.date;
-                        let progress = 25;
+                        let progress = dataVal.progress;
 
                         let newElem = {
                             'id': id,
