@@ -20,7 +20,9 @@
                         <div class="item pointer" @click="viewUser(item.id)">{(item.name)}</div>
                         <div class="item">{(item.numEstu)} estudiantes</div>
                         <div class="item">{(item.date)}</div>
-                        <div class="item">{(item.progress)}%</div>
+                        <div class="item relative">
+                            <div class="circlechart" :data-percentage="item.progress"></div><span>{(item.progress)}%</span>
+                        </div>
                         <div class="item">
                             <a :href="'../user/index.php?id=' + item.id">
                                 <img src="/local/dashboard/imgpanel/usuario.svg" alt=""/>
@@ -107,4 +109,5 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
 <script src="/local/dashboard/js/panel.js"></script>
+<script src="/local/dashboard/js/progresscircle.js"></script>
 <link rel="stylesheet" href="/local/dashboard/css/panel.css">
