@@ -135,6 +135,7 @@ var explorer = new Vue({
                         };
                         usuarios.push(newElem);
                     });
+                    this.usuarios = usuarios;
                     this.searchUsers = this.usuarios;
                     this.gerenciasList = gerenciasList;
                     this.areasList = areasList;
