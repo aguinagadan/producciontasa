@@ -22,13 +22,13 @@ var explorer = new Vue({
     created(){
         this.sizeWeb();
         window.onresize = this.sizeWeb;
-        this.getCourseList();
     },
     mounted(){
-        //this.getCourseList();
+
     },
     computed: {
         searchCurse: function (){
+            this.getCourseList();
             return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
