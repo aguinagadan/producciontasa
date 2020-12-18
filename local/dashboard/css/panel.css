@@ -463,7 +463,6 @@
     background: #F1F4F5;
     padding: 20px;
     border-radius: 6px;
-    display: block;
 }
 @media (max-width: 860px) {
     .back .modal {
