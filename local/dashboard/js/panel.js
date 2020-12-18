@@ -54,6 +54,18 @@ var explorer = new Vue({
                     });
                     this.cursosList = courses;
                 });
+            console.log(this.cursosList);
+
+            this.cursosList = [{
+                id: '1',
+                name: 'Ergonomia 2020',
+                numEstu: 751,
+                date: "6 de junio de 2020",
+                progress: 90
+            }];
+
+            console.log(this.cursosList);
+
             return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
