@@ -26,7 +26,7 @@ var explorer = new Vue({
     mounted(){
 
     },
-    computed: {
+    asyncComputed: {
         searchCourse: function (){
             let frm = new FormData();
             frm.append('request_type','panelUserCursos');
@@ -53,8 +53,8 @@ var explorer = new Vue({
                         courses.push(newElem);
                     });
                     this.cursosList = courses;
-                    return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
                 });
+            return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
         // searchUsers: function(){
         //   return this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
