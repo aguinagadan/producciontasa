@@ -87,6 +87,7 @@ $PAGE->set_pagetype('my-index');
 $PAGE->blocks->add_region('content');
 $PAGE->set_subpage($currentpage->id);
 $PAGE->set_title($pagetitle);
+$PAGE->requires->jquery();
 //$PAGE->set_heading($header);
 
 if (!isguestuser()) {   // Skip default home page for guests
