@@ -224,7 +224,7 @@ function panelUserCursos() {
 			'numEstu' => count($users),
 			'date' => convertDateToSpanish($course->startdate),
 			'progress' => $progress,
-			'userIdsMail' => '1,2,3',
+			'userIdsMail' => '1|||2|||3',
 		];
 	}
 
