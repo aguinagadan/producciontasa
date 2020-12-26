@@ -22,15 +22,11 @@ var explorer = new Vue({
     created(){
         this.sizeWeb();
         window.onresize = this.sizeWeb;
-        this.searchCourse();
     },
     mounted(){
 
     },
     computed: {
-
-    },
-    methods: {
         searchCourse: function (){
             let frm = new FormData();
             frm.append('request_type','panelUserCursos');
@@ -65,6 +61,8 @@ var explorer = new Vue({
         // searchUsers: function(){
         //   return this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
         // },
+    },
+    methods: {
         searchName: function(){
             if(this.searchAlumnos != ''){
                 this.searchUsers = this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
