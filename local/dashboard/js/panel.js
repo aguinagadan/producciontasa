@@ -42,7 +42,7 @@ var explorer = new Vue({
                         let numEstu = dataVal.numEstu;
                         let date = dataVal.date;
                         let progress = dataVal.progress;
-                        let userIdMails = dataVal.userIdMails;
+                        let userIdsMail = dataVal.userIdsMail;
 
                         let newElem = {
                             'id': id,
@@ -50,7 +50,7 @@ var explorer = new Vue({
                             'numEstu': numEstu,
                             'date': date,
                             'progress': progress,
-                            'userIdMails': userIdMails
+                            'userIdsMail': userIdsMail
                         };
                         courses.push(newElem);
                     });
@@ -165,9 +165,9 @@ var explorer = new Vue({
         closeModal: function(){
             document.querySelector(".back").style.display = "none";
         },
-        showModal: function(userIdMails){
+        showModal: function(userIdsMail){
             document.querySelector(".back").style.display = "flex";
-            console.log(userIdMails);
+            console.log(userIdsMail);
             document.querySelector(".back-ids").value = userIdMails;
         }
     }
