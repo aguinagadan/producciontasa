@@ -139,6 +139,9 @@ var explorer = new Vue({
                     this.zonasList = zonasList;
                 });
         },
+        enviarCorreos: function() {
+
+        },
         close: function(){
             this.general = true;
             this.users = false;
@@ -162,6 +165,7 @@ var explorer = new Vue({
         },
         showModal: function(){
             document.querySelector(".back").style.display = "flex";
+            document.querySelector(".back-ids").value = document.querySelector("#userIds").val();
         }
     }
 });

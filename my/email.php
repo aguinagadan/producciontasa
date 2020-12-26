@@ -8,6 +8,9 @@ $message = $_POST['message'];
 $from = 'webmaster@tasa.com.pe';
 $subject = 'TASA - Mensaje de seguimiento';
 
+var_dump($_POST);
+exit;
+
 if($_POST['idUsersAll']) {
 	$userIds = explode( ',', $_POST['idUsersAll']);
 

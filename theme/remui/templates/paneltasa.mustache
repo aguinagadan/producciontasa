@@ -17,6 +17,7 @@
                 </div>
                 <div class="body">
                     <div class="list" v-for="item in searchCourse">
+                        <input id="userIds" type="hidden" value="1,2,3"></div>
                         <div class="item pointer" @click="viewUser(item.id)">{(item.name)}</div>
                         <div class="item">{(item.numEstu)} estudiantes</div>
                         <div class="item">{(item.date)}</div>
@@ -53,13 +54,13 @@
             <div class="close" @click="close()">X</div>
             <div class="primary usuarios">
                 <div class="search">
-                    <a href="#">
-                        <img src="/local/dashboard/imgpanel/excel.svg"/>
-                        <span>Descargar Excel</span>
-                    </a>
-                    <a href="#">
-                        <img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span>
-                    </a>
+<!--                    <a href="#">-->
+<!--                        <img src="/local/dashboard/imgpanel/excel.svg"/>-->
+<!--                        <span>Descargar Excel</span>-->
+<!--                    </a>-->
+<!--                    <a href="#">-->
+<!--                        <img src="/local/dashboard/imgpanel/descargar.svg"/><span>Descargar certificados</span>-->
+<!--                    </a>-->
                     <input type="text" placeholder="Buscar usuario" v-model="searchAlumnos" @keyup="searchName()"/>
                 </div>
                 <div class="header">
@@ -121,12 +122,13 @@
                     <h4>Enviar mensaje</h4>
                     <div class="close" @click="closeModal()">X</div>
                 </div>
+                <input class="back-ids" type="hidden">
                 <div class="content">
                     <textarea name="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="footer">
                     <div class="btn btn-defauld">Cancelar</div>
-                    <div class="btn btn-info">Aceptar</div>
+                    <div @click="enviarCorreos()" class="btn btn-info">Aceptar</div>
                 </div>
             </div>
         </div>
