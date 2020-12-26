@@ -142,7 +142,15 @@ var explorer = new Vue({
                 });
         },
         enviarCorreos: function() {
-
+            console.log(document.querySelector(".back-ids").val());
+            let idUsersAll = document.querySelector(".back-ids").val();
+            let frm = new FormData();
+            frm.append('idUsersAll', idUsersAll);
+            frm.append('message', 'testing');
+            axios.post('../my/email.php', frm)
+                .then((response) => {
+                    alert('Mensaje enviado');
+                });
         },
         close: function(){
             this.general = true;
@@ -167,8 +175,7 @@ var explorer = new Vue({
         },
         showModal: function(userIdsMail){
             document.querySelector(".back").style.display = "flex";
-            console.log(userIdsMail);
-            document.querySelector(".back-ids").value = userIdMails;
+            document.querySelector(".back-ids").value = userIdsMail;
         }
     }
 });
