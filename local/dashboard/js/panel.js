@@ -167,6 +167,7 @@ var explorer = new Vue({
         },
         showModal: function(userIdMails){
             document.querySelector(".back").style.display = "flex";
+            console.log(userIdMails);
             document.querySelector(".back-ids").value = userIdMails;
         }
     }
