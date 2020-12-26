@@ -20,6 +20,7 @@ var explorer = new Vue({
         };
     },
     created(){
+        this.getCourses();
         this.sizeWeb();
         window.onresize = this.sizeWeb;
     },
@@ -28,6 +29,14 @@ var explorer = new Vue({
     },
     computed: {
         searchCourse: function (){
+            return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
+        },
+        // searchUsers: function(){
+        //   return this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
+        // },
+    },
+    methods: {
+        getCourses: function() {
             let frm = new FormData();
             frm.append('request_type','panelUserCursos');
             axios.post('../local/dashboard/ajax_controller.php', frm)
@@ -56,13 +65,7 @@ var explorer = new Vue({
                     });
                     this.cursosList = courses;
                 });
-            return this.cursosList.filter((item) => item.name.includes(this.searchCursos));
         },
-        // searchUsers: function(){
-        //   return this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
-        // },
-    },
-    methods: {
         searchName: function(){
             if(this.searchAlumnos != ''){
                 this.searchUsers = this.usuarios.filter((item) => item.name.includes(this.searchAlumnos));
