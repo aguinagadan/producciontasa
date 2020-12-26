@@ -42,13 +42,15 @@ var explorer = new Vue({
                         let numEstu = dataVal.numEstu;
                         let date = dataVal.date;
                         let progress = dataVal.progress;
+                        let userIdMails = dataVal.userIdMails;
 
                         let newElem = {
                             'id': id,
                             'name': name,
                             'numEstu': numEstu,
                             'date': date,
-                            'progress': progress
+                            'progress': progress,
+                            'userIdMails': userIdMails
                         };
                         courses.push(newElem);
                     });
@@ -163,9 +165,9 @@ var explorer = new Vue({
         closeModal: function(){
             document.querySelector(".back").style.display = "none";
         },
-        showModal: function(){
+        showModal: function(userIdMails){
             document.querySelector(".back").style.display = "flex";
-            document.querySelector(".back-ids").value = document.querySelector("#userIds").val();
+            document.querySelector(".back-ids").value = userIdMails;
         }
     }
 });

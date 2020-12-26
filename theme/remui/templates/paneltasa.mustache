@@ -33,7 +33,7 @@
                             <a :href="'excel.php?course_id=' + item.id">
                                 <img src="/local/dashboard/imgpanel/excel.svg" alt=""/>
                             </a>
-                            <span @click="showModal()">
+                            <span @click="showModal(item.userIdMails)">
                                 <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
                             </span>
 <!--                        <a href="#">-->
@@ -43,7 +43,6 @@
                                 <img src="/local/dashboard/imgpanel/descargar.svg" alt=""/>
                             </a>
                         </div>
-                        <input id="userIds" type="hidden" value="1,2,3"/>
                     </div>
                 </div>
             </div>
