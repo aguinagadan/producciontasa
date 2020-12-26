@@ -22,9 +22,10 @@ var explorer = new Vue({
     created(){
         this.sizeWeb();
         window.onresize = this.sizeWeb;
+        this.searchCourse();
     },
     mounted(){
-        this.searchCourse();
+
     },
     computed: {
 
