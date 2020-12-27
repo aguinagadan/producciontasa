@@ -8,13 +8,12 @@ $message = $_POST['message'];
 $from = 'webmaster@tasa.com.pe';
 $subject = 'TASA - Mensaje de seguimiento';
 
-var_dump($_POST);
-exit;
-
 if($_POST['idUsersAll']) {
-	$userIds = explode( ',', $_POST['idUsersAll']);
+	$userIds = explode( '|||', $_POST['idUsersAll']);
 
 	$existingMails = array();
+
+	var_dump(count($userIds));
 
 	foreach($userIds as $userId) {
 		$foruser = core_user::get_user($userId);
@@ -27,6 +26,7 @@ if($_POST['idUsersAll']) {
 			var_dump('mensaje => ' . $message);
 			var_dump('de => '. $from);
 			var_dump('subject => ' . $subject);
+			exit;
 			$existingMails[] = $emailTo;
 			email_to_user($foruser, $from, $subject, $message);
 		}
