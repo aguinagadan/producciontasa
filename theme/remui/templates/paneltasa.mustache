@@ -64,7 +64,6 @@
                 </div>
                 <div class="header">
                     <div class="item">
-                        <input type="checkbox" name=""/>
                     </div>
                     <div class="item pointer" @click="changeOrderUser()">
                         <div class="icon"><span v-bind:class="{ disabled: orderUser }">▲</span><span v-bind:class="{ disabled: !orderUser }">▼</span></div><span>Usuario</span>
@@ -92,7 +91,7 @@
                 <div class="body">
                     <div class="list" v-for="item in searchUsers">
                         <div class="item">
-                            <input type="checkbox"/><span @click="showModal()"><img src="/local/dashboard/imgpanel/mail.svg" alt=""/></span>
+                            <input @click="selectUserClick(item.id)" type="checkbox"/><span @click="showModal()"><img src="/local/dashboard/imgpanel/mail.svg" alt=""/></span>
                         </div>
                         <div class="item pointer">{(item.name)}</div>
                         <div class="item">{(item.gerencia)}</div>
@@ -108,7 +107,7 @@
                         <span>
                             <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
                         </span>
-                        <span>
+                        <span @click="showModal2">
                             Enviar recordatorio a seleccionados
                         </span>
                     </a>
@@ -125,8 +124,23 @@
                     <textarea v-model="textMails" name="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="footer">
-                    <div class="btn btn-defauld">Cancelar</div>
+                    <div class="btn btn-defauld" @click="closeModal()">Cancelar</div>
                     <div @click="enviarCorreos()" class="btn btn-info">Aceptar</div>
+                </div>
+            </div>
+        </div>
+        <div class="back-single">
+            <div class="qroma-modal">
+                <div class="title">
+                    <h4>Enviar mensaje</h4>
+                    <div class="close" @click="closeModal()">X</div>
+                </div>
+                <div class="content">
+                    <textarea v-model="textMailsSingle" name="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="footer">
+                    <div class="btn btn-defauld" @click="closeModal()">Cancelar</div>
+                    <div @click="enviarCorreosSingle()" class="btn btn-info">Aceptar</div>
                 </div>
             </div>
         </div>

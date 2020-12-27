@@ -18,7 +18,9 @@ var explorer = new Vue({
             searchAlumnos: '',
             searchUsers:[],
             backIds: '',
-            textMails: ''
+            textMails: '',
+            selectedUser: '',
+            textMailsSingle: ''
         };
     },
     created(){
@@ -124,6 +126,7 @@ var explorer = new Vue({
 
                     Object.keys(data).forEach(key => {
                         let dataVal = data[key];
+                        let id = dataVal.id;
                         let name = dataVal.name;
                         let gerencia = dataVal.gerencia;
                         let area = dataVal.area;
@@ -131,6 +134,7 @@ var explorer = new Vue({
                         let progress = dataVal.progress;
 
                         let newElem = {
+                            'id': id,
                             'name': name,
                             'gerencia': gerencia,
                             'area': area,
@@ -150,6 +154,15 @@ var explorer = new Vue({
             let frm = new FormData();
             frm.append('idUsersAll', this.backIds);
             frm.append('message', this.textMails);
+            axios.post('../my/email.php', frm)
+                .then((response) => {
+                    alert('Mensaje enviado');
+                });
+        },
+        enviarCorreosSingle: function() {
+            let frm = new FormData();
+            frm.append('idUser', this.selectedUser);
+            frm.append('message', this.textMailsSingle);
             axios.post('../my/email.php', frm)
                 .then((response) => {
                     alert('Mensaje enviado');
@@ -179,6 +192,12 @@ var explorer = new Vue({
         showModal: function(userIdsMail){
             document.querySelector(".back").style.display = "flex";
             this.backIds = userIdsMail;
+        },
+        selectUserClick: function(id) {
+            this.selectedUser = id;
+        },
+        showModal2: function(){
+            document.querySelector(".back-single").style.display = "flex";
         }
     }
 });

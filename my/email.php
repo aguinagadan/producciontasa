@@ -13,8 +13,6 @@ if($_POST['idUsersAll']) {
 
 	$existingMails = array();
 
-	var_dump(count($userIds));
-
 	foreach($userIds as $userId) {
 		$foruser = core_user::get_user($userId);
 		$emailTo = $foruser->email;
@@ -26,9 +24,8 @@ if($_POST['idUsersAll']) {
 			var_dump('mensaje => ' . $message);
 			var_dump('de => '. $from);
 			var_dump('subject => ' . $subject);
-			exit;
 			$existingMails[] = $emailTo;
-			email_to_user($foruser, $from, $subject, $message);
+			//email_to_user($foruser, $from, $subject, $message);
 		}
 	}
 } else {
@@ -36,9 +33,12 @@ if($_POST['idUsersAll']) {
 
 	$emailTo = $foruser->email;
 
+	var_dump($_POST);
+
 	var_dump('email => ' . $emailTo);
 	var_dump('mensaje => ' . $message);
 	var_dump('de => '. $from);
 	var_dump('subject => ' . $subject);
-	email_to_user($foruser, $from, $subject, $message);
+	exit;
+	//email_to_user($foruser, $from, $subject, $message);
 }
