@@ -278,8 +278,8 @@ function getUsuariosByCurso($courseId) {
 		$zonasList[] = ['name' => $zona];
 
 		$return[] = [
-			'id' => $user->id,
 			'name' => $user->firstname . ' ' . $user->lastname,
+			'id' => $user->id,
 			'gerencia' => !empty($gerencia) ? $gerencia: '-',
 			'area' => !empty($area) ? $area: '-',
 			'zona' => !empty($zona) ? $zona: '-',
