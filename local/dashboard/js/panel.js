@@ -162,7 +162,6 @@ var explorer = new Vue({
         },
         enviarCorreosSingle: function() {
             let frm = new FormData();
-            console.log(this.selectedUsers);
             frm.append('idUser', this.selectedUsers);
             frm.append('message', this.textMailsSingle);
             axios.post('../my/email.php', frm)

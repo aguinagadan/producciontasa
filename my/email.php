@@ -25,7 +25,7 @@ if($_POST['idUsersAll']) {
 			var_dump('de => '. $from);
 			var_dump('subject => ' . $subject);
 			$existingMails[] = $emailTo;
-			//email_to_user($foruser, $from, $subject, $message);
+			email_to_user($foruser, $from, $subject, $message);
 		}
 	}
 } else {
@@ -45,7 +45,7 @@ if($_POST['idUsersAll']) {
 			var_dump('de => '. $from);
 			var_dump('subject => ' . $subject);
 			$existingMails[] = $emailTo;
-			//email_to_user($foruser, $from, $subject, $message);
+			email_to_user($foruser, $from, $subject, $message);
 		}
 	}
 }
