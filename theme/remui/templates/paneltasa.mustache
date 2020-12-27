@@ -102,11 +102,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer">
-                    <span>
-                        <img src="/local/dashboard/imgpanel/mail.svg" alt=""/>
-                    </span>
-                    <div style="cursor: pointer" @click="showModal2">
+                <div class="footer row">
+                    <img style="width: 20px; cursor: pointer" src="/local/dashboard/imgpanel/mail.svg" alt=""/>
+                    <div style="cursor: pointer; margin-left: 1%;" @click="showModal2">
                         Enviar recordatorio a seleccionados
                     </div>
                     </a>
@@ -132,13 +130,13 @@
             <div class="qroma-modal">
                 <div class="title">
                     <h4>Enviar mensaje</h4>
-                    <div class="close" @click="closeModal()">X</div>
+                    <div class="close" @click="closeModal2()">X</div>
                 </div>
                 <div class="content">
                     <textarea v-model="textMailsSingle" name="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="footer">
-                    <div class="btn btn-defauld" @click="closeModal()">Cancelar</div>
+                    <div class="btn btn-defauld" @click="closeModal2()">Cancelar</div>
                     <div @click="enviarCorreosSingle()" class="btn btn-info">Aceptar</div>
                 </div>
             </div>

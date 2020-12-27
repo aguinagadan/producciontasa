@@ -189,12 +189,15 @@ var explorer = new Vue({
         closeModal: function(){
             document.querySelector(".back").style.display = "none";
         },
+        closeModal2: function(){
+            document.querySelector(".back-single").style.display = "none";
+        },
         showModal: function(userIdsMail){
             document.querySelector(".back").style.display = "flex";
             this.backIds = userIdsMail;
         },
         selectUserClick: function(id) {
-            this.selectedUser = id;
+            this.selectedUser = this.selectedUser + '|||' + id;
         },
         showModal2: function(){
             document.querySelector(".back-single").style.display = "flex";
