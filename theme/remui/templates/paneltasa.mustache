@@ -121,9 +121,9 @@
                     <h4>Enviar mensaje</h4>
                     <div class="close" @click="closeModal()">X</div>
                 </div>
-                <input class="back-ids" type="hidden">
+                <input v-model="backIds" class="back-ids" type="hidden">
                 <div class="content">
-                    <textarea name="" cols="30" rows="10"></textarea>
+                    <textarea v-model="textMail" name="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="footer">
                     <div class="btn btn-defauld">Cancelar</div>

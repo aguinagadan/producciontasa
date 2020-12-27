@@ -17,6 +17,8 @@ var explorer = new Vue({
             searchCursos: '',
             searchAlumnos: '',
             searchUsers:[],
+            backIds: '',
+            textMails: ''
         };
     },
     created(){
@@ -145,8 +147,8 @@ var explorer = new Vue({
                 });
         },
         enviarCorreos: function() {
-            console.log(document.querySelector(".back-ids").val());
-            let idUsersAll = document.querySelector(".back-ids").val();
+            console.log(this.backIds);
+            console.log(this.textMails);
             let frm = new FormData();
             frm.append('idUsersAll', idUsersAll);
             frm.append('message', 'testing');
