@@ -150,7 +150,6 @@ var explorer = new Vue({
             console.log(this.backIds);
             console.log(this.textMails);
             let frm = new FormData();
-            frm.append('idUsersAll', idUsersAll);
             frm.append('message', 'testing');
             axios.post('../my/email.php', frm)
                 .then((response) => {
