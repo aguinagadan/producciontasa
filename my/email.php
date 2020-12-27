@@ -31,6 +31,9 @@ if($_POST['idUsersAll']) {
 } else {
 	$foruser = core_user::get_user($_POST['idUser']);
 
+	var_dump($foruser);
+	exit;
+
 	if(strpos($foruser, '|||') !== false) {
 		$userIds = explode( '|||', $foruser);
 

@@ -163,13 +163,12 @@ var explorer = new Vue({
         enviarCorreosSingle: function() {
             let frm = new FormData();
             console.log(this.selectedUsers);
-            return false;
-            // frm.append('idUser', this.selectedUser);
-            // frm.append('message', this.textMailsSingle);
-            // axios.post('../my/email.php', frm)
-            //     .then((response) => {
-            //         alert('Mensaje enviado');
-            //     });
+            frm.append('idUser', this.selectedUser);
+            frm.append('message', this.textMailsSingle);
+            axios.post('../my/email.php', frm)
+                .then((response) => {
+                    alert('Mensaje enviado');
+                });
         },
         close: function(){
             this.general = true;
@@ -202,7 +201,7 @@ var explorer = new Vue({
         selectUserClick: function(id) {
             var check = this.selectedUsers.includes(id);
             if(check) {
-                this.selectedUsers.remove(id);
+                this.selectedUsers.pop(id);
             } else {
                 this.selectedUsers.push(id);
             }
