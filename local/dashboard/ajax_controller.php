@@ -223,12 +223,7 @@ function panelUserCursos() {
 			$userList[] = $singleUser->id;
 		}
 
-		var_dump(count($userList));
-
 		$userList = implode('|||', $userList);
-
-		var_dump($userList);
-		exit;
 
 		$courses[] = [
 			'name'=> $course->fullname,
@@ -236,7 +231,7 @@ function panelUserCursos() {
 			'numEstu' => count($users),
 			'date' => convertDateToSpanish($course->startdate),
 			'progress' => $progress,
-			'userIdsMail' => '1|||2|||3',
+			'userIdsMail' => $userList,
 		];
 	}
 
