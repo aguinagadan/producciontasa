@@ -29,45 +29,23 @@ if($_POST['idUsersAll']) {
 		}
 	}
 } else {
-	//$foruser = core_user::get_user($_POST['idUser']);
+	$userIds = explode( ',', $_POST['idUser']);
 
-	var_dump($_POST['idUser']);
-	exit;
+	$existingMails = array();
 
-	if(strpos($foruser, '|||') !== false) {
-		$userIds = explode( '|||', $foruser);
-
-		$existingMails = array();
-
-		var_dump('mas de uno');
-		var_dump(count($userIds));
-
-		foreach($userIds as $userId) {
-			$foruser = core_user::get_user($userId);
-			$emailTo = $foruser->email;
-
-			if(in_array($emailTo, $existingMails)) {
-				continue;
-			} else {
-				var_dump('email => ' . $emailTo);
-				var_dump('mensaje => ' . $message);
-				var_dump('de => '. $from);
-				var_dump('subject => ' . $subject);
-				$existingMails[] = $emailTo;
-				//email_to_user($foruser, $from, $subject, $message);
-			}
-		}
-		exit;
-	} else {
+	foreach($userIds as $userId) {
+		$foruser = core_user::get_user($userId);
 		$emailTo = $foruser->email;
 
-		var_dump('solo uno');
-		var_dump($_POST);
-		var_dump('email => ' . $emailTo);
-		var_dump('mensaje => ' . $message);
-		var_dump('de => '. $from);
-		var_dump('subject => ' . $subject);
-		exit;
-		//email_to_user($foruser, $from, $subject, $message);
+		if(in_array($emailTo, $existingMails)) {
+			continue;
+		} else {
+			var_dump('email => ' . $emailTo);
+			var_dump('mensaje => ' . $message);
+			var_dump('de => '. $from);
+			var_dump('subject => ' . $subject);
+			$existingMails[] = $emailTo;
+			//email_to_user($foruser, $from, $subject, $message);
+		}
 	}
 }
