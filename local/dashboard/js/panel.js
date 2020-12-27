@@ -147,8 +147,8 @@ var explorer = new Vue({
                 });
         },
         enviarCorreos: function() {
-            console.log(this.backIds);
             console.log(this.textMails);
+            console.log(this.backIds);
             let frm = new FormData();
             frm.append('message', 'testing');
             axios.post('../my/email.php', frm)
@@ -179,7 +179,7 @@ var explorer = new Vue({
         },
         showModal: function(userIdsMail){
             document.querySelector(".back").style.display = "flex";
-            document.querySelector(".back-ids").value = userIdsMail;
+            this.backIds = userIdsMail;
         }
     }
 });
