@@ -20,6 +20,7 @@ var explorer = new Vue({
             backIds: '',
             textMails: '',
             selectedUser: '',
+            selectedUsers: [],
             textMailsSingle: ''
         };
     },
@@ -161,12 +162,14 @@ var explorer = new Vue({
         },
         enviarCorreosSingle: function() {
             let frm = new FormData();
-            frm.append('idUser', this.selectedUser);
-            frm.append('message', this.textMailsSingle);
-            axios.post('../my/email.php', frm)
-                .then((response) => {
-                    alert('Mensaje enviado');
-                });
+            console.log(this.selectedUsers);
+            return false;
+            // frm.append('idUser', this.selectedUser);
+            // frm.append('message', this.textMailsSingle);
+            // axios.post('../my/email.php', frm)
+            //     .then((response) => {
+            //         alert('Mensaje enviado');
+            //     });
         },
         close: function(){
             this.general = true;
@@ -197,7 +200,12 @@ var explorer = new Vue({
             this.backIds = userIdsMail;
         },
         selectUserClick: function(id) {
-            this.selectedUser = this.selectedUser + '|||' + id;
+            var check = this.selectedUsers.includes(id);
+            if(check) {
+                this.selectedUsers.remove(id);
+            } else {
+                this.selectedUsers.push(id);
+            }
         },
         showModal2: function(){
             document.querySelector(".back-single").style.display = "flex";
