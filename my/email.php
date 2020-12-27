@@ -31,7 +31,7 @@ if($_POST['idUsersAll']) {
 } else {
 	$foruser = core_user::get_user($_POST['idUser']);
 
-	var_dump($foruser);
+	var_dump($_POST['idUser']);
 	exit;
 
 	if(strpos($foruser, '|||') !== false) {
