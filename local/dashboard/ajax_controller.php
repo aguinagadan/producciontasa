@@ -209,6 +209,7 @@ function panelUserCursos() {
 	$allCourses = enrol_get_users_courses($USER->id, true);
 
 	foreach($allCourses as $course) {
+		$userList = array();
 		if($course->visible == 0) {
 			continue;
 		}
@@ -217,6 +218,17 @@ function panelUserCursos() {
 		$users = get_enrolled_users($context);
 
 		$progress = round(progress::get_course_progress_percentage($course, $USER->id));
+
+		foreach($users as $singleUser) {
+			$userList[] = $singleUser->id;
+		}
+
+		var_dump(count($userList));
+
+		$userList = implode('|||', $userList);
+
+		var_dump($userList);
+		exit;
 
 		$courses[] = [
 			'name'=> $course->fullname,
