@@ -158,7 +158,7 @@ function updateUser($user, $userAD) {
 	$nroTrabajador = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ?
 		$userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'] : '';
 
-	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription'] : 'No especificado';
+	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc'] : 'No especificado';
 
 	$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : 'No especificado';
 
