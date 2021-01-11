@@ -2,6 +2,13 @@ var explorer = new Vue({
     el: '#ranking',
     data(){
       return{
+        user: {
+              name: '',
+              level: '',
+              levelImage: '',
+              points: 0,
+              percentage: 0,
+        },
         levels: [
             {
                 name: "Fitoplancton",
@@ -46,12 +53,6 @@ var explorer = new Vue({
                 pointMax: 1049
             },
         ],
-        user: {
-            name: "Juan Carlos Matias Lorenzo",
-            level: "Sardina",
-            point: 352,
-            porcent: 20,
-        },
         area: [
             {name: "Operaciones", punto: "2,352 millas náuticas"},
             {name: "Operaciones", punto: "2,352 millas náuticas"},
@@ -84,7 +85,7 @@ var explorer = new Vue({
         widthContent: 0,
         maxMov: 0,
         time: '',
-      }         
+      };
     },
     created(){
     //   this.sizeWeb();
@@ -92,15 +93,23 @@ var explorer = new Vue({
       this.size();
     },
     mounted(){
-      
+        this.obtenerUsuario();
     },
     methods: {
-    //   sizeWeb: function(){
-    //     if (window.innerWidth < 768)
-    //       this.menu = false;
-    //     else
-    //       this.menu = true;
-    //   },
+        obtenerUsuario: function(){
+            let frm = new FormData();
+            frm.append('request_type','obtenerUsuario');
+            axios.post('/local/ranking/ajax_controller.php',frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    this.user.id = data.id;
+                    this.user.name = data.name;
+                    this.user.levelName = data.levelName;
+                    this.user.levelImage = data.levelImage;
+                    this.user.points = data.points;
+                    this.user.percentage = data.percentage;
+                });
+        },
         size: function(){
             this.widthContent = this.area.length*210;
             console.log(this.widthContent);
