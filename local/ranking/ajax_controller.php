@@ -136,7 +136,7 @@ function obtenerNiveles() {
 		if(isset($levels[$key+1])) {
 			$pointMax = $levels[$key+1]->get_xp_required();
 		} else {
-			$pointMax = 0;
+			$pointMax = '-';
 		}
 
 		$levelArr[] = [
@@ -146,8 +146,9 @@ function obtenerNiveles() {
 			'pointMin' => $pointMin,
 			'pointMax' => $pointMax
 		];
-
-		$pointMin = $pointMax;
+		if(!isset($levels[$key+1])) {
+			$pointMin = $pointMax;
+		}
 	}
 
 	$response['status'] = true;
