@@ -112,24 +112,24 @@ var explorer = new Vue({
             let marginLeft = 0;
             this.marginLeftBaner += 100;
             if(marginLeft < this.marginLeftBaner) {
-                this.marginLeftBaner = (100 * this.cursospaginate.length - 100)*-1;
+                this.marginLeftBaner = (100 * this.levelspaginate.length - 100)*-1;
             }
             if(this.banerPoint == 1) {
-                this.banerPoint = this.cursospaginate.length;
+                this.banerPoint = this.levelspaginate.length;
             } else {
                 this.banerPoint -= 1;
             }
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
         nextBaner: function() {
-            let marginLeft = (100 * this.cursospaginate.length - 100)*-1;
+            let marginLeft = (100 * this.levelspaginate.length - 100)*-1;
             this.marginLeftBaner -= 100;
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
             }
-            if(this.banerPoint <  this.cursospaginate.length) {
+            if(this.banerPoint <  this.levelspaginate.length) {
                 this.banerPoint += 1;
-            } else if(this.banerPoint ==  this.cursospaginate.length) {
+            } else if(this.banerPoint ==  this.levelspaginate.length) {
                 this.banerPoint = 1;
             }
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
