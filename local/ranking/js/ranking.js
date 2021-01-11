@@ -13,6 +13,7 @@ var explorer = new Vue({
               percentage: 0,
         },
         levels: [],
+        users: [],
         area: [
             {name: "Operaciones", punto: "2,352 millas náuticas"},
             {name: "Operaciones", punto: "2,352 millas náuticas"},
@@ -26,20 +27,6 @@ var explorer = new Vue({
             {name: "Operaciones", punto: "2,352 millas náuticas"},
             {name: "Operaciones", punto: "2,352 millas náuticas"},
             {name: "Operaciones", punto: "2,352 millas náuticas"},
-        ],
-        users: [
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
-            {name: "Yasmin Liseth Castañeda Calderon", punto:"2,352 millas náuticas", level: "Nivel 10, Anchoveta"},
         ],
         positionCard: 0,
         widthContent: 0,
@@ -98,6 +85,29 @@ var explorer = new Vue({
                     this.levels = levels;
                     this.pages = Math.ceil(this.levels.length/6);
                     this.levelspaginate = new Array(this.pages);
+                });
+        },
+        obtenerUsuarios: function(){
+            let frm = new FormData();
+            frm.append('request_type','obtenerUsuarios');
+            axios.post('/local/ranking/ajax_controller.php',frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    let users = [];
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let name = dataVal.name;
+                        let punto = dataVal.punto;
+                        let level = dataVal.level;
+
+                        let newElem = {
+                            'name': name,
+                            'punto': punto,
+                            'level': level
+                        };
+                        users.push(newElem);
+                    });
+                    this.users = users;
                 });
         },
         size: function(){

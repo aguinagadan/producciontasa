@@ -25,6 +25,9 @@ try {
 		case 'obtenerNiveles':
 			$returnArr = obtenerNiveles();
 			break;
+		case 'obtenerUsuarios':
+			$returnArr = obtenerUsuarios();
+			break;
 	}
 } catch (Exception $e) {
 	$returnArr['status'] = false;
@@ -153,4 +156,29 @@ function obtenerNiveles() {
 	$response['data'] = $levelArr;
 
 	return $response;
+}
+
+function obtenerUsuarios() {
+	global $DB;
+
+	$userIDs = array(2,3);
+
+	foreach($userIDs as $userID) {
+		$world = \block_xp\di::get('course_world_factory')->get_world(1);
+		$state = $world->get_store()->get_state($userID);
+		$widget = new \block_xp\output\xp_widget($state, [], null, []);
+		$level = $widget->state->get_level();
+
+		//Get data
+		$levelName = obtenerLevelPropertyValue($level, 'name');
+		$xp = $widget->state->get_xp();
+
+		$user = $DB->get_record('user', array('id' => $userID));
+
+		$users[] = [
+			'name'=> $user->firstname . ' ' . $user->lastname,
+			'punto' =>$xp . ', millas naúticas',
+			'level'=> 'Nivel ' . $level->get_name() .', ' . $levelName
+		];
+	}
 }
