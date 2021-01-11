@@ -110,7 +110,7 @@ function obtenerUsuario() {
 		'photo' => getUserImage(),
 		'name' => strtoupper($USER->firstname . ' ' . $USER->lastname),
 		'levelName' => getUserLevel(1)['levelName'],
-		'levelImage' => getUserLevel(0)['img'],
+		'levelImage' => getUserLevel(1)['img'],
 		'points' => getUserLevel(1)['xp'],
 		'percentage' => getUserLevel(1)['percentage'],
 	);
