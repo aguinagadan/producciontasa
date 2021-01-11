@@ -132,7 +132,7 @@ function obtenerNiveles() {
 
 	foreach ($levels as $level) {
 
-		var_dump($level);
+		var_dump($level->get_level());
 		exit;
 
 		$levelObj = $level->get_level();
