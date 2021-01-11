@@ -42,6 +42,7 @@ var explorer = new Vue({
     mounted(){
         this.obtenerUsuario();
         this.obtenerNiveles();
+        this.obtenerUsuarios();
     },
     methods: {
         obtenerUsuario: function(){
