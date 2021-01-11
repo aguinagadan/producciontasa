@@ -131,6 +131,10 @@ function obtenerNiveles() {
 	$levels = $levelsinfo->get_levels();
 
 	foreach ($levels as $level) {
+
+		var_dump($level);
+		exit;
+
 		$levelObj = $level->get_level();
 		$levelName = obtenerLevelPropertyValue($levelObj, 'name');
 		$levelNumber = obtenerLevelPropertyValue($levelObj, 'number');
