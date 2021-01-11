@@ -3,7 +3,9 @@
         <div class="title">RANKING TASA</div>
         <div class="user">{{user.name}}</div>
         <div class="progress-tasa">
-            <div class="icon"><img :src="user.levelImage" alt="" srcset=""/></div>
+            <div class="icon" v-html="user.levelImage">
+                {{user.levelImage}}
+            </div>
             <div class="info">
                 <div class="level">Nivel: {{user.levelName}}</div>
                 <div class="progress-tasa">
