@@ -1,0 +1,227 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #F1F4F5;
+}
+
+.header, .content {
+  padding: 20px 10%;
+}
+
+.header {
+  background: url("../img/baner.png");
+  background-size: cover;
+  height: 250px;
+  width: 100%;
+}
+.header .title {
+  font-family: "Catamaran", sans-serif;
+  font-weight: 500;
+  color: white;
+}
+.header .user {
+  color: white;
+  font-size: 60px;
+  font-family: "Catamaran", sans-serif;
+  font-weight: 500;
+}
+.header .progress {
+  display: flex;
+}
+.header .progress .icon {
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+}
+.header .progress .icon img {
+  height: 100%;
+  width: 100%;
+}
+.header .progress .info {
+  color: white;
+  font-family: "Catamaran", sans-serif;
+}
+.header .progress .info .progress {
+  margin: 5px 0;
+}
+.header .progress .info .progress .progress-bar {
+  background: rgba(255, 255, 255, 0.55);
+  height: 13px;
+  width: 412px;
+  border-radius: 6.5px;
+  overflow: hidden;
+}
+.header .progress .info .progress .progress-bar .defauld {
+  height: 100%;
+  background: #F1F4F5;
+  border-radius: 6.5px;
+}
+.header .progress .info .point {
+  opacity: 0.75;
+}
+
+.content h2 {
+  color: #184A7D;
+  margin: 10px 0;
+  font-family: "Segoe UI";
+  font-weight: normal;
+}
+.content .niveles {
+  margin-bottom: 40px;
+  position: relative;
+}
+.content .niveles .body {
+  overflow: hidden;
+  padding: 10px;
+}
+.content .niveles .body #leves {
+  display: flex;
+}
+.content .niveles .body #leves .item {
+  width: 210px;
+  background: white;
+  padding: 20px;
+  box-shadow: 2px 2px 6px #00000029;
+  border-radius: 8px;
+  text-align: center;
+  font-family: "Segoe UI";
+  margin-right: 20px;
+}
+.content .niveles .body #leves .item.actual {
+  background: #5EC1ED;
+}
+.content .niveles .body #leves .item.actual .level, .content .niveles .body #leves .item.actual .name, .content .niveles .body #leves .item.actual .points {
+  color: white;
+}
+.content .niveles .body #leves .item:last-child {
+  margin-right: 0 !important;
+}
+.content .niveles .body #leves .item .level {
+  color: #707070;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+}
+.content .niveles .body #leves .item .name {
+  color: #184A7D;
+  font-weight: bold;
+  margin: 15px 0;
+  font-size: 20px;
+}
+.content .niveles .body #leves .item .points {
+  color: #707070;
+  font-size: 12px;
+}
+.content .niveles .body #leves .item .icon {
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+.content .niveles .body #leves .item .icon img {
+  height: 100%;
+  width: 100%;
+}
+.content .niveles .before, .content .niveles .after {
+  position: absolute;
+  color: white;
+  background: #5EC1ED;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 50%;
+}
+.content .niveles .before.disabled, .content .niveles .after.disabled {
+  opacity: 0.5;
+}
+.content .niveles .before {
+  left: -50px;
+}
+.content .niveles .after {
+  right: -50px;
+}
+.content .ranking {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #707070;
+  margin-bottom: 20px;
+}
+.content .ranking .body {
+  display: flex;
+}
+.content .ranking .body .left .header-table, .content .ranking .body .right .header-table {
+  padding: 10px;
+}
+.content .ranking .body .left .header-table, .content .ranking .body .right .header-table {
+  background: #184A7D;
+  color: white;
+  display: flex;
+}
+.content .ranking .body .left .header-table .item, .content .ranking .body .right .header-table .item {
+  text-align: center;
+}
+.content .ranking .body .left .body-table, .content .ranking .body .right .body-table {
+  height: 408px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.content .ranking .body .left .body-table .list, .content .ranking .body .right .body-table .list {
+  display: flex;
+  background: white;
+}
+.content .ranking .body .left .body-table .list .item, .content .ranking .body .right .body-table .list .item {
+  padding: 15px 5px;
+}
+.content .ranking .body .left .body-table .list .item:nth-child(1), .content .ranking .body .right .body-table .list .item:nth-child(1) {
+  text-align: right;
+}
+.content .ranking .body .left .body-table .list:nth-child(2n), .content .ranking .body .right .body-table .list:nth-child(2n) {
+  background: #FBFDFD;
+}
+.content .ranking .body .left {
+  width: 35%;
+}
+.content .ranking .body .left .header-table .item:nth-child(1), .content .ranking .body .left .body-table .item:nth-child(1) {
+  width: 26px;
+}
+.content .ranking .body .left .header-table .item:nth-child(2), .content .ranking .body .left .body-table .item:nth-child(2) {
+  width: calc(50% - 13px);
+}
+.content .ranking .body .left .header-table .item:nth-child(3), .content .ranking .body .left .body-table .item:nth-child(3) {
+  width: calc(50% - 13px);
+}
+.content .ranking .body .right {
+  margin-left: 20px;
+  width: calc(65% - 20px);
+}
+.content .ranking .body .right .header-table .item, .content .ranking .body .right .body-table .item {
+  position: relative;
+}
+.content .ranking .body .right .header-table .item .icon, .content .ranking .body .right .body-table .item .icon {
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 13px;
+}
+.content .ranking .body .right .header-table .item .icon img, .content .ranking .body .right .body-table .item .icon img {
+  height: 30px;
+}
+.content .ranking .body .right .header-table .item:nth-child(1), .content .ranking .body .right .body-table .item:nth-child(1) {
+  width: 26px;
+}
+.content .ranking .body .right .header-table .item:nth-child(2), .content .ranking .body .right .body-table .item:nth-child(2) {
+  width: calc(50% - 13px);
+}
+.content .ranking .body .right .header-table .item:nth-child(3), .content .ranking .body .right .body-table .item:nth-child(3) {
+  width: 25%;
+}
+.content .ranking .body .right .header-table .item:nth-child(4), .content .ranking .body .right .body-table .item:nth-child(4) {
+  width: 25%;
+}
+.content .ranking .body .right .body-table .list .item:nth-child(2) {
+  padding-left: 35px;
+}

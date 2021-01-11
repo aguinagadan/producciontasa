@@ -1,0 +1,76 @@
+<div class="container" id="ranking">
+    <div class="header">
+        <div class="title">RANKING TASA</div>
+        <div class="user">{{user.name}}</div>
+        <div class="progress">
+            <div class="icon"><img src="img/delfin.png" alt="" srcset=""/></div>
+            <div class="info">
+                <div class="level">Nivel: {{user.level}}</div>
+                <div class="progress">
+                    <div class="progress-bar">
+                        <div class="defauld" :style="'width: '+user.porcent+'%'"></div>
+                    </div>
+                </div>
+                <div class="point">{{user.point}} millas nauticas obtenidas</div>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="niveles">
+            <h2>Niveles</h2>
+            <div class="before" v-bind:class="{ disabled: positionCard == 0}">◄ </div>
+            <div class="body">
+                <div id="leves">
+                    <div class="item" v-for="item in levels" v-bind:class="{ actual: user.level == item.name }">
+                        <div class="level">Nivel {{item.level}}</div>
+                        <div class="icon"><img :src="item.img" alt="" srcset=""/></div>
+                        <div class="name">{{item.name}}</div>
+                        <div class="points">{{item.pointMin}} - {{item.pointMax}} millas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="after" v-bind:class="{ disabled: positionCard == 0}">►</div>
+        </div>
+        <div class="ranking">
+            <h2>Ranking de temporada</h2>
+            <div class="body">
+                <div class="left">
+                    <div class="table">
+                        <div class="header-table">
+                            <div class="item"></div>
+                            <div class="item">Área</div>
+                            <div class="item">Puntos</div>
+                        </div>
+                        <div class="body-table">
+                            <div class="list" v-for="(item, key) in area">
+                                <div class="item">{{key+1}}</div>
+                                <div class="item">{{item.name}}</div>
+                                <div class="item">{{item.punto}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="table">
+                        <div class="header-table">
+                            <div class="item"></div>
+                            <div class="item">Participante</div>
+                            <div class="item">Puntos</div>
+                            <div class="item">Nivel</div>
+                        </div>
+                        <div class="body-table">
+                            <div class="list" v-for="(item, key) in users">
+                                <div class="item">{{key+1}}</div>
+                                <div class="item">
+                                    <div class="icon"><img src="img/delfin.png" alt="" srcset=""/></div><span>{{item.name}}</span>
+                                </div>
+                                <div class="item">{{item.punto}}</div>
+                                <div class="item">{{item.level}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
