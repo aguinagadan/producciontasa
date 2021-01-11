@@ -4,7 +4,7 @@ var explorer = new Vue({
       return{
         user: {
               name: '',
-              level: '',
+              levelName: '',
               levelImage: '',
               points: 0,
               percentage: 0,
