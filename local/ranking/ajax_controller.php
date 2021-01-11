@@ -133,10 +133,10 @@ function obtenerNiveles() {
 		$levelNumber = $level->get_level();
 		$levelImg = getLevelBadge($level, 1);
 
-		if(count($levels) == $key+1) {
-			$pointMax = '-';
-		} else {
+		if(isset($levels[$key+1])) {
 			$pointMax = $levels[$key+1]->get_xp_required();
+		} else {
+			$pointMax = 0;
 		}
 
 		$levelArr[] = [
@@ -146,8 +146,7 @@ function obtenerNiveles() {
 			'pointMin' => $pointMin,
 			'pointMax' => $pointMax
 		];
-		var_dump($levelArr);
-		exit;
+
 		$pointMin = $pointMax;
 	}
 
