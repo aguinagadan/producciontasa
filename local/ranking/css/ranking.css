@@ -259,3 +259,8 @@ body#page-local-ranking-index {
 #page-local-ranking-index .card-body {
   padding: 0 !important;
 }
+
+.d-badge-img {
+  width: 15vh !important;
+  height: 15vh !important;
+}
