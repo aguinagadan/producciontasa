@@ -72,7 +72,7 @@ var explorer = new Vue({
             let frm = new FormData();
             frm.append('request_type','obtenerNiveles');
             axios.post('/local/ranking/ajax_controller.php',frm)
-                .then(() => {
+                .then((response) => {
                     let data = response.data.data;
                     let levels = [];
                     Object.keys(data).forEach(key => {
