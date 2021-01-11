@@ -144,6 +144,8 @@ function obtenerNiveles() {
 			'pointMin' => 0,
 			'pointMax' => $levelXp
 		];
+		var_dump($levelArr);
+		exit;
 	}
 
 	$response['status'] = true;
