@@ -21,6 +21,9 @@ try {
 		case 'obtenerUsuario':
 			$returnArr = obtenerUsuario();
 			break;
+		case 'obtenerNiveles':
+			$returnArr = obtenerNiveles();
+			break;
 	}
 } catch (Exception $e) {
 	$returnArr['status'] = false;
@@ -115,4 +118,12 @@ function obtenerUsuario() {
 	$response['data'] = $userArr;
 
 	return $response;
+}
+
+function obtenerNiveles() {
+	$world = \block_xp\di::get('course_world_factory')->get_world(1);
+	$levelsinfo = $world->get_levels_info();
+	$levelsinfo->get_levels();
+	var_dump($levelsinfo->get_levels());
+	exit;
 }

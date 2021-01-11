@@ -16,42 +16,7 @@ var explorer = new Vue({
                 img: "img/delfin.png",
                 pointMin: 0,
                 pointMax: 199
-            },
-            {
-                name: "Zooplancton",
-                level: 2,
-                img: "img/delfin.png",
-                pointMin: 200,
-                pointMax: 249
-            },
-            {
-                name: "Jurel",
-                level: 3,
-                img: "img/delfin.png",
-                pointMin: 250,
-                pointMax: 349
-            },
-            {
-                name: "Sardina",
-                level: 4,
-                img: "img/delfin.png",
-                pointMin: 350,
-                pointMax: 499
-            },
-            {
-                name: "Bonito",
-                level: 5,
-                img: "img/delfin.png",
-                pointMin: 500,
-                pointMax: 799
-            },
-            {
-                name: "Tortuga marina",
-                level: 6,
-                img: "img/delfin.png",
-                pointMin: 800,
-                pointMax: 1049
-            },
+            }
         ],
         area: [
             {name: "Operaciones", punto: "2,352 millas náuticas"},
@@ -94,6 +59,7 @@ var explorer = new Vue({
     },
     mounted(){
         this.obtenerUsuario();
+        this.obtenerNiveles();
     },
     methods: {
         obtenerUsuario: function(){
@@ -108,6 +74,14 @@ var explorer = new Vue({
                     this.user.levelImage = data.levelImage;
                     this.user.points = data.points;
                     this.user.percentage = data.percentage;
+                });
+        },
+        obtenerNiveles: function(){
+            let frm = new FormData();
+            frm.append('request_type','obtenerNiveles');
+            axios.post('/local/ranking/ajax_controller.php',frm)
+                .then(() => {
+                    console.log('test');
                 });
         },
         size: function(){
