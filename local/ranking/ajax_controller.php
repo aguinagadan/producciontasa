@@ -53,6 +53,10 @@ function obtenerLevelPropertyValue($level, $property) {
 }
 
 function getLevelBadge($level) {
+	$badgeurl = $level->get_badge_url();
+	var_dump($badgeurl->host);
+	var_dump($badgeurl['host']);
+	exit;
 	if ($level instanceof level_with_badge && ($badgeurl = $level->get_badge_url()) !== null) {
 		return $badgeurl->host.$badgeurl->path.$badgeurl->slashargument;
 	} else {
