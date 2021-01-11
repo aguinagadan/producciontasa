@@ -225,3 +225,36 @@ body {
 .content .ranking .body .right .body-table .list .item:nth-child(2) {
   padding-left: 35px;
 }
+
+#page-local-ranking-index #nav-drawer {
+  display: none;
+}
+
+body#page-local-ranking-index {
+  margin-left: 0 !important;
+}
+
+#page-local-ranking-index #page-header {
+  display: none;
+}
+
+#page-local-ranking-index #page-footer {
+  display: none !important;
+}
+
+#page-local-ranking-index #page-content {
+  padding-bottom: 0 !important;
+}
+
+#page-local-ranking-index .container {
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+#page-local-ranking-index #region-main {
+  padding: 0 !important;
+}
+
+#page-local-ranking-index .card-body {
+  padding: 0 !important;
+}
