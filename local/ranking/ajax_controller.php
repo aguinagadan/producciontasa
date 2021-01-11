@@ -28,6 +28,9 @@ try {
 		case 'obtenerUsuarios':
 			$returnArr = obtenerUsuarios();
 			break;
+		case 'obtenerAreas':
+			$returnArr = obtenerAreas();
+			break;
 	}
 } catch (Exception $e) {
 	$returnArr['status'] = false;
@@ -178,13 +181,23 @@ function obtenerUsuarios() {
 		$users[] = [
 			'img'=> getLevelBadge($level, 1),
 			'name'=> $user->firstname . ' ' . $user->lastname,
-			'punto' =>$xp . ', millas naúticas',
+			'punto' =>$xp . ' millas naúticas',
 			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
 		];
 	}
 
 	$response['status'] = true;
 	$response['data'] = $users;
+
+	return $response;
+}
+
+function obtenerAreas() {
+	$areas[] = ['name' => 'Area 1', 'punto' => '1000 millas naúticas'];
+	$areas[] = ['name' => 'Area 2', 'punto' => '2000 millas naúticas'];
+
+	$response['status'] = true;
+	$response['data'] = $areas;
 
 	return $response;
 }

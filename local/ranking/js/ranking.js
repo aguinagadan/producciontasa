@@ -14,20 +14,7 @@ var explorer = new Vue({
         },
         levels: [],
         users: [],
-        area: [
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-            {name: "Operaciones", punto: "2,352 millas náuticas"},
-        ],
+        areas: [],
         positionCard: 0,
         widthContent: 0,
         maxMov: 0,
@@ -43,6 +30,7 @@ var explorer = new Vue({
         this.obtenerUsuario();
         this.obtenerNiveles();
         this.obtenerUsuarios();
+        this.obtenerAreas();
     },
     methods: {
         obtenerUsuario: function(){
@@ -111,6 +99,27 @@ var explorer = new Vue({
                         users.push(newElem);
                     });
                     this.users = users;
+                });
+        },
+        obtenerAreas: function(){
+            let frm = new FormData();
+            frm.append('request_type','obtenerAreas');
+            axios.post('/local/ranking/ajax_controller.php',frm)
+                .then((response) => {
+                    let data = response.data.data;
+                    let areas = [];
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let name = dataVal.name;
+                        let punto = dataVal.punto;
+
+                        let newElem = {
+                            'name': name,
+                            'punto': punto,
+                        };
+                        areas.push(newElem);
+                    });
+                    this.areas = areas;
                 });
         },
         size: function(){
