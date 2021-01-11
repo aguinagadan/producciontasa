@@ -128,20 +128,25 @@ function obtenerNiveles() {
 
 	$pointMin = 0;
 
-	foreach ($levels as $level) {
+	foreach ($levels as $key=>$level) {
 		$levelName = obtenerLevelPropertyValue($level, 'name');
 		$levelNumber = $level->get_level();
-		$levelXp = $level->get_xp_required();
 		$levelImg = getLevelBadge($level, 1);
+
+		if(count($levels) == $key+1) {
+			$pointMax = '-';
+		} else {
+			$pointMax = $levels[$key+1]->get_xp_required();
+		}
 
 		$levelArr[] = [
 			'name'=> $levelName,
 			'number' => $levelNumber,
 			'img'=> $levelImg,
 			'pointMin' => $pointMin,
-			'pointMax' => $levelXp
+			'pointMax' => $pointMax
 		];
-		$pointMin = $levelXp;
+		$pointMin = $pointMax;
 	}
 
 	$response['status'] = true;
