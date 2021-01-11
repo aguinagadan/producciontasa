@@ -1,7 +1,10 @@
 var explorer = new Vue({
     el: '#ranking',
     data(){
-      return{
+      return {
+        levelspaginate: [],
+        marginLeftBaner: 0,
+        banerPoint: 1,
         user: {
               name: '',
               levelName: '',
@@ -93,6 +96,8 @@ var explorer = new Vue({
                         levels.push(newElem);
                     });
                     this.levels = levels;
+                    this.pages = Math.ceil(this.levels.length/6);
+                    this.levelspaginate = new Array(this.pages);
                 });
         },
         size: function(){
@@ -103,17 +108,31 @@ var explorer = new Vue({
             this.maxMov = container - this.widthContent;
             console.log(this.maxMov);
         },
-        movR: function(){
-            this.time = setInterval(() => {
-                if(this.positionCard > this.maxMov){
-                    this.positionCard -= 1;
-                } else{
-                    removeMovR();
-                }
-            }, 20);
+        prevBaner: function() {
+            let marginLeft = 0;
+            this.marginLeftBaner += 100;
+            if(marginLeft < this.marginLeftBaner) {
+                this.marginLeftBaner = (100 * this.cursospaginate.length - 100)*-1;
+            }
+            if(this.banerPoint == 1) {
+                this.banerPoint = this.cursospaginate.length;
+            } else {
+                this.banerPoint -= 1;
+            }
+            $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
-        removeMovR: function(){
-            clearInterval(this.time);
-        }
+        nextBaner: function() {
+            let marginLeft = (100 * this.cursospaginate.length - 100)*-1;
+            this.marginLeftBaner -= 100;
+            if(marginLeft > this.marginLeftBaner) {
+                this.marginLeftBaner = 0;
+            }
+            if(this.banerPoint <  this.cursospaginate.length) {
+                this.banerPoint += 1;
+            } else if(this.banerPoint ==  this.cursospaginate.length) {
+                this.banerPoint = 1;
+            }
+            $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
+        },
     }
 });

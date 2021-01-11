@@ -20,7 +20,7 @@
     <div class="content">
         <div class="niveles">
             <h2>Niveles</h2>
-            <div class="before" v-bind:class="{ disabled: positionCard == 0}">◄ </div>
+            <div class="before" @click="prevBaner">◄ </div>
             <div class="body">
                 <div id="leves">
                     <div class="item" v-for="item in levels" v-bind:class="{ actual: user.level == item.name }">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="after" v-bind:class="{ disabled: positionCard == 0}">►</div>
+            <div class="after" @click="nextBaner">►</div>
         </div>
         <div class="ranking">
             <h2>Ranking de temporada</h2>
