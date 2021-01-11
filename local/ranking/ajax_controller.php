@@ -146,6 +146,8 @@ function obtenerNiveles() {
 			'pointMin' => $pointMin,
 			'pointMax' => $pointMax
 		];
+		var_dump($levelArr);
+		exit;
 		$pointMin = $pointMax;
 	}
 
