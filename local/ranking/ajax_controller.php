@@ -52,31 +52,12 @@ function obtenerLevelPropertyValue($level, $property) {
 	return $returnedValue;
 }
 
-function getLevelBadge($level, $small) {
-	$levelnum = $level->get_level();
-
-	if($small == 1) {
-		$customClass = 'qroma-block_xp-level';
-	} else {
-		$customClass = 'qroma-block_xp-level-2';
-	}
-
-	$classes = $customClass . ' block_xp-level level-' . $levelnum;
-	$label = get_string('levelx', 'block_xp', $levelnum);
-	$classes .= ' d-badge';
-
-	$html = '';
+function getLevelBadge($level) {
 	if ($level instanceof level_with_badge && ($badgeurl = $level->get_badge_url()) !== null) {
-		$html .= html_writer::tag(
-			'div',
-			html_writer::empty_tag('img', ['src' => $badgeurl,
-				'alt' => $label, 'class'=> 'd-badge-img']),
-			['class' => $classes . ' level-badge', 'style' => 'height: 75px;']
-		);
+		return $badgeurl;
 	} else {
-		$html .= html_writer::tag('div', $levelnum, ['class' => $classes, 'aria-label' => $label]);
+		return '';
 	}
-	return $html;
 }
 
 function getUserLevel($small) {
@@ -94,7 +75,7 @@ function getUserLevel($small) {
 	$widgetState = $widget->state;
 	$pc = $widgetState->get_ratio_in_level() * 100;
 
-	$levelInfo = array('levelName' => $levelName, 'xp' =>$xp, 'img' => getLevelBadge($level, $small), 'percentage' => $pc);
+	$levelInfo = array('levelName' => $levelName, 'xp' =>$xp, 'img' => getLevelBadge($level), 'percentage' => $pc);
 
 	return $levelInfo;
 }
