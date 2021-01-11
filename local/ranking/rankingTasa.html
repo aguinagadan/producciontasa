@@ -24,7 +24,7 @@
             <div class="body">
                 <div id="leves">
                     <div class="item" v-for="item in levels" v-bind:class="{ actual: user.level == item.name }">
-                        <div class="level">Nivel {{item.level}}</div>
+                        <div class="level">Nivel {{item.number}}</div>
                         <div class="icon"><img :src="item.img" alt="" srcset=""/></div>
                         <div class="name">{{item.name}}</div>
                         <div class="points">{{item.pointMin}} - {{item.pointMax}} millas</div>

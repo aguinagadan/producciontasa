@@ -7,6 +7,7 @@ require_once($CFG->dirroot. '/course/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 use block_xp\local\xp\level_with_name;
+use block_xp\local\xp\levels_info;
 use block_xp\local\xp\level_with_badge;
 
 try {
@@ -50,6 +51,10 @@ function obtenerLevelPropertyValue($level, $property) {
 				$name = get_string('levelx', 'block_xp', $level->get_level());
 			}
 			$returnedValue = $name;
+			break;
+		case 'number':
+			$number = $level instanceof levels_info ? $level->get_level($level->get_count()) : null;
+			$returnedValue = $number;
 			break;
 	}
 	return $returnedValue;
@@ -123,7 +128,26 @@ function obtenerUsuario() {
 function obtenerNiveles() {
 	$world = \block_xp\di::get('course_world_factory')->get_world(1);
 	$levelsinfo = $world->get_levels_info();
-	$levelsinfo->get_levels();
-	var_dump($levelsinfo->get_levels());
-	exit;
+	$levels = $levelsinfo->get_levels();
+
+	foreach ($levels as $level) {
+		$levelObj = $level->get_level();
+		$levelName = obtenerLevelPropertyValue($levelObj, 'name');
+		$levelNumber = obtenerLevelPropertyValue($levelObj, 'number');
+		$levelXp = $level->get_xp_required();
+		$levelImg = getLevelBadge($level, 1);
+
+		$levelArr[] = [
+			'name'=> $levelName,
+			'number' => $levelNumber,
+			'img'=> $levelImg,
+			'pointMin' => 0,
+			'pointMax' => $levelXp
+		];
+	}
+
+	$response['status'] = true;
+	$response['data'] = $levelArr;
+
+	return $response;
 }

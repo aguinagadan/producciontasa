@@ -9,15 +9,7 @@ var explorer = new Vue({
               points: 0,
               percentage: 0,
         },
-        levels: [
-            {
-                name: "Fitoplancton",
-                level: 1,
-                img: "img/delfin.png",
-                pointMin: 0,
-                pointMax: 199
-            }
-        ],
+        levels: [],
         area: [
             {name: "Operaciones", punto: "2,352 millas náuticas"},
             {name: "Operaciones", punto: "2,352 millas náuticas"},
@@ -81,7 +73,26 @@ var explorer = new Vue({
             frm.append('request_type','obtenerNiveles');
             axios.post('/local/ranking/ajax_controller.php',frm)
                 .then(() => {
-                    console.log('test');
+                    let data = response.data.data;
+                    let levels = [];
+                    Object.keys(data).forEach(key => {
+                        let dataVal = data[key];
+                        let name = dataVal.name;
+                        let number = dataVal.number;
+                        let img = dataVal.img;
+                        let pointMin = dataVal.pointMin;
+                        let pointMax = dataVal.pointMax;
+
+                        let newElem = {
+                            'name': name,
+                            'number': number,
+                            'img': img,
+                            'pointMin': pointMin,
+                            'pointMax': pointMax
+                        };
+                        levels.push(newElem);
+                    });
+                    this.levels = levels;
                 });
         },
         size: function(){
