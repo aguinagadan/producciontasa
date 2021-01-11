@@ -52,10 +52,6 @@ function obtenerLevelPropertyValue($level, $property) {
 			}
 			$returnedValue = $name;
 			break;
-		case 'number':
-			$number = $level instanceof levels_info ? $level->get_level($level->get_count()) : null;
-			$returnedValue = $number;
-			break;
 	}
 	return $returnedValue;
 }
@@ -131,13 +127,8 @@ function obtenerNiveles() {
 	$levels = $levelsinfo->get_levels();
 
 	foreach ($levels as $level) {
-
-		var_dump($level->get_level());
-		exit;
-
-		$levelObj = $level->get_level();
-		$levelName = obtenerLevelPropertyValue($levelObj, 'name');
-		$levelNumber = obtenerLevelPropertyValue($levelObj, 'number');
+		$levelName = obtenerLevelPropertyValue($level, 'name');
+		$levelNumber = $level->get_level();
 		$levelXp = $level->get_xp_required();
 		$levelImg = getLevelBadge($level, 1);
 
