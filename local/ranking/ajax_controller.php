@@ -181,4 +181,9 @@ function obtenerUsuarios() {
 			'level'=> 'Nivel ' . $level->get_name() .', ' . $levelName
 		];
 	}
+
+	$response['status'] = true;
+	$response['data'] = $users;
+
+	return $response;
 }
