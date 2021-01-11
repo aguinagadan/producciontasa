@@ -178,7 +178,7 @@ function obtenerUsuarios() {
 		$users[] = [
 			'name'=> $user->firstname . ' ' . $user->lastname,
 			'punto' =>$xp . ', millas naúticas',
-			'level'=> 'Nivel ' . $level->get_name() .', ' . $levelName
+			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
 		];
 	}
 
