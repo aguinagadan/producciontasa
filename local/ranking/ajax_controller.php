@@ -176,6 +176,7 @@ function obtenerUsuarios() {
 		$user = $DB->get_record('user', array('id' => $userID));
 
 		$users[] = [
+			'img'=> getLevelBadge($level, 1),
 			'name'=> $user->firstname . ' ' . $user->lastname,
 			'punto' =>$xp . ', millas naúticas',
 			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName

@@ -100,11 +100,13 @@ var explorer = new Vue({
                         let name = dataVal.name;
                         let punto = dataVal.punto;
                         let level = dataVal.level;
+                        let img = dataVal.img;
 
                         let newElem = {
                             'name': name,
                             'punto': punto,
-                            'level': level
+                            'level': level,
+                            'img': img
                         };
                         users.push(newElem);
                     });
