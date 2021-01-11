@@ -126,6 +126,8 @@ function obtenerNiveles() {
 	$levelsinfo = $world->get_levels_info();
 	$levels = $levelsinfo->get_levels();
 
+	$pointMin = 0;
+
 	foreach ($levels as $level) {
 		$levelName = obtenerLevelPropertyValue($level, 'name');
 		$levelNumber = $level->get_level();
@@ -136,9 +138,10 @@ function obtenerNiveles() {
 			'name'=> $levelName,
 			'number' => $levelNumber,
 			'img'=> $levelImg,
-			'pointMin' => 0,
+			'pointMin' => $pointMin,
 			'pointMax' => $levelXp
 		];
+		$pointMin = $levelXp;
 	}
 
 	$response['status'] = true;
