@@ -249,6 +249,7 @@ body#page-local-ranking-index {
 #page-local-ranking-index .container {
   padding: 0 !important;
   max-width: 100% !important;
+  background: #F1F4F5 !important;
 }
 
 #page-local-ranking-index #region-main {
