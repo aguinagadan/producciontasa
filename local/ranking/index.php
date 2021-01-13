@@ -8,6 +8,7 @@ $title = 'Ranking';
 $url = new moodle_url("/local/ranking/index.php");
 $PAGE->set_url($url);
 
+$PAGE->requires->jquery();
 $PAGE->requires->css(new moodle_url('../ranking/css/ranking.css'));
 $PAGE->requires->js(new moodle_url('../ranking/js/ranking.js'));
 
