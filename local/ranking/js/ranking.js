@@ -146,7 +146,7 @@ var explorer = new Vue({
         },
         nextBaner: function() {
             let containerWidth = (document.querySelector("#leves").offsetWidth)/this.nextBanerCount;
-            let pages = 1500/containerWidth;
+            let pages = 1800/containerWidth;
             let marginLeft = (100 * pages - 100)*-1;
             this.marginLeftBaner -= 100;
 
