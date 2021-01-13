@@ -152,7 +152,7 @@ var explorer = new Vue({
             console.log(containerWidth);
             console.log(pages);
             console.log(marginLeft);
-            console.log(marginLeftBaner);
+            console.log(this.marginLeftBaner);
 
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
