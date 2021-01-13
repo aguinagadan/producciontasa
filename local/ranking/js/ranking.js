@@ -162,6 +162,7 @@ var explorer = new Vue({
             this.marginLeftBaner -= 100;
 
             console.log('containerWidth => ' + containerWidth);
+            console.log('leves width => ' + leves);
             console.log('pages => ' + pages);
             console.log('marginLeft => ' + marginLeft);
             console.log('marginLeftBaner => ' + this.marginLeftBaner);
