@@ -79,12 +79,12 @@ body {
   padding: 10px;
 }
 .content .niveles .body #leves {
+  width: 134vw;
   display: flex;
 }
 .content .niveles .body #leves .item {
-  width: calc(50% - 20px);
-  background: white;
-  padding: 20px;
+  width: 30%;
+  padding: 18px;
   box-shadow: 2px 2px 6px #00000029;
   border-radius: 8px;
   text-align: center;
