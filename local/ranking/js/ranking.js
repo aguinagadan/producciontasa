@@ -133,7 +133,7 @@ var explorer = new Vue({
             console.log(this.maxMov);
         },
         prevBaner: function() {
-            let containerWidth = (document.querySelector("#levelsContainer").offsetWidth)/this.prevBanerCount;
+            let containerWidth = document.querySelector("#levelsContainer").offsetWidth;
             let leves = (document.querySelector(".item").offsetWidth) * 10;
             let pages = Math.ceil(leves/containerWidth);
             let marginLeft = 0;
@@ -151,7 +151,7 @@ var explorer = new Vue({
             this.prevBanerCount++;
         },
         nextBaner: function() {
-            let containerWidth = (document.querySelector("#levelsContainer").offsetWidth);
+            let containerWidth = document.querySelector("#levelsContainer").offsetWidth;
             let leves = (document.querySelector(".item").offsetWidth) * 10;
             let pages = Math.ceil(leves/containerWidth);
             let marginLeft = (containerWidth * pages - containerWidth)*-1;
