@@ -168,9 +168,9 @@ var explorer = new Vue({
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
             }
-            if(this.banerPoint <  this.levelspaginate.length) {
+            if(this.banerPoint <  pages) {
                 this.banerPoint += 1;
-            } else if(this.banerPoint ==  this.levelspaginate.length) {
+            } else if(this.banerPoint ==  pages) {
                 this.banerPoint = 1;
             }
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
