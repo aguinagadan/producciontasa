@@ -134,11 +134,12 @@ var explorer = new Vue({
         },
         prevBaner: function() {
             let containerWidth = (document.querySelector("#leves").offsetWidth)/this.prevBanerCount;
-            let pages = 2500/containerWidth;
+            let leves = (document.querySelector(".item").offsetWidth) * 10;
+            let pages = Math.ceil(leves/containerWidth);
             let marginLeft = 0;
-            this.marginLeftBaner += 100;
+            this.marginLeftBaner += containerWidth;
             if(marginLeft < this.marginLeftBaner) {
-                this.marginLeftBaner = (100 * pages - 100)*-1;
+                this.marginLeftBaner = (containerWidth * pages - containerWidth)*-1;
             }
             if(this.banerPoint == 1) {
                 this.banerPoint = this.pages;
@@ -146,12 +147,7 @@ var explorer = new Vue({
                 this.banerPoint -= 1;
             }
 
-            console.log(containerWidth);
-            console.log(pages);
-            console.log(marginLeft);
-            console.log(this.marginLeftBaner);
-
-            $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
+            $('#leves').animate({'margin-left': this.marginLeftBaner+"px"}, 500);
             this.prevBanerCount++;
         },
         nextBaner: function() {
@@ -160,12 +156,6 @@ var explorer = new Vue({
             let pages = Math.ceil(leves/containerWidth);
             let marginLeft = (containerWidth * pages - containerWidth)*-1;
             this.marginLeftBaner -= containerWidth;
-
-            console.log('containerWidth => ' + containerWidth);
-            console.log('leves width => ' + leves);
-            console.log('pages => ' + pages);
-            console.log('marginLeft => ' + marginLeft);
-            console.log('marginLeftBaner => ' + this.marginLeftBaner);
 
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
