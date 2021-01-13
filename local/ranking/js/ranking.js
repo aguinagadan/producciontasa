@@ -145,6 +145,7 @@ var explorer = new Vue({
         },
         nextBaner: function() {
             let marginLeft = (100 * this.levelspaginate.length - 100)*-1;
+            this.marginLeftBaner -= 100;
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
             }
