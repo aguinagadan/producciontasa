@@ -144,9 +144,7 @@ var explorer = new Vue({
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
         nextBaner: function() {
-            let containerWidth = document.querySelector("#leves").offsetWidth;
             let marginLeft = (100 * this.levelspaginate.length - 100)*-1;
-            this.marginLeftBaner -= containerWidth;
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
             }
@@ -155,7 +153,7 @@ var explorer = new Vue({
             } else if(this.banerPoint ==  this.levelspaginate.length) {
                 this.banerPoint = 1;
             }
-            document.querySelector("#leves").animate({'margin-left': "1500 px"}, 500);
+            $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
     }
 });
