@@ -165,7 +165,7 @@ var explorer = new Vue({
             console.log(marginLeft);
             console.log(this.marginLeftBaner);
 
-            if(marginLeft >= this.marginLeftBaner) {
+            if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
             }
             if(this.banerPoint <  pages) {
