@@ -160,10 +160,10 @@ var explorer = new Vue({
             let marginLeft = (100 * pages - 100)*-1;
             this.marginLeftBaner -= 100;
 
-            console.log(containerWidth);
-            console.log(pages);
-            console.log(marginLeft);
-            console.log(this.marginLeftBaner);
+            console.log('containerWidth => ' + containerWidth);
+            console.log('pages => ' + pages);
+            console.log('marginLeft => ' + marginLeft);
+            console.log('marginLeftBaner => ' + this.marginLeftBaner);
 
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
