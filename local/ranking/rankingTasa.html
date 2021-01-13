@@ -21,7 +21,7 @@
         <div class="niveles">
             <h2>Niveles</h2>
             <div class="before" @click="prevBaner">◄ </div>
-            <div class="body">
+            <div class="body" id="levelsContainer">
                 <div id="leves">
                     <div class="item" v-for="item in levels" v-bind:class="{ actual: user.level == item.name }">
                         <div class="level">Nivel {{item.number}}</div>
