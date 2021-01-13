@@ -155,7 +155,7 @@ var explorer = new Vue({
             } else if(this.banerPoint ==  this.levelspaginate.length) {
                 this.banerPoint = 1;
             }
-            $('#leves').animate({'margin-left': this.marginLeftBaner+"px"}, 500);
+            $('#leves').animate({'margin-left': this.marginLeftBaner+" px"}, 500);
         },
     }
 });
