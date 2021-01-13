@@ -144,7 +144,9 @@ var explorer = new Vue({
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
         nextBaner: function() {
-            let marginLeft = (100 * this.levelspaginate.length - 100)*-1;
+            let containerWidth = document.querySelector("#leves").offsetWidth;
+            let pages = 1500/containerWidth;
+            let marginLeft = (100 * pages - 100)*-1;
             this.marginLeftBaner -= 100;
             if(marginLeft > this.marginLeftBaner) {
                 this.marginLeftBaner = 0;
