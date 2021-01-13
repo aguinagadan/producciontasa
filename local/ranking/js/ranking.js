@@ -19,6 +19,7 @@ var explorer = new Vue({
         widthContent: 0,
         maxMov: 0,
         time: '',
+        nextBanerCount: 1
       };
     },
     created(){
@@ -144,7 +145,7 @@ var explorer = new Vue({
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
         },
         nextBaner: function() {
-            let containerWidth = document.querySelector("#leves").offsetWidth;
+            let containerWidth = (document.querySelector("#leves").offsetWidth)/this.nextBanerCount;
             let pages = 1500/containerWidth;
             let marginLeft = (100 * pages - 100)*-1;
             this.marginLeftBaner -= 100;
@@ -163,6 +164,7 @@ var explorer = new Vue({
                 this.banerPoint = 1;
             }
             $('#leves').animate({'margin-left': this.marginLeftBaner+"%"}, 500);
+            this.nextBanerCount++;
         },
     }
 });
