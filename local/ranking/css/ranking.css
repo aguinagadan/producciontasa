@@ -307,3 +307,7 @@ body#page-local-ranking-index {
 #page-local-ranking-index .card-body {
   padding: 0 !important;
 }
+
+.progress-tasa img {
+  margin-bottom: 50%;
+}
