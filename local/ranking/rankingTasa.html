@@ -65,12 +65,10 @@
                         <div class="body-table">
                             <div class="list" v-for="(item, key) in users">
                                 <div class="item">{{key+1}}</div>
-                                <div class="item">
-                                    <div class="icon" v-html="item.img">
-                                        {{item.img}}
-                                    </div>
-                                    <span>{{item.name}}</span>
+                                <div v-html="item.img">
+                                    {{item.img}}
                                 </div>
+                                <div class="item"><span>{{item.name}}</span></div>
                                 <div class="item">{{item.punto}}</div>
                                 <div class="item">{{item.level}}</div>
                             </div>
