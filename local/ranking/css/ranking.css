@@ -311,3 +311,12 @@ body#page-local-ranking-index {
 .progress-tasa img {
   margin-bottom: 50%;
 }
+
+.body-table .d-badge{
+  line-height: 7vh !important;
+}
+
+.body-table .d-badge-img {
+  width: 4vh !important;
+  height: 4vh !important;
+}
