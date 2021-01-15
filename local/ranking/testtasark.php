@@ -74,6 +74,17 @@ foreach ($users as $user) {
 	);
 }
 
+function usort_callback($a, $b) {
+	if ( $a['points'] == $b['points'] )
+		return 0;
+
+	return ( $a['points'] > $b['points'] ) ? -1 : 1;
+}
+
+usort($return, 'usort_callback');
+
+$top100 = array_slice($return, 0, 100);
+
 echo '<pre>';
-var_dump($return);
+var_dump($top100);
 exit;
