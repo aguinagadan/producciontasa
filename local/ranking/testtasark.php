@@ -11,6 +11,11 @@ $title = 'Ranking';
 $url = new moodle_url("/local/ranking/testtasark.php");
 $PAGE->set_url($url);
 
+var_dump($USER);
+var_dump($USER->id);
+exit;
+
+
 $users = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
 
 function getLevelBadge($level, $small) {
