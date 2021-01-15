@@ -65,9 +65,19 @@ foreach ($users as $user) {
 	$levelName = obtenerLevelPropertyValue($level, 'name');
 	$xp = $widget->state->get_xp();
 
-	echo '<pre>';
-	var_dump($user->firstname . ' ' . $user->lastname);
-	var_dump($xp . ' millas naúticas');
-	var_dump('Nivel ' . $level->get_level() .', ' . $levelName);
-	echo '<br>';
+	$return[] = array(
+		'userid' => $user->id,
+		'username' => $user->firstname . ' ' . $user->lastname,
+		'points' => $xp
+	);
 }
+
+usort($return, function($a, $b) {
+	return $a['points'] - $b['points'];
+});
+
+$newArray = array_slice($return, 0, 100, true);
+
+echo '<pre>';
+var_dump($newArray);
+exit;
