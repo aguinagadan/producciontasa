@@ -55,6 +55,8 @@ function obtenerLevelPropertyValue($level, $property) {
 	return $returnedValue;
 }
 
+$return = array();
+
 foreach ($users as $user) {
 	$world = \block_xp\di::get('course_world_factory')->get_world(1);
 	$state = $world->get_store()->get_state($user->id);
@@ -72,12 +74,6 @@ foreach ($users as $user) {
 	);
 }
 
-$keys = array_column($return, 'points');
-
-array_multisort($keys, SORT_ASC, $return);
-
-$newArray = array_slice($return, 0, 100, true);
-
 echo '<pre>';
-var_dump($newArray);
+var_dump($return);
 exit;
