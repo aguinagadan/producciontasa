@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/../../config.php');
 use block_xp\local\xp\level_with_name;
 use block_xp\local\xp\level_with_badge;
 
-global $PAGE, $OUTPUT, $DB;
+global $PAGE, $OUTPUT, $DB, $USER;
 
 $title = 'Ranking';
 // Set up the page.
@@ -85,6 +85,10 @@ usort($return, 'usort_callback');
 
 $top100 = array_slice($return, 0, 100);
 
+$key = array_search($USER->id, array_column($top100, 'userid'));
+$key2 = array_search('4992', array_column($top100, 'userid'));
+
 echo '<pre>';
-var_dump($top100);
+var_dump($key);
+var_dump($key2);
 exit;
