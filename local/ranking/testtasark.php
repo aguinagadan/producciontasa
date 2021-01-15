@@ -72,9 +72,9 @@ foreach ($users as $user) {
 	);
 }
 
-usort($return, function($a, $b) {
-	return $a['points'] - $b['points'];
-});
+$keys = array_column($return, 'points');
+
+array_multisort($keys, SORT_ASC, $return);
 
 $newArray = array_slice($return, 0, 100, true);
 
