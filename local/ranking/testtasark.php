@@ -70,7 +70,7 @@ foreach ($users as $user) {
 	$return[] = array(
 		'userid' => $user->id,
 		'username' => $user->firstname . ' ' . $user->lastname,
-		'points' => $xp
+		'points' => intval($xp)
 	);
 }
 
