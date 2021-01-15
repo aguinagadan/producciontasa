@@ -11,11 +11,6 @@ $title = 'Ranking';
 $url = new moodle_url("/local/ranking/testtasark.php");
 $PAGE->set_url($url);
 
-var_dump($USER);
-var_dump($USER->id);
-exit;
-
-
 $users = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
 
 function getLevelBadge($level, $small) {
@@ -93,9 +88,15 @@ $top100 = array_slice($return, 0, 100);
 $key = array_search($USER->id, array_column($top100, 'userid'));
 
 if($key === false) {
+
+	$world = \block_xp\di::get('course_world_factory')->get_world(1);
+	$state = $world->get_store()->get_state($USER->id);
+	$widget = new \block_xp\output\xp_widget($state, [], null, []);
+
 	$top100[] = array(
 		'userid' => $USER->id,
 		'username' => $USER->firstname . ' ' . $USER->lastname,
+		'points' => $widget->state->get_xp()
 	);
 }
 
