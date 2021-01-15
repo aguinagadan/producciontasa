@@ -7,7 +7,6 @@ require_once($CFG->dirroot. '/course/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 
 use block_xp\local\xp\level_with_name;
-use block_xp\local\xp\levels_info;
 use block_xp\local\xp\level_with_badge;
 
 try {
