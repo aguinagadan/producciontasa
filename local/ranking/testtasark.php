@@ -86,9 +86,20 @@ usort($return, 'usort_callback');
 $top100 = array_slice($return, 0, 100);
 
 $key = array_search($USER->id, array_column($top100, 'userid'));
-$key2 = array_search('4992', array_column($top100, 'userid'));
+
+if($key === false) {
+
+	$world = \block_xp\di::get('course_world_factory')->get_world(1);
+	$state = $world->get_store()->get_state($USER->id);
+	$widget = new \block_xp\output\xp_widget($state, [], null, []);
+
+	$top100[] = array(
+		'userid' => $USER->id,
+		'username' => $USER->firstname . ' ' . $USER->lastname,
+		'points' => $widget->state->get_xp()
+	);
+}
 
 echo '<pre>';
-var_dump($key);
-var_dump($key2);
+var_dump($top100);
 exit;
