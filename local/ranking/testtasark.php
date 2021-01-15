@@ -8,13 +8,10 @@ $title = 'Ranking';
 $url = new moodle_url("/local/ranking/testtasark.php");
 $PAGE->set_url($url);
 
-$PAGE->set_title('Ranking');
-echo $OUTPUT->header();
-
 $users = $DB->get_record('user', array('deleted' => 0, 'suspended' => 0));
 
-foreach ($users as $user) {
-	echo $user->username;
-}
+var_dump(count($users));
 
-echo $OUTPUT->footer();
+foreach ($users as $user) {
+	var_dump($user);
+}
