@@ -203,7 +203,7 @@ function obtenerUsuarios() {
 		$users[$key]['punto'] = $us['punto'];
 		$users[$key]['level'] = $us['level'];
 
-		$usersPos[$us['user_id']] = $key+1;
+		$usersPos[$us['userid']] = $key+1;
 	}
 
 	$top100 = array_slice($users, 0, 100);
@@ -219,7 +219,7 @@ function obtenerUsuarios() {
 			'pos' => $usersPos[$USER->id],
 			'img' => getLevelBadge($level, 1),
 			'name' => $USER->firstname . ' ' . $USER->lastname,
-			'points' => $widget->state->get_xp() . ' millas naúticas',
+			'punto' => $widget->state->get_xp() . ' millas naúticas',
 			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
 		);
 	}
