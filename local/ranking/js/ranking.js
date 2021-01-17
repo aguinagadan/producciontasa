@@ -91,8 +91,10 @@ var explorer = new Vue({
                         let punto = dataVal.punto;
                         let level = dataVal.level;
                         let img = dataVal.img;
+                        let pos = dataVal.pos;
 
                         let newElem = {
+                            'pos': pos,
                             'name': name,
                             'punto': punto,
                             'level': level,

@@ -172,7 +172,7 @@ function obtenerUsuarios() {
 
 	$usersArr = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
 
-	foreach($usersArr as $userArr) {
+	foreach($usersArr as $key=>$userArr) {
 		$world = \block_xp\di::get('course_world_factory')->get_world(1);
 		$state = $world->get_store()->get_state($userArr->id);
 		$widget = new \block_xp\output\xp_widget($state, [], null, []);
@@ -185,6 +185,7 @@ function obtenerUsuarios() {
 		$user = $DB->get_record('user', array('id' => $userArr->id));
 
 		$users[] = [
+
 			'userid' => $userArr->id,
 			'img'=> getLevelBadge($level, 1),
 			'name'=> $user->firstname . ' ' . $user->lastname,
@@ -194,6 +195,10 @@ function obtenerUsuarios() {
 	}
 
 	usort($users, 'usort_callback');
+
+	foreach($users as $key=>$us) {
+		$usersPos[$us['user_id']] = $key+1;
+	}
 
 	$top100 = array_slice($users, 0, 100);
 
@@ -206,6 +211,7 @@ function obtenerUsuarios() {
 		$widget = new \block_xp\output\xp_widget($state, [], null, []);
 
 		$top100[] = array(
+			'pos' => $usersPos[$USER->id],
 			'img' => getLevelBadge($level, 1),
 			'name' => $USER->firstname . ' ' . $USER->lastname,
 			'points' => $widget->state->get_xp() . ' millas naúticas',
