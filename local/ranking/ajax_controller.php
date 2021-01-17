@@ -65,9 +65,9 @@ function getLevelBadge($level, $small) {
 	$levelnum = $level->get_level();
 
 	if($small == 1) {
-		$customClass = 'qroma-block_xp-level';
+		$customClass = 'icon qroma-block_xp-level';
 	} else {
-		$customClass = 'qroma-block_xp-level-2';
+		$customClass = 'icon qroma-block_xp-level-2';
 	}
 
 	$classes = $customClass . ' block_xp-level level-' . $levelnum;
