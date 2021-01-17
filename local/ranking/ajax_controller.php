@@ -253,7 +253,7 @@ function obtenerAreas() {
 
 	foreach ($top100s as $key=>$top100) {
 		$response[] = [
-			'name' =>  $key,
+			'name' =>  array_keys($top100),
 			'punto' => $top100['punto'],
 		];
 	}
