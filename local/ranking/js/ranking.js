@@ -20,9 +20,7 @@ var explorer = new Vue({
         maxMov: 0,
         time: '',
         nextBanerCount: 1,
-        prevBanerCount: 1,
-        loadingUsers: true,
-        loadingAreas: true
+        prevBanerCount: 1
       };
     },
     created(){
@@ -79,6 +77,8 @@ var explorer = new Vue({
                 });
         },
         cargarRanking: function () {
+            this.loadingAreas = true;
+            this.loadingUsers = true;
             this.obtenerUsuarios();
             this.obtenerAreas();
         },
