@@ -250,7 +250,11 @@ function obtenerAreas() {
 	}
 
 	usort($areas, 'usort_callback');
-	$top100s = array_slice($areas, 0, 99);
+	if(count($areas) >= 100) {
+		$top100s = array_slice($areas, 0, 100);
+	} else {
+		$top100s = $areas;
+	}
 
 	foreach ($top100s as $key=>$top100) {
 		$response[] = [
