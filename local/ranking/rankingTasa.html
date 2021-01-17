@@ -57,15 +57,15 @@
                 <div class="right">
                     <div class="table">
                         <div class="header-table">
-                            <div class="item"></div>
-                            <div class="item">Participante</div>
-                            <div class="item">Puntos</div>
-                            <div class="item">Nivel</div>
+                            <div class="item" style="width: 22% !important;"></div>
+                            <div class="item" style="width: 22% !important;">Participante</div>
+                            <div class="item" style="width: 22% !important;">Puntos</div>
+                            <div class="item" style="width: 22% !important;">Nivel</div>
                         </div>
                         <div class="body-table">
                             <div class="list" v-for="(item, key) in users">
                                 <div class="item">{{key+1}}</div>
-                                <div class="item" v-html="item.img">
+                                <div class="item" style="width: 0 !important;" v-html="item.img">
                                     {{item.img}}
                                 </div>
                                 <div class="item"><span>{{item.name}}</span></div>
