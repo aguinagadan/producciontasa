@@ -259,7 +259,7 @@ body {
   height: 30px;
 }
 .content .ranking .body .right .header-table .item:nth-child(1), .content .ranking .body .right .body-table .item:nth-child(1) {
-  width: 40px;
+  width: 50px;
 }
 .content .ranking .body .right .header-table .item:nth-child(2), .content .ranking .body .right .body-table .item:nth-child(2) {
   width: calc(50% - 13px);
