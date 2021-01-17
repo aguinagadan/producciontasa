@@ -66,7 +66,6 @@ $html = '
    <th style="background-color:#154A7D; color:#FFFFFF;">GERENCIA</th>
    <th style="background-color:#154A7D; color:#FFFFFF;">AREA</th>
    <th style="background-color:#154A7D; color:#FFFFFF;">CARGO</th>
-   <th style="background-color:#154A7D; color:#FFFFFF;">ESTADO</th>
    <th>Cumplimiento</th>
    <th>Nota I</th>
    <th>Nota F</th>
@@ -75,7 +74,6 @@ $html = '
 
 $curso = get_course($courseId);
 $html .= '</tr></thead><tbody>';
-$userEstado = 'ACTIVO';
 
 foreach($users as $user) {
 	$html .= '<tr>';
@@ -87,12 +85,6 @@ foreach($users as $user) {
 	$html .= '<td>' . strtoupper($user->profile['gerencia']) .  '</td>';
 	$html .= '<td>' . strtoupper($user->profile['area_funcional']) .  '</td>';
 	$html .= '<td>' . strtoupper($user->profile['posicion']) .  '</td>';
-
-	if($user->suspended) {
-		$userEstado = 'INACTIVO';
-	}
-
-	$html .= '<td>' . $userEstado .  '</td>';
 
 	$quiz = $DB->get_records_sql("select * from {quiz} q where q.course = ?", array($courseId));
 	$courseCompletion = $DB->get_records_sql("select * from {course_completions} c where c.course = ? and c.userid = ?", array($courseId, $user->id));
