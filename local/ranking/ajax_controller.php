@@ -244,14 +244,17 @@ function obtenerAreas() {
 			$world = \block_xp\di::get('course_world_factory')->get_world(1);
 			$state = $world->get_store()->get_state($user->id);
 			$widget = new \block_xp\output\xp_widget($state, [], null, []);
-			$areas[$area]['puntos'] += $widget->state->get_xp();
+			$areas[$area]['punto'] += $widget->state->get_xp();
 		}
 	}
 
-	foreach ($areas as $key=>$area) {
+	usort($areas, 'usort_callback');
+	$top100s = array_slice($areas, 0, 100);
+
+	foreach ($top100s as $key=>$top100) {
 		$response[] = [
 			'name' =>  $key,
-			'punto' => $area['puntos'],
+			'punto' => $top100['punto'],
 		];
 	}
 
