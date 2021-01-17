@@ -241,24 +241,22 @@ function obtenerAreas() {
 		profile_load_custom_fields($user);
 		$area = $user->profile['area_funcional'];
 		if(!empty($area)) {
-
 			$world = \block_xp\di::get('course_world_factory')->get_world(1);
 			$state = $world->get_store()->get_state($user->id);
 			$widget = new \block_xp\output\xp_widget($state, [], null, []);
-
 			$areas[$area]['puntos'] += $widget->state->get_xp();
 		}
 	}
 
-	echo '<pre>';
-	var_dump($areas);
-	exit;
-
-	$areas[] = ['name' => 'Area 1', 'punto' => '1000 millas naúticas'];
-	$areas[] = ['name' => 'Area 2', 'punto' => '2000 millas naúticas'];
+	foreach ($areas as $key=>$area) {
+		$response[] = [
+			'name' =>  $key,
+			'punto' => $area['puntos'],
+		];
+	}
 
 	$response['status'] = true;
-	$response['data'] = $areas;
+	$response['data'] = $response;
 
 	return $response;
 }
