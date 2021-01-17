@@ -161,10 +161,10 @@ function obtenerNiveles() {
 }
 
 function usort_callback($a, $b) {
-	if ( $a['points'] == $b['points'] )
+	if ( $a['punto'] == $b['punto'] )
 		return 0;
 
-	return ( $a['points'] > $b['points'] ) ? -1 : 1;
+	return ( $a['punto'] > $b['punto'] ) ? -1 : 1;
 }
 
 function obtenerUsuarios() {
@@ -188,7 +188,7 @@ function obtenerUsuarios() {
 			'userid' => $userArr->id,
 			'img'=> getLevelBadge($level, 1),
 			'name'=> $user->firstname . ' ' . $user->lastname,
-			'punto' =>$xp . ' millas naúticas',
+			'punto' =>$xp,
 			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
 		];
 	}
