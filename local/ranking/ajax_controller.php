@@ -244,6 +244,7 @@ function obtenerAreas() {
 			$world = \block_xp\di::get('course_world_factory')->get_world(1);
 			$state = $world->get_store()->get_state($user->id);
 			$widget = new \block_xp\output\xp_widget($state, [], null, []);
+			$areas[$area]['name'] = $area;
 			$areas[$area]['punto'] += $widget->state->get_xp();
 		}
 	}
@@ -253,7 +254,7 @@ function obtenerAreas() {
 
 	foreach ($top100s as $key=>$top100) {
 		$response[] = [
-			'name' =>  array_keys($top100),
+			'name' =>  $top100['name'],
 			'punto' => $top100['punto'],
 		];
 	}
