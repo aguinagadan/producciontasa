@@ -160,14 +160,21 @@ function obtenerNiveles() {
 	return $response;
 }
 
+function usort_callback($a, $b) {
+	if ( $a['points'] == $b['points'] )
+		return 0;
+
+	return ( $a['points'] > $b['points'] ) ? -1 : 1;
+}
+
 function obtenerUsuarios() {
-	global $DB;
+	global $DB, $USER;
 
-	$userIDs = array(2,3);
+	$usersArr = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
 
-	foreach($userIDs as $userID) {
+	foreach($usersArr as $userArr) {
 		$world = \block_xp\di::get('course_world_factory')->get_world(1);
-		$state = $world->get_store()->get_state($userID);
+		$state = $world->get_store()->get_state($userArr->id);
 		$widget = new \block_xp\output\xp_widget($state, [], null, []);
 		$level = $widget->state->get_level();
 
@@ -175,9 +182,10 @@ function obtenerUsuarios() {
 		$levelName = obtenerLevelPropertyValue($level, 'name');
 		$xp = $widget->state->get_xp();
 
-		$user = $DB->get_record('user', array('id' => $userID));
+		$user = $DB->get_record('user', array('id' => $userArr->id));
 
 		$users[] = [
+			'userid' => $userArr->id,
 			'img'=> getLevelBadge($level, 1),
 			'name'=> $user->firstname . ' ' . $user->lastname,
 			'punto' =>$xp . ' millas naúticas',
@@ -185,8 +193,29 @@ function obtenerUsuarios() {
 		];
 	}
 
+	usort($users, 'usort_callback');
+
+	$top100 = array_slice($users, 0, 100);
+
+	$key = array_search($USER->id, array_column($top100, 'userid'));
+
+	if($key === false) {
+
+		$world = \block_xp\di::get('course_world_factory')->get_world(1);
+		$state = $world->get_store()->get_state($USER->id);
+		$widget = new \block_xp\output\xp_widget($state, [], null, []);
+
+		$top100[] = array(
+			'img' => getLevelBadge($level, 1),
+			'name' => $USER->firstname . ' ' . $USER->lastname,
+			'points' => $widget->state->get_xp() . ' millas naúticas',
+			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
+		);
+	}
+
+
 	$response['status'] = true;
-	$response['data'] = $users;
+	$response['data'] = $top100;
 
 	return $response;
 }
