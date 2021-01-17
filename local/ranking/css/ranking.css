@@ -320,3 +320,12 @@ body#page-local-ranking-index {
   width: 4vh !important;
   height: 4vh !important;
 }
+
+.cargar-button {
+  background: #184a7d 0 0 no-repeat padding-box !important;
+  border: 1px solid #DDDDDD;
+  border-radius: 5px;
+  opacity: 1;
+  color: white;
+  width: 25%;
+}
