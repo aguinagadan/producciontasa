@@ -23,7 +23,7 @@
             <div class="before" @click="prevBaner" style="cursor: pointer;">◄ </div>
             <div class="body" id="levelsContainer">
                 <div id="leves">
-                    <div class="item" v-for="item in levels" v-bind:class="{ actual: user.level == item.name }">
+                    <div class="item" v-for="item in levels" v-bind:class="{ actual: user.levelName == item.name }">
                         <div class="level">Nivel {{item.number}}</div>
                         <div class="icon" v-html="item.img">
                             {{item.img}}
