@@ -329,7 +329,7 @@ body#page-local-ranking-index {
   width: 25%;
 }
 
-.qroma-block_xp-level .d-badge-img {
+#levelsContainer .qroma-block_xp-level .d-badge-img {
   width: 11vh!important;
   height: 11vh!important;
 }
