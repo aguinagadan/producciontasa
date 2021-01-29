@@ -328,3 +328,8 @@ body#page-local-ranking-index {
   color: white;
   width: 25%;
 }
+
+.qroma-block_xp-level .d-badge-img {
+  width: 11vh!important;
+  height: 11vh!important;
+}
