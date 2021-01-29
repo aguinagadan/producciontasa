@@ -126,7 +126,8 @@ function execCurl($data) {
 function getADToken() {
 	$data = array(
 		'url' => 'https://login.microsoftonline.com/b7e26f48-2292-4a14-a355-1aeb8489ae3d/oauth2/token',
-		'postFields' => http_build_query(array('grant_type' => 'client_credentials',
+		'postFields' => http_build_query(array(
+			'grant_type' => 'client_credentials',
 			'client_id' => '57f43017-1336-4356-8e65-c81a52eda0f3',
 			'client_secret' => 'p._o2p72hK~C9N_op.z_YR93P~z~SjZijz',
 			'scope' => 'https://graph.microsoft.com/.default'), '', '&'),
