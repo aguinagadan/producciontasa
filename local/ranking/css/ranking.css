@@ -285,15 +285,11 @@ body#page-local-ranking-index {
   display: none;
 }
 
-#page-local-ranking-index #page-footer {
-  display: none !important;
-}
-
 #page-local-ranking-index #page-content {
   padding-bottom: 0 !important;
 }
 
-#page-local-ranking-index .container {
+#page-local-ranking-index #page .container {
   padding: 0 !important;
   max-width: 100% !important;
   background: #F1F4F5 !important;
