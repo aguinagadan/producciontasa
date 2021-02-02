@@ -86,8 +86,7 @@ function migrate_tasa_users_task() {
 
 		//consultar: filtrando si tiene datos extra (?)
 		if(
-			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) &&
-			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'])
+			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])
 		) {
 			updateUser($user, $userAD);
 		}

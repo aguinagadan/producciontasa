@@ -99,7 +99,7 @@ function updateUser($user, $userAD) {
 	$nroTrabajador = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ?
 		$userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'] : '';
 
-	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription'] : '';
+	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc'] : 'No especificado';
 
 	$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : '';
 
@@ -146,6 +146,10 @@ foreach($allUsers as $allUser) {
 	}
 }
 
+echo '<pre>';
+var_dump($usersValues);
+exit;
+
 foreach($usersValues as $key=>$userAD) {
 	$userPrincipalName = $userAD['userPrincipalName'];
 
@@ -165,13 +169,7 @@ foreach($usersValues as $key=>$userAD) {
 
 	//consultar: filtrando si tiene datos extra (?)
 	if(
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userUODescription']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_department']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ||
-		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'])
+		isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])
 	) {
 		updateUser($user, $userAD);
 	}
