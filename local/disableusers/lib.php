@@ -93,9 +93,10 @@ function disableusers_task() {
 	}
 
 	$users = $DB->get_records('user');
+	$indicadorDeNombreUsuario = 'tasa.com';
 
 	foreach($users as $user) {
-		if(!in_array($user->username, $usersAdArr)) {
+		if(strpos($user->username, $indicadorDeNombreUsuario) !== false && !in_array($user->username, $usersAdArr)) {
 			$userMainDataObj = new stdClass();
 			$userMainDataObj->id = $user->id;
 			$userMainDataObj->deleted = 1;

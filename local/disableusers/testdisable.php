@@ -90,25 +90,14 @@ foreach($usersValues as $key=>$userAD) {
 	$usersAdArr[] = $userAD['userPrincipalName'];
 }
 
-echo '<pre>';
-var_dump($usersAdArr);
-
 $users = $DB->get_records('user');
-
-$indicadorDeCorreo = 'tasa.com';
+$indicadorDeNombreUsuario = 'tasa.com';
 
 foreach($users as $user) {
-	if(strpos($user->username, $indicadorDeCorreo) !== false && !in_array($user->username, $usersAdArr)) {
-		echo 'test----';
-		$notinAd[] = $user->username;
-
-//		$userMainDataObj = new stdClass();
-//		$userMainDataObj->id = $user->id;
-//		$userMainDataObj->deleted = 1;
-//		$DB->update_record('user', $userMainDataObj);
+	if(strpos($user->username, $indicadorDeNombreUsuario) !== false && !in_array($user->username, $usersAdArr)) {
+		$userMainDataObj = new stdClass();
+		$userMainDataObj->id = $user->id;
+		$userMainDataObj->deleted = 1;
+		$DB->update_record('user', $userMainDataObj);
 	}
 }
-
-echo '<pre>';
-var_dump($notinAd);
-exit;
