@@ -95,14 +95,20 @@ var_dump($usersAdArr);
 
 $users = $DB->get_records('user');
 
+$indicadorDeCorreo = 'tasa.com';
+
 foreach($users as $user) {
-	if(strpos($user->username, 'tasa.com') !== false && !in_array($user->username, $usersAdArr)) {
+	if(strpos($user->username, $indicadorDeCorreo) !== false && !in_array($user->username, $usersAdArr)) {
 		echo 'test----';
-		var_dump($user->username);
-		exit;
-		$userMainDataObj = new stdClass();
-		$userMainDataObj->id = $user->id;
-		$userMainDataObj->deleted = 1;
-		$DB->update_record('user', $userMainDataObj);
+		$notinAd[] = $user->username;
+
+//		$userMainDataObj = new stdClass();
+//		$userMainDataObj->id = $user->id;
+//		$userMainDataObj->deleted = 1;
+//		$DB->update_record('user', $userMainDataObj);
 	}
 }
+
+echo '<pre>';
+var_dump($notinAd);
+exit;
