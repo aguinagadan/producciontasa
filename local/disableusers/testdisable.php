@@ -4,7 +4,7 @@ global $DB;
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
 
-function execCurl($data) {
+function execCurlD($data) {
 	$curl = curl_init();
 
 	$url = $data['url'];
@@ -34,7 +34,7 @@ function execCurl($data) {
 	$responseData = json_decode($response,true);
 	return $responseData;
 }
-function getADToken() {
+function getADTokenD() {
 	$data = array(
 		'url' => 'https://login.microsoftonline.com/b7e26f48-2292-4a14-a355-1aeb8489ae3d/oauth2/token',
 		'postFields' => http_build_query(array(
@@ -48,10 +48,10 @@ function getADToken() {
 			'Cookie: buid=0.AQYASG_it5IiFEqjVRrrhImuPRgFD1jTGCJMjrrTt_PN72QGAAA.AQABAAEAAAAGV_bv21oQQ4ROqh0_1-tAW_7_lkPgDNNQcc9ndJ6-VT_fKycsxUQA_fsiaenVHh0m1dZmFiOVou0VgVUcdSWQcKUXNWy0yeSTtMjrE4vBvIZsvOjiuXWYPgfnevpPNZAgAA; fpc=AlKOys_Nd-FDqTUucSXhED6Lv60HAQAAAEAZ29YOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd')
 	);
 
-	$responseData = execCurl($data);
+	$responseData = execCurlD($data);
 	return $responseData['access_token'];
 }
-function getADUsers($key, $skipToken='') {
+function getADUsersD($key, $skipToken='') {
 	if($key>0) {
 		$skipToken = '&$skiptoken='.$skipToken;
 	}
@@ -59,9 +59,9 @@ function getADUsers($key, $skipToken='') {
 	$data = array(
 		'url' => 'https://graph.windows.net/b7e26f48-2292-4a14-a355-1aeb8489ae3d/users?api-version=1.6'.$skipToken,
 		'httpMethod' => 'GET',
-		'httpHeader' => array("Authorization: ". getADToken())
+		'httpHeader' => array("Authorization: ". getADTokenD())
 	);
-	$responseData = execCurl($data);
+	$responseData = execCurlD($data);
 	return $responseData;
 }
 
@@ -74,7 +74,7 @@ while(true) {
 	if($key>1 && $skipToken=='') {
 		break;
 	}
-	$allUsers[] = getADUsers($key, $skipToken);
+	$allUsers[] = getADUsersD($key, $skipToken);
 	$needle = '$skiptoken=';
 	$skipToken = substr($allUsers[$key]['odata.nextLink'], strpos($allUsers[$key]['odata.nextLink'], $needle) + strlen($needle));
 	$key++;
