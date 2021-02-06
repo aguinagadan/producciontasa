@@ -96,10 +96,10 @@ var_dump($usersAdArr);
 $users = $DB->get_records('user');
 
 foreach($users as $user) {
-	echo 'test----';
-	var_dump($user->username);
-	exit;
 	if(!in_array($user->username, $usersAdArr)) {
+		echo 'test----';
+		var_dump($user->username);
+		exit;
 		$userMainDataObj = new stdClass();
 		$userMainDataObj->id = $user->id;
 		$userMainDataObj->deleted = 1;
