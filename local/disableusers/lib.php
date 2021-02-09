@@ -89,14 +89,14 @@ function disableusers_task() {
 		}
 	}
 	foreach($usersValues as $key=>$userAD) {
-		$usersAdArr[] = $userAD['userPrincipalName'];
+		$usersAdArr[] = strtolower($userAD['userPrincipalName']);
 	}
 
 	$users = $DB->get_records('user');
 	$indicadorDeNombreUsuario = 'tasa.com';
 
 	foreach($users as $user) {
-		if(strpos($user->username, $indicadorDeNombreUsuario) !== false && !in_array($user->username, $usersAdArr)) {
+		if(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr)) {
 			$userMainDataObj = new stdClass();
 			$userMainDataObj->id = $user->id;
 			$userMainDataObj->deleted = 1;
