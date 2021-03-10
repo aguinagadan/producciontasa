@@ -103,17 +103,13 @@ foreach($usersValues as $key=>$userAD) {
 $users = $DB->get_records('user');
 $indicadorDeNombreUsuario = 'tasa.com';
 
+var_dump($users);
+exit;
+
 foreach($users as $user) {
-	if($user->id == 4681) {
-		var_dump(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr));
-		var_dump(isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']));
-		var_dump(isLowerThanToday($userEndDates[$user->username]));
-		exit;
-	}
 	if(
 		(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
-		|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
-			isLowerThanTodayDis($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
+		|| (isset($userEndDates[$user->username]) && isLowerThanToday($userEndDates[$user->username]))
 	) {
 		$userMainDataObj = new stdClass();
 		$userMainDataObj->id = $user->id;

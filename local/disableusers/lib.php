@@ -100,6 +100,7 @@ function disableusers_task() {
 	}
 	foreach($usersValues as $key=>$userAD) {
 		$usersAdArr[] = strtolower($userAD['userPrincipalName']);
+		$userEndDates[$userAD['userPrincipalName']] = $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate'];
 	}
 
 	$users = $DB->get_records('user');
@@ -108,8 +109,7 @@ function disableusers_task() {
 	foreach($users as $user) {
 		if(
 			(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
-			|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
-				isLowerThanToday($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
+			|| (isset($userEndDates[$user->username]) && isLowerThanToday($userEndDates[$user->username]))
 		) {
 			$userMainDataObj = new stdClass();
 			$userMainDataObj->id = $user->id;
