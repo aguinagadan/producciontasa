@@ -104,9 +104,9 @@ $indicadorDeNombreUsuario = 'tasa.com';
 
 foreach($users as $user) {
 	//if(
-		(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
-		|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
-			isLowerThanToday($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
+	//	(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
+	//	|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
+	//		isLowerThanToday($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
 	//) {
 	if($user->id == 4681) {
 		$userMainDataObj = new stdClass();
