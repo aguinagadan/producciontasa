@@ -23,8 +23,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2020020304;
-$plugin->requires = 2020020304;
+$plugin->version = 2020020303;
+$plugin->requires = 2020020303;
 $plugin->release = '3.8.0.3';
 $plugin->component = 'local_office365';
 $plugin->maturity = MATURITY_STABLE;
