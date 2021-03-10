@@ -1,14 +1,8 @@
 <?php
 global $DB;
 
-var_dump('a');
-
 require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
-
-var_dump('b');
-exit;
-
 
 function execCurlDis($data) {
 	$curl = curl_init();
@@ -39,4 +33,87 @@ function execCurlDis($data) {
 	curl_close($curl);
 	$responseData = json_decode($response,true);
 	return $responseData;
+}
+function getADTokenDis() {
+	$data = array(
+		'url' => 'https://login.microsoftonline.com/b7e26f48-2292-4a14-a355-1aeb8489ae3d/oauth2/token',
+		'postFields' => http_build_query(array(
+			'grant_type' => 'client_credentials',
+			'client_id' => '57f43017-1336-4356-8e65-c81a52eda0f3',
+			'client_secret' => 'p._o2p72hK~C9N_op.z_YR93P~z~SjZijz',
+			'scope' => 'https://graph.microsoft.com/.default'), '', '&'),
+		'httpMethod' => 'POST',
+		'httpHeader' => array('host: login.microsoftonline.com',
+			'Content-Type: application/x-www-form-urlencoded',
+			'Cookie: buid=0.AQYASG_it5IiFEqjVRrrhImuPRgFD1jTGCJMjrrTt_PN72QGAAA.AQABAAEAAAAGV_bv21oQQ4ROqh0_1-tAW_7_lkPgDNNQcc9ndJ6-VT_fKycsxUQA_fsiaenVHh0m1dZmFiOVou0VgVUcdSWQcKUXNWy0yeSTtMjrE4vBvIZsvOjiuXWYPgfnevpPNZAgAA; fpc=AlKOys_Nd-FDqTUucSXhED6Lv60HAQAAAEAZ29YOAAAA; x-ms-gateway-slice=estsfd; stsservicecookie=estsfd')
+	);
+
+	$responseData = execCurlDis($data);
+	return $responseData['access_token'];
+}
+function getADUsersDis($key, $skipToken='') {
+	if($key>0) {
+		$skipToken = '&$skiptoken='.$skipToken;
+	}
+
+	$data = array(
+		'url' => 'https://graph.windows.net/b7e26f48-2292-4a14-a355-1aeb8489ae3d/users?api-version=1.6'.$skipToken,
+		'httpMethod' => 'GET',
+		'httpHeader' => array("Authorization: ". getADTokenDis())
+	);
+	$responseData = execCurlDis($data);
+	return $responseData;
+}
+
+function isLowerThanTodayDis($date) {
+	$date_now = date("Y-m-d");
+	if ($date < $date_now) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
+$key = 0;
+$skipToken = '';
+$usersValues = array();
+$allUsers = array();
+
+while(true) {
+	if($key>1 && $skipToken=='') {
+		break;
+	}
+	$allUsers[] = getADUsersDis($key, $skipToken);
+	$needle = '$skiptoken=';
+	$skipToken = substr($allUsers[$key]['odata.nextLink'], strpos($allUsers[$key]['odata.nextLink'], $needle) + strlen($needle));
+	$key++;
+}
+
+foreach($allUsers as $allUser) {
+	foreach($allUser['value'] as $key=>$val) {
+		$usersValues[$count] = $val;
+		$count++;
+	}
+}
+foreach($usersValues as $key=>$userAD) {
+	$usersAdArr[] = $userAD['userPrincipalName'];
+}
+
+$users = $DB->get_records('user');
+$indicadorDeNombreUsuario = 'tasa.com';
+
+var_dump($users);
+exit;
+
+foreach($users as $user) {
+	if(
+		(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
+		|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
+			isLowerThanTodayDis($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
+	) {
+		$userMainDataObj = new stdClass();
+		$userMainDataObj->id = $user->id;
+		$userMainDataObj->deleted = 1;
+		$DB->update_record('user', $userMainDataObj);
+	}
 }
