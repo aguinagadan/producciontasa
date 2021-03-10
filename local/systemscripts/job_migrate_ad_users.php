@@ -1,17 +1,8 @@
 <?php
-global $CFG;
-
-echo 'a';
+global $CFG, $DB;
 
 require_once(dirname(__FILE__) . '/../../config.php');
-
-echo 'b';
-var_dump(dirname(__FILE__) . '/../../config.php');
-exit;
-
 require_once($CFG->dirroot.'/user/profile/lib.php');
-
-global $DB;
 
 function getZonaPorDivision($division) {
 	$returnValue = '';
@@ -152,10 +143,6 @@ foreach($allUsers as $allUser) {
 		$count++;
 	}
 }
-
-echo '<pre>';
-var_dump($usersValues);
-exit;
 
 foreach($usersValues as $key=>$userAD) {
 	$userPrincipalName = $userAD['userPrincipalName'];
