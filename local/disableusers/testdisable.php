@@ -10,7 +10,7 @@ var_dump('b');
 exit;
 
 
-function execCurlD($data) {
+function execCurlDis($data) {
 	$curl = curl_init();
 
 	$url = $data['url'];
