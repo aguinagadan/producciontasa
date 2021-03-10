@@ -65,6 +65,15 @@ function getADUsersD($key, $skipToken='') {
 	return $responseData;
 }
 
+function isLowerThanToday($date) {
+	$date_now = date("Y-m-d");
+	if ($date < $date_now) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
 $key = 0;
 $skipToken = '';
 $usersValues = array();
@@ -94,10 +103,19 @@ $users = $DB->get_records('user');
 $indicadorDeNombreUsuario = 'tasa.com';
 
 foreach($users as $user) {
-	if(strpos($user->username, $indicadorDeNombreUsuario) !== false && !in_array($user->username, $usersAdArr)) {
+	if(
+		(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
+		|| (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']) &&
+			isLowerThanToday($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']))
+	) {
+		var_dump($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']);
+		exit;
 		$userMainDataObj = new stdClass();
 		$userMainDataObj->id = $user->id;
 		$userMainDataObj->deleted = 1;
 		$DB->update_record('user', $userMainDataObj);
+	} else {
+		var_dump('test');
 	}
 }
+exit;

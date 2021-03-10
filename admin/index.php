@@ -710,7 +710,7 @@ if (!$cache and moodle_needs_upgrading()) {
     }
 
     // install/upgrade all plugins and other parts
-    //upgrade_noncore(true);
+    upgrade_noncore(true);
 }
 
 // If this is the first install, indicate that this site is fully configured

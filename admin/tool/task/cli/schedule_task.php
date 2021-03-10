@@ -114,7 +114,7 @@ if ($execute = $options['execute']) {
         mtrace("Task '$execute' not found");
         exit(1);
     }
-
+//samuel
 //    if (moodle_needs_upgrading()) {
 //        mtrace("Moodle upgrade pending, cannot execute tasks.");
 //        exit(1);
