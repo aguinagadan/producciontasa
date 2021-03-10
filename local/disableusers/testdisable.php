@@ -97,6 +97,7 @@ foreach($allUsers as $allUser) {
 }
 foreach($usersValues as $key=>$userAD) {
 	$usersAdArr[] = $userAD['userPrincipalName'];
+	$userEndDates[$userAD['userPrincipalName']] = $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate'];
 }
 
 $users = $DB->get_records('user');
@@ -104,15 +105,9 @@ $indicadorDeNombreUsuario = 'tasa.com';
 
 foreach($users as $user) {
 	if($user->id == 4681) {
-		var_dump($user->username);
-		var_dump($indicadorDeNombreUsuario);
-		var_dump(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false);
-		var_dump(strtolower($user->username));
-		var_dump($usersAdArr);
 		var_dump(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr));
-		var_dump($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']);
 		var_dump(isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']));
-		var_dump(isLowerThanToday($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userEndDate']));
+		var_dump(isLowerThanToday($userEndDates[$user->username]));
 		exit;
 	}
 	if(
