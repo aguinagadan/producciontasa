@@ -1,7 +1,14 @@
 <?php
 global $CFG;
 
+echo 'a';
+
 require_once(dirname(__FILE__) . '/../../config.php');
+
+echo 'b';
+var_dump(dirname(__FILE__) . '/../../config.php');
+exit;
+
 require_once($CFG->dirroot.'/user/profile/lib.php');
 
 global $DB;
