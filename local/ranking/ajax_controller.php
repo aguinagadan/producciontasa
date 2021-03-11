@@ -178,7 +178,7 @@ function obtenerUsuarios() {
 			'img'=> $userArr->levelimg,
 			'name'=> $userArr->username,
 			'punto' => $userArr->points,
-			'level'=> 'Nivel ' .  $userArr->levelnumber .', ' .  $userArr->levelnum
+			'level'=> 'Nivel ' .  $userArr->levelnum .', ' .  $userArr->levelname
 		];
 	}
 
