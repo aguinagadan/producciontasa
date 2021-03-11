@@ -73,7 +73,8 @@ foreach ($users as $key => $user) {
 	profile_load_custom_fields($user);
 	$area = trim($user->profile['area']);
 
-	$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
+	//$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
+	$userData = array();
 
 	$newUserObj = new stdClass();
 	$newUserObj->userid = $user->id;
