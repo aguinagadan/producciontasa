@@ -74,7 +74,7 @@ function obtenerLevelTempNameTemp($level) {
 
 foreach ($users as $key => $user) {
 	profile_load_custom_fields($user);
-	$area = trim($user->profile['area']);
+	$area = trim($user->profile['area_funcional']);
 
 	//$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
 	$userData = array();
