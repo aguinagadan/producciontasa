@@ -1,9 +1,9 @@
 <?php
 
-global $DB, $CFG;
+global $CFG, $DB;
 
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once($CFG->dirroot.'/user/profile/lib.php');
 
 use block_xp\local\xp\level_with_name;
 use block_xp\local\xp\level_with_badge;
@@ -70,31 +70,34 @@ function obtenerLevelTempNameTemp($level) {
 	return obtenerLevelTempPropertyValue($level, 'name');
 }
 
-$users = $DB->get_records('user', array('deleted' => 0));
+function migrate_users_temp_task() {
+	global $DB;
 
-foreach ($users as $key => $user) {
-	profile_load_custom_fields($user);
-	$area = $user->profile['area_funcional'];
+	$users = $DB->get_records('user', array('deleted' => 0));
 
-	$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
+	foreach ($users as $key => $user) {
+		profile_load_custom_fields($user);
+		$area = $user->profile['area_funcional'];
 
-	$newUserObj = new stdClass();
-	$newUserObj->userid = $user->id;
-	$newUserObj->username = $user->firstname . ' ' . $user->lastname;
-	$newUserObj->area = $area;
-	$newUserObj->points = obtenerLevelTemp($user->id)[2];
-	$newUserObj->levelnum = obtenerLevelTemp($user->id)[0]->get_level();
-	$newUserObj->levelname = obtenerLevelTemp($user->id)[1];
-	$newUserObj->levelimg = obtenerLevelTemp($user->id)[3];
-	$newUserObj->updated_at = date("Y-m-d H:i:s");
+		$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
 
-	if (empty($userData)) {
-		$newUserObj->created_at = date("Y-m-d H:i:s");
-		$DB->insert_record('tasa_user_point_tmp', $newUserObj);
-	} else {
-		$newUserObj->id = $userData->id;
-		$DB->update_record('tasa_user_point_tmp', $newUserObj);
+		$newUserObj = new stdClass();
+		$newUserObj->userid = $user->id;
+		$newUserObj->username = $user->firstname . ' ' . $user->lastname;
+		$newUserObj->area = $area;
+		$newUserObj->points = obtenerLevelTemp($user->id)[2];
+		$newUserObj->levelnum = obtenerLevelTemp($user->id)[0]->get_level();
+		$newUserObj->levelname = obtenerLevelTemp($user->id)[1];
+		$newUserObj->levelimg = obtenerLevelTemp($user->id)[3];
+		$newUserObj->updated_at = date("Y-m-d H:i:s");
+
+		if (empty($userData)) {
+			$newUserObj->created_at = date("Y-m-d H:i:s");
+			$DB->insert_record('tasa_user_point_tmp', $newUserObj);
+		} else {
+			$newUserObj->id = $userData->id;
+			$DB->update_record('tasa_user_point_tmp', $newUserObj);
+		}
 	}
-}
 
-echo 'exito';
+}
