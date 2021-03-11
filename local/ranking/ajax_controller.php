@@ -170,26 +170,15 @@ function usort_callback($a, $b) {
 function obtenerUsuarios() {
 	global $DB, $USER;
 
-	$usersArr = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
+	$usersArr = $DB->get_records('tasa_user_point_tmp');
 
 	foreach($usersArr as $key=>$userArr) {
-		$world = \block_xp\di::get('course_world_factory')->get_world(1);
-		$state = $world->get_store()->get_state($userArr->id);
-		$widget = new \block_xp\output\xp_widget($state, [], null, []);
-		$level = $widget->state->get_level();
-
-		//Get data
-		$levelName = obtenerLevelPropertyValue($level, 'name');
-		$xp = $widget->state->get_xp();
-
-		$user = $DB->get_record('user', array('id' => $userArr->id));
-
 		$users[] = [
-			'userid' => $userArr->id,
-			'img'=> getLevelBadge($level, 1),
-			'name'=> $user->firstname . ' ' . $user->lastname,
-			'punto' =>$xp,
-			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
+			'userid' => $userArr->userid,
+			'img'=> $userArr->levelimg,
+			'name'=> $userArr->username,
+			'punto' => $userArr->points,
+			'level'=> 'Nivel ' .  $userArr->levelnum .', ' .  $userArr->levelnum
 		];
 	}
 
@@ -203,7 +192,12 @@ function obtenerUsuarios() {
 		$users[$key]['punto'] = $us['punto'];
 		$users[$key]['level'] = $us['level'];
 
-		$usersPos[$us['userid']] = $key+1;
+		if($us['userid'] == $USER->id) {
+			$usersPos[$us['userid']]['pos'] = $key+1;
+			$usersPos[$us['userid']]['img'] = $us['img'];
+			$usersPos[$us['userid']]['punto'] = $us['punto'];
+			$usersPos[$us['userid']]['level'] = $us['level'];
+		}
 	}
 
 	$top100 = array_slice($users, 0, 100);
@@ -211,19 +205,18 @@ function obtenerUsuarios() {
 	$key = array_search($USER->id, array_column($top100, 'userid'));
 
 	if($key === false) {
-		$world = \block_xp\di::get('course_world_factory')->get_world(1);
-		$state = $world->get_store()->get_state($USER->id);
-		$widget = new \block_xp\output\xp_widget($state, [], null, []);
-
 		$top100[] = array(
-			'pos' => $usersPos[$USER->id],
-			'img' => getLevelBadge($level, 1),
+			'pos' => $usersPos[$USER->id]['pos'],
+			'img' => $usersPos[$USER->id]['img'],
 			'name' => $USER->firstname . ' ' . $USER->lastname,
-			'punto' => $widget->state->get_xp() . ' millas naúticas',
-			'level'=> 'Nivel ' . $level->get_level() .', ' . $levelName
+			'punto' => $usersPos[$USER->id]['punto'] . ' millas naúticas',
+			'level'=> $usersPos[$USER->id]['level'],
 		);
 	}
 
+	echo '<pre>';
+	var_dump($top100);
+	exit;
 
 	$response['status'] = true;
 	$response['data'] = $top100;
