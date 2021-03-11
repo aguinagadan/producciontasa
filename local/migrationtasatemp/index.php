@@ -73,14 +73,10 @@ function obtenerLevelTempNameTemp($level) {
 }
 
 foreach ($users as $key => $user) {
-	var_dump($user);
 	profile_load_custom_fields($user);
-	var_dump($user);
 	$area = $user->profile['area_funcional'];
-	var_dump($area);
-	exit;
 
-	//$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
+	$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
 	$userData = array();
 
 	$newUserObj = new stdClass();
@@ -88,20 +84,17 @@ foreach ($users as $key => $user) {
 	$newUserObj->username = $user->firstname . ' ' . $user->lastname;
 	$newUserObj->area = $area;
 	$newUserObj->points = obtenerLevelTemp($user->id)[2];
-	$newUserObj->level = obtenerLevelTemp($user->id)[0]->get_level();
+	$newUserObj->levelnum = obtenerLevelTemp($user->id)[0]->get_level();
 	$newUserObj->levelname = obtenerLevelTemp($user->id)[1];
 	$newUserObj->levelimg = obtenerLevelTemp($user->id)[3];
 	$newUserObj->updated_at = date("Y-m-d H:i:s");
 
 	if (empty($userData)) {
 		$newUserObj->created_at = date("Y-m-d H:i:s");
-		echo '<pre>';
-		var_dump($newUserObj);
-		exit;
-		//$DB->insert_record('tasa_user_point_tmp', $newUserObj);
+		$DB->insert_record('tasa_user_point_tmp', $newUserObj);
 	} else {
 		$newUserObj->id = $userData->id;
-		//$DB->update_record('tasa_user_point_tmp', $newUserObj);
+		$DB->update_record('tasa_user_point_tmp', $newUserObj);
 	}
 }
 
