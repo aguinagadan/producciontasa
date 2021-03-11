@@ -33,6 +33,7 @@ var explorer = new Vue({
     mounted(){
         this.obtenerUsuario();
         this.obtenerNiveles();
+        this.obtenerUsuarios();
     },
     methods: {
         obtenerUsuario: function(){
@@ -80,8 +81,6 @@ var explorer = new Vue({
         },
         cargarRanking: function () {
             this.loadingAreas = true;
-            this.loadingUsers = true;
-            this.obtenerUsuarios();
             this.obtenerAreas();
         },
         obtenerUsuarios: function(){

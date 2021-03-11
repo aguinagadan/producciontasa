@@ -178,7 +178,7 @@ function obtenerUsuarios() {
 			'img'=> $userArr->levelimg,
 			'name'=> $userArr->username,
 			'punto' => $userArr->points,
-			'level'=> 'Nivel ' .  $userArr->levelnum .', ' .  $userArr->levelnum
+			'level'=> 'Nivel ' .  $userArr->levelnumber .', ' .  $userArr->levelnum
 		];
 	}
 
@@ -210,13 +210,9 @@ function obtenerUsuarios() {
 			'img' => $usersPos[$USER->id]['img'],
 			'name' => $USER->firstname . ' ' . $USER->lastname,
 			'punto' => $usersPos[$USER->id]['punto'] . ' millas naúticas',
-			'level'=> $usersPos[$USER->id]['level'],
+			'level' => $usersPos[$USER->id]['level'],
 		);
 	}
-
-	echo '<pre>';
-	var_dump($top100);
-	exit;
 
 	$response['status'] = true;
 	$response['data'] = $top100;
