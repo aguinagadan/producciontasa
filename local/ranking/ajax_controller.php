@@ -228,7 +228,7 @@ function obtenerAreas() {
 
 	foreach($results as $key=>$result) {
 		$areas[$result->area]['name'] = $result->area;
-		$areas[$result->area]['punto'] = $results->total_points;
+		$areas[$result->area]['punto'] = $result->total_points;
 	}
 
 	usort($areas, 'usort_callback');
