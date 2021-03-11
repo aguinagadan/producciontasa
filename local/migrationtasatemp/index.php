@@ -59,7 +59,13 @@ function obtenerLevelTemp($userId) {
 	$level = $widget->state->get_level();
 	$puntos = $widget->state->get_xp();
 
-	return array($level,$puntos);
+	return
+		array(
+			$level->get_level(),
+			obtenerLevelTempPropertyValue($level, 'name'),
+			$puntos,
+			getLevelBadgeTemp($level, 1)
+		);
 }
 
 function obtenerLevelTempNameTemp($level) {
@@ -77,10 +83,10 @@ foreach ($users as $key => $user) {
 	$newUserObj->userid = $user->id;
 	$newUserObj->username = $user->firstname . ' ' . $user->lastname;
 	$newUserObj->area = $area;
-	$newUserObj->points = obtenerLevelTemp($user->id)[1];
-	$newUserObj->level = obtenerLevelTemp($user->id)[0]->get_level();
-	$newUserObj->levelname = obtenerLevelTempNameTemp($newUserObj->level);
-	$newUserObj->levelimg = getLevelBadgeTemp($newUserObj->level, 1);
+	$newUserObj->points = obtenerLevelTemp($user->id)[2];
+	$newUserObj->level = obtenerLevelTemp($user->id)[0];
+	$newUserObj->levelname = obtenerLevelTemp($user->id)[1];
+	$newUserObj->levelimg = obtenerLevelTemp($user->id)[3];
 	$newUserObj->updated_at = date("Y-m-d H:i:s");
 
 	if (empty($userData)) {
