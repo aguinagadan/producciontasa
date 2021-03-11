@@ -227,8 +227,8 @@ function obtenerAreas() {
 	$results = $DB->get_records_sql("SELECT area, SUM(points) AS total_points FROM {tasa_user_point_tmp} WHERE area != '' GROUP BY area ORDER BY total_points DESC");
 
 	foreach($results as $key=>$result) {
-		$results[$result->area]['name'] = $result->area;
-		$results[$result->area]['punto'] = $results->total_points;
+		$areas[$result->area]['name'] = $result->area;
+		$areas[$result->area]['punto'] = $results->total_points;
 	}
 
 	usort($areas, 'usort_callback');
