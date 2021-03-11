@@ -77,7 +77,6 @@ foreach ($users as $key => $user) {
 	$area = $user->profile['area_funcional'];
 
 	$userData = $DB->get_record('tasa_user_point_tmp', array('userid' => $user->id));
-	$userData = array();
 
 	$newUserObj = new stdClass();
 	$newUserObj->userid = $user->id;
