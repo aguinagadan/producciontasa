@@ -61,7 +61,7 @@ function obtenerLevelTemp($userId) {
 
 	return
 		array(
-			$level->get_level(),
+			$level,
 			obtenerLevelTempPropertyValue($level, 'name'),
 			$puntos,
 			getLevelBadgeTemp($level, 1)
@@ -91,6 +91,7 @@ foreach ($users as $key => $user) {
 
 	if (empty($userData)) {
 		$newUserObj->created_at = date("Y-m-d H:i:s");
+		echo '<pre>';
 		var_dump($newUserObj);
 		exit;
 		//$DB->insert_record('tasa_user_point_tmp', $newUserObj);
