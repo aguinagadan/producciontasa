@@ -75,6 +75,7 @@ function obtenerLevelTempNameTemp($level) {
 foreach ($users as $key => $user) {
 	var_dump($user);
 	profile_load_custom_fields($user);
+	var_dump($user);
 	$area = $user->profile['area_funcional'];
 	var_dump($area);
 	exit;
