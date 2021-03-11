@@ -70,7 +70,7 @@ function obtenerLevelTempNameTemp($level) {
 	return obtenerLevelTempPropertyValue($level, 'name');
 }
 
-function migrate_users_temp_task() {
+function migrationtasatemp_task() {
 	global $DB;
 
 	$users = $DB->get_records('user', array('deleted' => 0));

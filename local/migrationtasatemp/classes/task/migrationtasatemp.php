@@ -8,7 +8,7 @@ namespace local_migrationtasatemp\task;
  * @copyright  2015 Vadim Dvorovenko <Vadimon@mail.ru>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class migrate_users_temp extends \core\task\scheduled_task
+class migrationtasatemp extends \core\task\scheduled_task
 {
 
 	/**
@@ -26,7 +26,7 @@ class migrate_users_temp extends \core\task\scheduled_task
 	public function execute(){
 		global $CFG;
 		require_once($CFG->dirroot . '/local/migrationtasatemp/lib.php');
-		migrate_users_temp_task();
+		migrationtasatemp_task();
 	}
 
 }

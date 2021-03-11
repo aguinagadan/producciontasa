@@ -13,7 +13,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $tasks = array(
 	array(
-		'classname' => 'local_migrationtasatemp\task\migrate_users_temp',
+		'classname' => 'local_migrationtasatemp\task\migrationtasatemp',
 		'blocking' => 0,
 		'minute' => '30',
 		'hour' => '17',
