@@ -245,10 +245,6 @@ function obtenerAreas() {
 		];
 	}
 
-	echo '<pre>';
-	var_dump($response);
-	exit;
-
 	$response['status'] = true;
 	$response['data'] = $response;
 
