@@ -224,18 +224,11 @@ function obtenerAreas() {
 	global $DB;
 
 	$areas = array();
-	$users = $DB->get_records('user', array('deleted' => 0, 'suspended' => 0));
+	$results = $DB->get_records_sql("SELECT area, SUM(points) AS total_points FROM {tasa_user_point_tmp} WHERE area != '' GROUP BY area ORDER BY total_points DESC");
 
-	foreach($users as $key=>$user) {
-		profile_load_custom_fields($user);
-		$area = $user->profile['area_funcional'];
-		if(!empty($area)) {
-			$world = \block_xp\di::get('course_world_factory')->get_world(1);
-			$state = $world->get_store()->get_state($user->id);
-			$widget = new \block_xp\output\xp_widget($state, [], null, []);
-			$areas[$area]['name'] = $area;
-			$areas[$area]['punto'] += $widget->state->get_xp();
-		}
+	foreach($results as $key=>$result) {
+		$results[$result->area]['name'] = $result->area;
+		$results[$result->area]['punto'] = $results->total_points;
 	}
 
 	usort($areas, 'usort_callback');
@@ -251,6 +244,10 @@ function obtenerAreas() {
 			'punto' => $top100['punto'],
 		];
 	}
+
+	echo '<pre>';
+	var_dump($response);
+	exit;
 
 	$response['status'] = true;
 	$response['data'] = $response;
