@@ -42,9 +42,9 @@
                     <img src="/local/ranking/img/loading.gif" v-if="loadingAreas" />
                     <div class="table" v-else>
                         <div class="header-table">
-                            <div class="item"></div>
-                            <div class="item">Área</div>
-                            <div class="item">Puntos</div>
+                            <div class="item width-9"></div>
+                            <div class="item text-align-left">Área</div>
+                            <div class="item text-align-left">Puntos</div>
                         </div>
                         <div class="body-table">
                             <div class="list" v-for="(item, key) in areas">
@@ -59,10 +59,10 @@
                     <img src="/local/ranking/img/loading.gif" v-if="loadingUsers" />
                     <div class="table" v-else>
                         <div class="header-table">
-                            <div class="item"></div>
-                            <div class="item" style="width: 19% !important;">Participante</div>
-                            <div class="item">Puntos</div>
-                            <div class="item">Nivel</div>
+                            <div class="item width-3"></div>
+                            <div class="item width-31 text-align-left">Participante</div>
+                            <div class="item width-26">Puntos</div>
+                            <div class="item text-align-left">Nivel</div>
                         </div>
                         <div class="body-table">
                             <div class="list" v-for="(item, key) in users">
