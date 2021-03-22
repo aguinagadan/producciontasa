@@ -331,21 +331,21 @@ body#page-local-ranking-index {
 }
 
 .width-3 {
-  width: 3%;
+  width: 3% !important;
 }
 
 .width-9 {
-  width: 9%;
+  width: 9% !important;
 }
 
 .width-26 {
-  width: 26%;
+  width: 26% !important;
 }
 
 .width-31 {
-  width: 31%;
+  width: 31% !important;
 }
 
 .text-align-left {
-  text-align: left;
+  text-align: left !important;
 }
