@@ -330,20 +330,20 @@ body#page-local-ranking-index {
   height: 11vh!important;
 }
 
-.width-3 {
-  width: 3% !important;
-}
-
 .width-9 {
   width: 9% !important;
 }
 
-.width-26 {
-  width: 26% !important;
+.width-101 {
+  width: 101px !important;
 }
 
-.width-31 {
-  width: 31% !important;
+.width-229 {
+  width: 229px !important;
+}
+
+.width-237 {
+  width: 237px !important;
 }
 
 .text-align-left {
