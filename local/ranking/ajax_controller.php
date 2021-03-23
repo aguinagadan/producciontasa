@@ -177,7 +177,7 @@ function obtenerUsuarios() {
 			'userid' => $userArr->userid,
 			'img'=> $userArr->levelimg,
 			'name'=> $userArr->username,
-			'punto' => $userArr->points,
+			'punto' => $userArr->points . ' millas naúticas',
 			'level'=> 'Nivel ' .  $userArr->levelnum .', ' .  $userArr->levelname
 		];
 	}
@@ -195,7 +195,7 @@ function obtenerUsuarios() {
 		if($us['userid'] == $USER->id) {
 			$usersPos[$us['userid']]['pos'] = $key+1;
 			$usersPos[$us['userid']]['img'] = $us['img'];
-			$usersPos[$us['userid']]['punto'] = $us['punto'] . ' millas naúticas';
+			$usersPos[$us['userid']]['punto'] = $us['punto'];
 			$usersPos[$us['userid']]['level'] = $us['level'];
 		}
 	}
