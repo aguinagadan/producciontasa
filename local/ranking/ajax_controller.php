@@ -195,7 +195,7 @@ function obtenerUsuarios() {
 		if($us['userid'] == $USER->id) {
 			$usersPos[$us['userid']]['pos'] = $key+1;
 			$usersPos[$us['userid']]['img'] = $us['img'];
-			$usersPos[$us['userid']]['punto'] = $us['punto'];
+			$usersPos[$us['userid']]['punto'] = $us['punto'] . ' millas naúticas',
 			$usersPos[$us['userid']]['level'] = $us['level'];
 		}
 	}
@@ -224,7 +224,7 @@ function obtenerAreas() {
 	global $DB;
 
 	$areas = array();
-	$results = $DB->get_records_sql("SELECT area, SUM(points) AS total_points FROM {tasa_user_point_tmp} WHERE area != '' GROUP BY area ORDER BY total_points DESC");
+	$results = $DB->get_records_sql("SELECT area, AVG(points) AS total_points FROM {tasa_user_point_tmp} WHERE area != '' GROUP BY area ORDER BY total_points DESC");
 
 	foreach($results as $key=>$result) {
 		$areas[$result->area]['name'] = $result->area;
