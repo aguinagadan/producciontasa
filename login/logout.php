@@ -59,7 +59,7 @@ foreach($authsequence as $authname) {
     $authplugin->logoutpage_hook();
 }
 
-if($USER->institution == 'azure') {
+if($USER->institution == 'azure' || $USER->institution == 'TASA') {
 	setcookie("mg_sso_profile", "", time() - 3600, '/');
 	setcookie("mg_sso_refresh_token", "", time() - 3600, '/');
 	setcookie("mg_sso_token", "", time() - 3600, '/');
