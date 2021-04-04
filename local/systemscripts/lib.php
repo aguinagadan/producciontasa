@@ -55,43 +55,8 @@ function migrate_tasa_users_task() {
 			$count++;
 		}
 	}
-	foreach($usersValues as $key=>$userAD) {
-		$userPrincipalName = $userAD['userPrincipalName'];
 
-		$user = $DB->get_record('user', array('username' => $userPrincipalName));
-
-		if(empty($user) || !$user) {
-			continue;
-		}
-
-		$userMainDataObj = new stdClass();
-		$userMainDataObj->id = $user->id;
-		$userMainDataObj->deleted = 0;
-		$userMainDataObj->firstname = isset($userAD['givenName']) ? $userAD['givenName'] : ' ';
-		$userMainDataObj->lastname =  isset($userAD['surname']) ? $userAD['surname'] : ' ';
-		if(isset($userAD['mail'])) {
-			$userMainDataObj->email = $userAD['mail'];
-		} else {
-			if(isset($userAD['otherMails']) && !empty($userAD['otherMails'])) {
-				$userMainDataObj->email = array_shift($userAD['otherMails']);
-			} else {
-				if(isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])) {
-					$userMainDataObj->email = $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'].'@aulavirtual.tasa.com.pe';
-				} else {
-					$userMainDataObj->email = ' ';
-				}
-			}
-		}
-
-		$DB->update_record('user', $userMainDataObj);
-
-		//consultar: filtrando si tiene datos extra (?)
-		if(
-			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])
-		) {
-			updateUser($user, $userAD);
-		}
-	}
+	createUsers($usersValues);
 }
 function execCurl($data) {
 	$curl = curl_init();
@@ -153,33 +118,77 @@ function getADUsers($key, $skipToken='') {
 	$responseData = execCurl($data);
 	return $responseData;
 }
-function updateUser($user, $userAD) {
-	$dni           = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] : '';
+function createUsers($usersValues) {
+	global $DB;
+	if(!empty($usersValues)) {
+		foreach ($usersValues as $key => $userAD) {
+			$userMainDataObj = new stdClass();
+			$userPrincipalName = $userAD['userPrincipalName'];
+			$userMainDataObj->username = isset($userPrincipalName) ? $userPrincipalName : ' ';
+			$userMainDataObj->firstname = isset($userAD['givenName']) ? $userAD['givenName'] : ' ';
+			$userMainDataObj->lastname = isset($userAD['surname']) ? $userAD['surname'] : ' ';
+			if (isset($userAD['mail'])) {
+				$userMainDataObj->email = $userAD['mail'];
+			} else {
+				if (isset($userAD['otherMails']) && !empty($userAD['otherMails'])) {
+					$userMainDataObj->email = array_shift($userAD['otherMails']);
+				} else {
+					if (isset($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])) {
+						$userMainDataObj->email = $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] . '@aulavirtual.tasa.com.pe';
+					} else {
+						$userMainDataObj->email = ' ';
+					}
+				}
+			}
+			$userMainDataObj->lang = 'es';
+			$userMainDataObj->institution = 'azure';
 
-	$nroTrabajador = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ?
-		$userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'] : '';
+			$user = $DB->get_record('user', array('username' => $userPrincipalName));
 
-	$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc'] : 'No especificado';
+			if (empty($user) || !$user) {
+				$userMainDataObj->auth = 'manual';
+				$userMainDataObj->confirmed  = 1;
+				$userMainDataObj->mnethostid = 1;
+				$userMainDataObj->id = $DB->insert_record('user', $userMainDataObj);
+			} else {
+				$userMainDataObj->id = $user->id;
+				$userMainDataObj->deleted = 0;
+				$DB->update_record('user', $userMainDataObj);
+			}
 
-	$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : 'No especificado';
+			//consultar: filtrando si tiene datos extra
+			if (
+			!empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'])
+			) {
+				$dni           = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userDocumentNumber'] : '';
 
-	$zona          = getZonaPorDivision($division);
+				$nroTrabajador = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id']) ?
+					$userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userSAPR3Id'] : '';
 
-	$areaFuncional = !empty($userAD['department']) ?
-		$userAD['department'] : 'No especificado';
+				$gerencia      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userHierarchyManagerDesc'] : 'No especificado';
 
-	$tipoEmpleado  = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType'] : 'No especificado';
+				$division      = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_plantDescription'] : 'No especificado';
 
-	$posicion      = !empty($userAD['jobTitle']) ? $userAD['jobTitle'] : 'No especificado';
+				$zona          = getZonaPorDivision($division);
 
-	$user->profile_field_dni = $dni;
-	$user->profile_field_codigo = $nroTrabajador;
-	$user->profile_field_gerencia = $gerencia;
-	$user->profile_field_zona = $zona;
-	$user->profile_field_division = $division;
-	$user->profile_field_area_funcional = $areaFuncional;
-	$user->profile_field_personal = $tipoEmpleado;
-	$user->profile_field_posicion = $posicion;
+				$areaFuncional = !empty($userAD['department']) ?
+					$userAD['department'] : 'No especificado';
 
-	profile_save_data($user);
+				$tipoEmpleado  = !empty($userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType']) ? $userAD['extension_f356ba22a23b4c2fb35162e63d13246c_userCompanyType'] : 'No especificado';
+
+				$posicion      = !empty($userAD['jobTitle']) ? $userAD['jobTitle'] : 'No especificado';
+
+				$userMainDataObj->profile_field_dni = $dni;
+				$userMainDataObj->profile_field_codigo = $nroTrabajador;
+				$userMainDataObj->profile_field_gerencia = $gerencia;
+				$userMainDataObj->profile_field_zona = $zona;
+				$userMainDataObj->profile_field_division = $division;
+				$userMainDataObj->profile_field_area_funcional = $areaFuncional;
+				$userMainDataObj->profile_field_personal = $tipoEmpleado;
+				$userMainDataObj->profile_field_posicion = $posicion;
+
+				profile_save_data($userMainDataObj);
+			}
+		}
+	}
 }
