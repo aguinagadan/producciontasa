@@ -190,7 +190,7 @@ function createUsers($usersValues) {
 				$userMainDataObj->profile_field_personal = $tipoEmpleado;
 				$userMainDataObj->profile_field_posicion = $posicion;
 
-				profile_save_data($userMainDataObj);
+				//profile_save_data($userMainDataObj);
 			}
 		}
 	}
