@@ -121,6 +121,8 @@ function getADUsers($key, $skipToken='') {
 function createUsers($usersValues) {
 	global $DB;
 	if(!empty($usersValues)) {
+		$contador = 0;
+		$arrContador = array();
 		foreach ($usersValues as $key => $userAD) {
 			$userMainDataObj = new stdClass();
 			$userPrincipalName = $userAD['userPrincipalName'];
@@ -149,10 +151,12 @@ function createUsers($usersValues) {
 				$userMainDataObj->auth = 'manual';
 				$userMainDataObj->confirmed  = 1;
 				$userMainDataObj->mnethostid = 1;
-				$userMainDataObj->id = $DB->insert_record('user', $userMainDataObj);
+				$arrContador[] = $userPrincipalName;
+				$contador++;
+				//$userMainDataObj->id = $DB->insert_record('user', $userMainDataObj);
 			} else {
 				$userMainDataObj->id = $user->id;
-				$DB->update_record('user', $userMainDataObj);
+				//$DB->update_record('user', $userMainDataObj);
 			}
 
 			//consultar: filtrando si tiene datos extra
@@ -190,4 +194,7 @@ function createUsers($usersValues) {
 			}
 		}
 	}
+	var_dump($contador);
+	var_dump($arrContador);
+	exit;
 }
