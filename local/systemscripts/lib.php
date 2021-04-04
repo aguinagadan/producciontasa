@@ -152,7 +152,6 @@ function createUsers($usersValues) {
 				$userMainDataObj->id = $DB->insert_record('user', $userMainDataObj);
 			} else {
 				$userMainDataObj->id = $user->id;
-				$userMainDataObj->deleted = 0;
 				$DB->update_record('user', $userMainDataObj);
 			}
 
