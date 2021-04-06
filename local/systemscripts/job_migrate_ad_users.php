@@ -1,7 +1,7 @@
 <?php
 global $CFG, $DB;
 
-require_once(dirname(__FILE__) . '/../../config.php');
+require('../../config.php');
 require_once($CFG->dirroot.'/user/profile/lib.php');
 
 echo 'test';
