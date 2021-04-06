@@ -144,6 +144,9 @@ foreach($allUsers as $allUser) {
 	}
 }
 
+var_dump($usersValues);
+exit;
+
 foreach($usersValues as $key=>$userAD) {
 	$userPrincipalName = $userAD['userPrincipalName'];
 
