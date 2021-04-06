@@ -137,6 +137,8 @@ while(true) {
 	$key++;
 }
 
+$count = 0;
+
 foreach($allUsers as $allUser) {
 	foreach($allUser['value'] as $key=>$val) {
 		$usersValues[$count] = $val;
