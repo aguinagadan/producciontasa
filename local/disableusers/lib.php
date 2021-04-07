@@ -114,7 +114,7 @@ function disableusers_task() {
 			|| (isset($userEndDates[$user->username]) && isLowerThanToday($userEndDates[$user->username]))
 		) {
 			$userMainDataObj->deleted = 1;
-		} else {
+		} elseif ((isset($userEndDates[$user->username]) && !isLowerThanToday($userEndDates[$user->username]))) {
 			$userMainDataObj->deleted = 0;
 		}
 		$DB->update_record('user', $userMainDataObj);
