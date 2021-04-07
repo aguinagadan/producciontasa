@@ -3,33 +3,33 @@ global $CFG, $DB;
 
 require('../../config.php');
 
-function getZonaPorDivision($division) {
-	$returnValue = '';
-
-	$divisionNorte = ['Chimbote', 'Malabrigo', 'Zananco', 'Astillero'];
-	$divisionNorte = array_map('strtolower', $divisionNorte);
-
-	$divisionCentro = ['Central pesca','CHD','Callao norte', 'Pucusana', 'Supe', 'Vegueta'];
-	$divisionCentro = array_map('strtolower', $divisionCentro);
-
-	$divisionSur = ['Ático','Atico','Pisco norte','Pisco sur', 'Matarani'];
-	$divisionSur = array_map('strtolower', $divisionSur);
-
-	$divisionCorporativo = ['Administración central','Administracion central','Administración central callao','Administracion central callao'];
-	$divisionCorporativo = array_map('strtolower', $divisionCorporativo);
-
-	if(in_array(strtolower($division), $divisionNorte)) {
-		$returnValue = 'Norte';
-	} else if(in_array(strtolower($division), $divisionCentro)) {
-		$returnValue = 'Centro';
-	} else if(in_array(strtolower($division), $divisionSur)) {
-		$returnValue = 'Sur';
-	} else if(in_array(strtolower($division), $divisionCorporativo)) {
-		$returnValue = 'Corporativo';
-	}
-
-	return $returnValue;
-}
+//function getZonaPorDivision($division) {
+//	$returnValue = '';
+//
+//	$divisionNorte = ['Chimbote', 'Malabrigo', 'Zananco', 'Astillero'];
+//	$divisionNorte = array_map('strtolower', $divisionNorte);
+//
+//	$divisionCentro = ['Central pesca','CHD','Callao norte', 'Pucusana', 'Supe', 'Vegueta'];
+//	$divisionCentro = array_map('strtolower', $divisionCentro);
+//
+//	$divisionSur = ['Ático','Atico','Pisco norte','Pisco sur', 'Matarani'];
+//	$divisionSur = array_map('strtolower', $divisionSur);
+//
+//	$divisionCorporativo = ['Administración central','Administracion central','Administración central callao','Administracion central callao'];
+//	$divisionCorporativo = array_map('strtolower', $divisionCorporativo);
+//
+//	if(in_array(strtolower($division), $divisionNorte)) {
+//		$returnValue = 'Norte';
+//	} else if(in_array(strtolower($division), $divisionCentro)) {
+//		$returnValue = 'Centro';
+//	} else if(in_array(strtolower($division), $divisionSur)) {
+//		$returnValue = 'Sur';
+//	} else if(in_array(strtolower($division), $divisionCorporativo)) {
+//		$returnValue = 'Corporativo';
+//	}
+//
+//	return $returnValue;
+//}
 //function execCurl($data) {
 //	$curl = curl_init();
 //
