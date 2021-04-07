@@ -114,11 +114,12 @@ function disableusers_task() {
 			$userMainDataObj = new stdClass();
 			$userMainDataObj->id = $user->id;
 			$userMainDataObj->deleted = 1;
-		} elseif ((isset($userEndDates[$user->username]) && !isLowerThanToday($userEndDates[$user->username]))) {
+			$DB->update_record('user', $userMainDataObj);
+		} else if ((isset($userEndDates[$user->username]) && !isLowerThanToday($userEndDates[$user->username]))) {
 			$userMainDataObj = new stdClass();
 			$userMainDataObj->id = $user->id;
 			$userMainDataObj->deleted = 0;
+			$DB->update_record('user', $userMainDataObj);
 		}
-		$DB->update_record('user', $userMainDataObj);
 	}
 }
