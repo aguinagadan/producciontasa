@@ -107,14 +107,16 @@ function disableusers_task() {
 	$indicadorDeNombreUsuario = 'tasa.com';
 
 	foreach($users as $user) {
+		$userMainDataObj = new stdClass();
+		$userMainDataObj->id = $user->id;
 		if(
 			(strpos(strtolower($user->username), $indicadorDeNombreUsuario) !== false && !in_array(strtolower($user->username), $usersAdArr))
 			|| (isset($userEndDates[$user->username]) && isLowerThanToday($userEndDates[$user->username]))
 		) {
-			$userMainDataObj = new stdClass();
-			$userMainDataObj->id = $user->id;
 			$userMainDataObj->deleted = 1;
-			$DB->update_record('user', $userMainDataObj);
+		} else {
+			$userMainDataObj->deleted = 0;
 		}
+		$DB->update_record('user', $userMainDataObj);
 	}
 }
