@@ -2,10 +2,6 @@
 global $CFG, $DB;
 
 require('../../config.php');
-require_once($CFG->dirroot.'/user/profile/lib.php');
-
-echo 'test';
-exit;
 
 function getZonaPorDivision($division) {
 	$returnValue = '';
